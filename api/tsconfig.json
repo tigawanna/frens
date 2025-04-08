@@ -1,0 +1,30 @@
+{
+  "compilerOptions": {
+    /* Base Options: */
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "target": "es2022",
+    "allowJs": true,
+    "resolveJsonModule": true,
+    "moduleDetection": "force",
+    "isolatedModules": true,
+    "verbatimModuleSyntax": true,
+    "module": "ESNext",
+    "moduleResolution": "Bundler",
+    "allowImportingTsExtensions": true,
+    "noImplicitOverride": true,
+    "outDir": "./dist",
+    "strict": true,
+    "types": ["node", "supertest"],
+    "noEmit": true,
+    "noErrorTruncation": true,
+    "lib": ["es2022"],
+    "paths": {
+      "@/*": ["./src/*"],
+      "@db/": ["./src/db/*"]
+    }
+  },
+  "tsc-alias": {
+    "resolveFullPaths": true
+  }
+}

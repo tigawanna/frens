@@ -1,0 +1,104 @@
+@import 'tailwindcss';
+
+@plugin 'tailwindcss-animate';
+@plugin '../components/shadcn/lib/shadcn-tailwind-config.ts';
+@plugin 'tailwindcss-animate';
+
+@plugin "daisyui" {
+  /* themes: cupcacke --default, forest --prefersdark; */
+  themes: all;
+  logs: false;
+}
+
+
+@custom-variant dark (&:is(.dark *));
+
+
+
+@theme {
+  --animate-border-spin: border-spin 7s linear infinite;
+
+  --color-sidebar: oklch(var(--sidebar-background));
+  --color-sidebar-foreground: oklch(var(--sidebar-foreground));
+  --color-sidebar-primary: oklch(var(--sidebar-primary));
+  --color-sidebar-primary-foreground: oklch(var(--sidebar-primary-foreground));
+  --color-sidebar-accent: oklch(var(--sidebar-accent));
+  --color-sidebar-accent-foreground: oklch(var(--sidebar-accent-foreground));
+  --color-sidebar-border: oklch(var(--sidebar-border));
+  --color-sidebar-ring: oklch(var(--sidebar-ring));
+
+  @keyframes border-spin {
+    100% {
+      transform: rotate(-360deg);
+    }
+  }
+}
+
+@theme {
+  --animate-border-spin: border-spin 7s linear infinite;
+
+  --color-sidebar: var(--sidebar-background);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+
+  @keyframes border-spin {
+    100% {
+      transform: rotate(-360deg);
+    }
+  }
+}
+
+
+
+/*
+  The default border color has changed to `currentColor` in Tailwind CSS v4,
+  so we've added these compatibility styles to make sure everything still
+  looks the same as it did with Tailwind CSS v3.
+
+  If we ever want to remove these styles, we need to add an explicit border
+  color utility to any element that depends on these defaults.
+*/
+@layer base {
+  *,
+  ::after,
+  ::before,
+  ::backdrop,
+  ::file-selector-button {
+    border-color: var(--color-gray-200, currentColor);
+  }
+}
+
+@layer base {
+  :root {
+    --chart-1:var(--color-accent);
+    --chart-2:var(--color-info);
+    --chart-3:var(--color-succent);
+    --sidebar-background:var(--color-base-100);
+    --sidebar-foreground:var(--color-base-content);
+    --sidebar-primary:var(--color-primary);
+    --sidebar-primary-foreground:var(--color-primary-content);
+    --sidebar-accent:var(--color-accent);
+    --sidebar-accent-foreground:var(--color-accent-content);
+    --sidebar-border:var(--color-base-content);
+    --sidebar-ring: var(--color-neutral);
+  }
+  .dark {
+    --chart-1:var(--color-accent);
+    --chart-2:var(--color-info);
+    --chart-3:var(--color-succent);
+    --sidebar-background:var(--color-base-100);
+    --sidebar-foreground:var(--color-base-content);
+    --sidebar-primary:var(--color-primary);
+    --sidebar-primary-foreground:var(--color-primary-content);
+    --sidebar-accent:var(--color-accent);
+    --sidebar-accent-foreground:var(--color-accent-content);
+    --sidebar-border:var(--color-base-content);
+    --sidebar-ring: var(--color-neutral);
+  }
+
+}
