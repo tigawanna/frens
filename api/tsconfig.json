@@ -19,9 +19,10 @@
     "noEmit": true,
     "noErrorTruncation": true,
     "lib": ["es2022"],
+    "baseUrl": ".",
     "paths": {
       "@/*": ["./src/*"],
-      "@db/": ["./src/db/*"]
+      "@/db*": ["./prisma/*"]
     }
   },
   "tsc-alias": {

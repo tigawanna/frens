@@ -10,6 +10,7 @@ import { z } from "zod";
 // };
 
 const envScheme = z.object({
+  DATABASE_URL: z.string(),
   PORT: z.coerce.number(),
   NODE_ENV: z.enum(["development", "test", "production"]),
   API_URL: z.string(),

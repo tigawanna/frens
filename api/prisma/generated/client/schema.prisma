@@ -14,8 +14,8 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-generator nexusPrisma {
-  provider = "nexus-prisma"
+generator pothos {
+  provider = "prisma-pothos-types"
 }
 
 model User {

@@ -9,20 +9,12 @@
   
 - we are using typescript and all function inputs should have type annotations
   
- - we're using react with vite and tanstack router + apollo
+ - we're using react with vite and tanstack router + apollo in the /client directory
   
- - the backend is a nodejs graphql server with express + prisma orm and nexus for code first graphql schema generation 
+ - the backend is a nodejs graphql server with express + prisma orm and graphql yoga  + pothos for code first graphql schema generation in the /api directory
   
-- everything is in turborepo monorepo
-  - prisma orm will be in the packages/database as reccomemnded in their docs https://www.prisma.io/docs/guides/turborepo
-  
-  which will be imported as a package in the server and client packages like so 
-  ```sh
-  {
-  "dependencies": {
-    "@repo/db": "workspace:*"
-  }
- ```
+
+
 
 this is our final objective
 
@@ -35,4 +27,4 @@ Backend
 - Node.js & Express: create the server-side logic and handle requests. - GraphQL: Design and implement the API to serve client data. Use GraphQL to efficiently fetch the data required by your frontend. 
 - Prisma ORM & PostgreSQL: manage your database interactions, design your schema, and perform queries through Prisma while persisting data in PostgreSQL. 
 
-i need a very basic password email auth setup too
+

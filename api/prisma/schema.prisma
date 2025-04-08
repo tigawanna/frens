@@ -14,17 +14,16 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-generator nexusPrisma {
-   provider = "nexus-prisma"
-
+generator pothos {
+  provider = "prisma-pothos-types"
 }
 
 model User {
-   id String @id @default(ulid())  
+  id String @id @default(ulid())  
   createdAt     DateTime  @default(now())
   updatedAt     DateTime  @updatedAt
   email         String    @unique
-  name          String?
+  name          String
   password      String    // Hashed password
   refreshTokens Token[]   // Relation to refresh tokens
   sessions      Session[]
