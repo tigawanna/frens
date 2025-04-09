@@ -11,11 +11,11 @@
 // Import Routes
 
 import { Route as rootRoute } from './routes/__root'
-import { Route as ProfileImport } from './routes/profile'
 import { Route as AboutImport } from './routes/about'
 import { Route as DashboardLayoutImport } from './routes/dashboard/layout'
 import { Route as AuthLayoutImport } from './routes/auth/layout'
 import { Route as IndexImport } from './routes/index'
+import { Route as ProfileIndexImport } from './routes/profile/index'
 import { Route as FrensIndexImport } from './routes/frens/index'
 import { Route as DashboardIndexImport } from './routes/dashboard/index'
 import { Route as AuthIndexImport } from './routes/auth/index'
@@ -25,12 +25,6 @@ import { Route as DashboardRepositoriesIndexImport } from './routes/dashboard/re
 import { Route as DashboardGistsIndexImport } from './routes/dashboard/gists/index'
 
 // Create/Update Routes
-
-const ProfileRoute = ProfileImport.update({
-  id: '/profile',
-  path: '/profile',
-  getParentRoute: () => rootRoute,
-} as any)
 
 const AboutRoute = AboutImport.update({
   id: '/about',
@@ -53,6 +47,12 @@ const AuthLayoutRoute = AuthLayoutImport.update({
 const IndexRoute = IndexImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const ProfileIndexRoute = ProfileIndexImport.update({
+  id: '/profile/',
+  path: '/profile/',
   getParentRoute: () => rootRoute,
 } as any)
 
@@ -132,13 +132,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AboutImport
       parentRoute: typeof rootRoute
     }
-    '/profile': {
-      id: '/profile'
-      path: '/profile'
-      fullPath: '/profile'
-      preLoaderRoute: typeof ProfileImport
-      parentRoute: typeof rootRoute
-    }
     '/auth/forgort-password': {
       id: '/auth/forgort-password'
       path: '/forgort-password'
@@ -172,6 +165,13 @@ declare module '@tanstack/react-router' {
       path: '/frens'
       fullPath: '/frens'
       preLoaderRoute: typeof FrensIndexImport
+      parentRoute: typeof rootRoute
+    }
+    '/profile/': {
+      id: '/profile/'
+      path: '/profile'
+      fullPath: '/profile'
+      preLoaderRoute: typeof ProfileIndexImport
       parentRoute: typeof rootRoute
     }
     '/dashboard/gists/': {
@@ -230,12 +230,12 @@ export interface FileRoutesByFullPath {
   '/auth': typeof AuthLayoutRouteWithChildren
   '/dashboard': typeof DashboardLayoutRouteWithChildren
   '/about': typeof AboutRoute
-  '/profile': typeof ProfileRoute
   '/auth/forgort-password': typeof AuthForgortPasswordRoute
   '/auth/signup': typeof AuthSignupRoute
   '/auth/': typeof AuthIndexRoute
   '/dashboard/': typeof DashboardIndexRoute
   '/frens': typeof FrensIndexRoute
+  '/profile': typeof ProfileIndexRoute
   '/dashboard/gists': typeof DashboardGistsIndexRoute
   '/dashboard/repositories': typeof DashboardRepositoriesIndexRoute
 }
@@ -243,12 +243,12 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
-  '/profile': typeof ProfileRoute
   '/auth/forgort-password': typeof AuthForgortPasswordRoute
   '/auth/signup': typeof AuthSignupRoute
   '/auth': typeof AuthIndexRoute
   '/dashboard': typeof DashboardIndexRoute
   '/frens': typeof FrensIndexRoute
+  '/profile': typeof ProfileIndexRoute
   '/dashboard/gists': typeof DashboardGistsIndexRoute
   '/dashboard/repositories': typeof DashboardRepositoriesIndexRoute
 }
@@ -259,12 +259,12 @@ export interface FileRoutesById {
   '/auth': typeof AuthLayoutRouteWithChildren
   '/dashboard': typeof DashboardLayoutRouteWithChildren
   '/about': typeof AboutRoute
-  '/profile': typeof ProfileRoute
   '/auth/forgort-password': typeof AuthForgortPasswordRoute
   '/auth/signup': typeof AuthSignupRoute
   '/auth/': typeof AuthIndexRoute
   '/dashboard/': typeof DashboardIndexRoute
   '/frens/': typeof FrensIndexRoute
+  '/profile/': typeof ProfileIndexRoute
   '/dashboard/gists/': typeof DashboardGistsIndexRoute
   '/dashboard/repositories/': typeof DashboardRepositoriesIndexRoute
 }
@@ -276,24 +276,24 @@ export interface FileRouteTypes {
     | '/auth'
     | '/dashboard'
     | '/about'
-    | '/profile'
     | '/auth/forgort-password'
     | '/auth/signup'
     | '/auth/'
     | '/dashboard/'
     | '/frens'
+    | '/profile'
     | '/dashboard/gists'
     | '/dashboard/repositories'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
     | '/about'
-    | '/profile'
     | '/auth/forgort-password'
     | '/auth/signup'
     | '/auth'
     | '/dashboard'
     | '/frens'
+    | '/profile'
     | '/dashboard/gists'
     | '/dashboard/repositories'
   id:
@@ -302,12 +302,12 @@ export interface FileRouteTypes {
     | '/auth'
     | '/dashboard'
     | '/about'
-    | '/profile'
     | '/auth/forgort-password'
     | '/auth/signup'
     | '/auth/'
     | '/dashboard/'
     | '/frens/'
+    | '/profile/'
     | '/dashboard/gists/'
     | '/dashboard/repositories/'
   fileRoutesById: FileRoutesById
@@ -318,8 +318,8 @@ export interface RootRouteChildren {
   AuthLayoutRoute: typeof AuthLayoutRouteWithChildren
   DashboardLayoutRoute: typeof DashboardLayoutRouteWithChildren
   AboutRoute: typeof AboutRoute
-  ProfileRoute: typeof ProfileRoute
   FrensIndexRoute: typeof FrensIndexRoute
+  ProfileIndexRoute: typeof ProfileIndexRoute
 }
 
 const rootRouteChildren: RootRouteChildren = {
@@ -327,8 +327,8 @@ const rootRouteChildren: RootRouteChildren = {
   AuthLayoutRoute: AuthLayoutRouteWithChildren,
   DashboardLayoutRoute: DashboardLayoutRouteWithChildren,
   AboutRoute: AboutRoute,
-  ProfileRoute: ProfileRoute,
   FrensIndexRoute: FrensIndexRoute,
+  ProfileIndexRoute: ProfileIndexRoute,
 }
 
 export const routeTree = rootRoute
@@ -345,8 +345,8 @@ export const routeTree = rootRoute
         "/auth",
         "/dashboard",
         "/about",
-        "/profile",
-        "/frens/"
+        "/frens/",
+        "/profile/"
       ]
     },
     "/": {
@@ -371,9 +371,6 @@ export const routeTree = rootRoute
     "/about": {
       "filePath": "about.tsx"
     },
-    "/profile": {
-      "filePath": "profile.tsx"
-    },
     "/auth/forgort-password": {
       "filePath": "auth/forgort-password.tsx",
       "parent": "/auth"
@@ -392,6 +389,9 @@ export const routeTree = rootRoute
     },
     "/frens/": {
       "filePath": "frens/index.tsx"
+    },
+    "/profile/": {
+      "filePath": "profile/index.tsx"
     },
     "/dashboard/gists/": {
       "filePath": "dashboard/gists/index.tsx",
