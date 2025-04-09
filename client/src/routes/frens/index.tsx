@@ -1,5 +1,6 @@
 import { authGuard } from '@/lib/viewer/auth0guard';
 import { createFileRoute } from '@tanstack/react-router'
+import { FrensContainer } from './-components/FrensContainer';
 
 export const Route = createFileRoute('/frens/')({
   component: RouteComponent,
@@ -9,5 +10,9 @@ export const Route = createFileRoute('/frens/')({
 })
 
 function RouteComponent() {
-  return <div>Hello "/frens/"!</div>
+  return (
+    <div>
+      <FrensContainer/>
+    </div>
+  )
 }
