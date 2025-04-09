@@ -1,6 +1,6 @@
 // import { builder } from "./builder";
 
-import { prisma } from "@/dbclient";
+import { prisma } from "@/db/client";
 import type { PothosBuilderGenericTYpe } from "./builder";
 
 export function UserSchema(

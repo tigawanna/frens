@@ -2,7 +2,7 @@ import SchemaBuilder from '@pothos/core';
 import PrismaPlugin from '@pothos/plugin-prisma';
 import type PrismaTypes from '@pothos/plugin-prisma/generated';
 import { prisma } from '@/db/client';
-import type { User } from '@/dbgenerated/client';
+import type { User } from '@/db/generated/client';
 
 
 export type PothosBuilderGenericTYpe ={
