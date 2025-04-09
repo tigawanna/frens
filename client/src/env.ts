@@ -1,7 +1,8 @@
 import { z } from "zod";
 
 const viteEnvSchema = z.object({
-    VITE_GQL_URL: z.string(),
+    VITE_CLIENT_URL: z.string(),
+    VITE_API_URL: z.string(),
 })
 
 const {data,error,success} = viteEnvSchema.safeParse(import.meta.env);

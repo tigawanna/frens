@@ -30,13 +30,17 @@ model User {
   accounts      Account[]
 
   // Social aspects
-  posts         Post[]
-  likes         Like[]
-  comments      Comment[]
+  posts      Post[]
+  likes      Like[]
+  comments   Comment[]
   // Follow relationships
-  followers     Follow[]  @relation("following")
-  following     Follow[]  @relation("follower")
-  
+  followers  Follow[]  @relation("following")
+  following  Follow[]  @relation("follower")
+  role       String?
+  banned     Boolean?
+  banReason  String?
+  banExpires DateTime?
+
   @@unique([email])
   @@map("user")
 }
@@ -51,6 +55,8 @@ model Session {
   userAgent String?
   userId    String
   user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  impersonatedBy String?
 
   @@unique([token])
   @@map("session")
@@ -85,8 +91,6 @@ model Verification {
 
   @@map("verification")
 }
-
-
 
 model Post {
   id        String    @id @default(ulid())

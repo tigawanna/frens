@@ -84,9 +84,6 @@ export async function fetchCurrentViewer(token: string): Promise<GitHubViewer|un
 
 
 export function getPAT(){
-  if(envVariables.VITE_PAT){
-    return envVariables.VITE_PAT
-  }
   if(typeof window !== "undefined"){
     const PAT = localStorage.getItem("PAT")
     if(!PAT){

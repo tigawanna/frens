@@ -8,8 +8,9 @@ import cookieParser from "cookie-parser";
 import { allowedOrigins, corsHeaders } from "./middleware/cors-stuff.ts";
 import requestIp from "request-ip";
 import { pothosSchema } from "./graphql/schema/root.schema.ts";
-import { createSchema, createYoga } from 'graphql-yoga'
-
+import { createYoga } from 'graphql-yoga'
+import { fromNodeHeaders, toNodeHandler } from "better-auth/node";
+import { auth } from "auth.ts";
 
 declare global {
   namespace Express {
@@ -43,10 +44,23 @@ app.use(
       }
     },
     optionsSuccessStatus: 200,
+     methods: ["GET", "POST", "PUT", "DELETE"], 
+    credentials: true,
   }),
 );
 
+//  always put this before calling express.json
+app.all("/api/auth/*", toNodeHandler(auth)); 
+
 app.use(express.json());
+
+app.get("/api/me", async (req, res) => {
+ 	const session = await auth.api.getSession({
+      headers: fromNodeHeaders(req.headers),
+    });
+	res.json(session);
+});
+
 
 app.get("/", (req, res) => {
   res.json({ message: "welcome to frens api" });
