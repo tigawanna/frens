@@ -10,6 +10,7 @@ import { QueryClient } from "@tanstack/react-query";
 import { RootComponent } from "./-components/RootComponent";
 import { z } from "zod";
 import { fetchCurrentViewer } from "@/lib/viewer/use-viewer";
+import { authClient } from "@/lib/better-auth/auth-client";
 
 const searchparams = z.object({
   globalPage: z.number().optional(),
@@ -20,24 +21,14 @@ const searchparams = z.object({
 
 // })
 
+type BetterAuthSession = NonNullable<Awaited<ReturnType<typeof fetchCurrentViewer>>["data"]>
+
+
 export const Route = createRootRouteWithContext<{
   queryClient: QueryClient;
-  viewer: Awaited<ReturnType<typeof fetchCurrentViewer> | undefined>;
-  PAT?: string;
+  viewer?: BetterAuthSession["user"];
+  session?: BetterAuthSession["session"]
 }>()({
   component: RootComponent,
-  async loader(ctx) {
-    if (!ctx.context.PAT) {
-      return;
-    }
-    const viewer = await fetchCurrentViewer(ctx.context.PAT);
-    if (!viewer) {
-      ctx.context.PAT = undefined;
-      ctx.context.viewer = undefined;
-    }
-    ctx.context.viewer = viewer;
-    return viewer;
-  },
-  staleTime: 2_000_000,
   validateSearch: (search) => searchparams.parse(search),
 });

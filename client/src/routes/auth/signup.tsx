@@ -16,7 +16,7 @@ function RouteComponent() {
     <div className="min-h-screen w-full flex justify-center md:justify-between gap-4 items-center">
       <img
         className="w-full max-w-[40%] hidden sm:flex fixed left-0 inset-y-0 right-[40vw] bottom-0 h-screen object-cover"
-        src="/frens.webp"
+        src="/frens.jpg"
       />
       <div className="w-full  sm:fixed inset-y-0 left-[20%]  right-0  overflow-auto">
         <div className="w-full   justify-center items-center py-10 flex overflow-auto">

@@ -14,6 +14,7 @@ import {
 } from "@/components/shadcn/ui/dropdown-menu";
 import { Link } from "@tanstack/react-router";
 import { ThemeToggle } from "@/components/themes/ThemeToggle";
+import { AVATAR_FALLBACK } from "@/consts";
 interface MainDrawerFooterProps {}
 
 export function MainDrawerFooter({}: MainDrawerFooterProps) {
@@ -31,7 +32,7 @@ export function MainDrawerFooter({}: MainDrawerFooterProps) {
       </div>
     );
   }
-  const avatarUrl = viewer.avatar_url;
+  const avatarUrl = viewer?.image || AVATAR_FALLBACK
   return (
     <div className="w-full h-full flex  gap-3 flex-col items-center justify-center">
       {/* user */}
@@ -40,14 +41,14 @@ export function MainDrawerFooter({}: MainDrawerFooterProps) {
           {/* <SidebarMenuButton size="lg" className=""> */}
           <div className="flex gap-2 w-full justify-between items-center">
             <Avatar className="h-8 w-8 rounded-full bg-base-content hover:bg-base-300">
-              <AvatarImage src={avatarUrl} alt={viewer.login} />
+              <AvatarImage src={avatarUrl} alt={viewer?.name} />
               <AvatarFallback className="rounded-lg">{viewer.name?.slice(0, 2)}</AvatarFallback>
             </Avatar>
             {notCompact && (
               <div className="flex  p-1 w-full justify-end items-center gap-2">
                 <div className="grid text-left text-sm leading-tight">
                   <span className="truncate font-semibold">{viewer.name}</span>
-                  <span className="truncate font-semibold">@{viewer.login}</span>
+                  <span className="truncate font-semibold">@{viewer?.name}</span>
                   <span className="truncate text-xs">{viewer.email}</span>
                 </div>
                 <ChevronsUpDown className="ml-auto size-4" />
@@ -64,7 +65,7 @@ export function MainDrawerFooter({}: MainDrawerFooterProps) {
           <DropdownMenuLabel className="p-0 font-normal">
             <div className="flex items-center gap-2 px-1 py-1.5 text-left text-sm">
               <Avatar className="h-8 w-8 rounded-lg">
-                <AvatarImage src={avatarUrl} alt={viewer.login} />
+                <AvatarImage src={avatarUrl} alt={viewer?.name} />
                 <AvatarFallback className="rounded-lg">CN</AvatarFallback>
               </Avatar>
               <div className="grid flex-1 text-left text-sm leading-tight">

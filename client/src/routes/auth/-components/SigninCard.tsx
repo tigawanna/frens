@@ -16,7 +16,6 @@ import { authClient } from "@/lib/better-auth/auth-client";
 import { Link, useSearch } from "@tanstack/react-router";
 import { Loader2 } from "lucide-react";
 import { FaGithub } from "react-icons/fa";
-import { useState } from "react";
 import { useMutation } from "@tanstack/react-query";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -26,7 +25,7 @@ import { Form, FormControl, FormField, FormItem, FormMessage } from "@/component
 const loginSchema = z.object({
   email: z.string().email("Please enter a valid email address"),
   password: z.string().min(1, "Password is required"),
-  rememberMe: z.boolean().default(false),
+  rememberMe: z.boolean(),
 });
 
 type LoginFormValues = z.infer<typeof loginSchema>;
@@ -42,6 +41,7 @@ export function SigninCard() {
       email: "",
       password: "",
       rememberMe: false,
+
     },
   });
 

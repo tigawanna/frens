@@ -9,7 +9,7 @@ import { RouterPendingComponent } from "./lib/tanstack/router/RouterPendingCompo
 import { MutationCache, QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import React from "react";
 import { App } from "./App";
-import { getPAT } from "./lib/viewer/use-viewer";
+
 
 export const queryClient = new QueryClient({
   mutationCache: new MutationCache({
@@ -43,8 +43,8 @@ export const router = createRouter({
   defaultErrorComponent: ({ error }) => <RouterErrorComponent error={error} />,
   context: {
     // pb: undefined!, // We'll inject this when we render
-    PAT: getPAT(),
     viewer: undefined,
+    session: undefined,
     queryClient,
     // viewer: undefined,
   },

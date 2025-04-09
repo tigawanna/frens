@@ -9,8 +9,8 @@ export function HomePage() {
       className="justify-center flex h-full min-h-screen w-full flex-col items-center overflow-auto bg-linear-to-br from-primary/60 via-red/60 to-primary/30"
     >
       <Helmet
-        title="My property manager"
-        description="Welcome to your property manager"
+        title="Frens"
+        description="come hang out"
       />
 
       <ResponsiveGenericToolbar>

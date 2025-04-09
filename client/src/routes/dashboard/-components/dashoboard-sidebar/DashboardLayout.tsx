@@ -25,7 +25,7 @@ interface DashboardLayoutProps {
 }
 
 export function DashboardLayout({ sidebar_props }: DashboardLayoutProps) {
-  const { PAT } = useRouteContext({ from: "__root__" });
+
 
   return (
     <SidebarProvider defaultOpen={false}>

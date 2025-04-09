@@ -12,7 +12,7 @@ export function GenericToolbar({}: GenericToolbarProps) {
           to="/"
           className="flex items-center gap-2 text-2xl font-bold hover:text-accent"
         >
-          My property manager
+          Frens
           <MapPinHouse />
         </Link>
       </div>
