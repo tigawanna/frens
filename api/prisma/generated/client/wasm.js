@@ -119,31 +119,87 @@ exports.Prisma.TransactionIsolationLevel = makeStrictEnum({
 
 exports.Prisma.UserScalarFieldEnum = {
   id: 'id',
-  createdAt: 'createdAt',
-  updatedAt: 'updatedAt',
-  email: 'email',
   name: 'name',
-  password: 'password'
-};
-
-exports.Prisma.TokenScalarFieldEnum = {
-  id: 'id',
+  email: 'email',
+  emailVerified: 'emailVerified',
+  image: 'image',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
-  type: 'type',
-  value: 'value',
-  expires: 'expires',
-  userId: 'userId'
+  role: 'role',
+  banned: 'banned',
+  banReason: 'banReason',
+  banExpires: 'banExpires'
 };
 
 exports.Prisma.SessionScalarFieldEnum = {
   id: 'id',
+  expiresAt: 'expiresAt',
+  token: 'token',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
-  expires: 'expires',
-  userId: 'userId',
   ipAddress: 'ipAddress',
-  userAgent: 'userAgent'
+  userAgent: 'userAgent',
+  userId: 'userId',
+  impersonatedBy: 'impersonatedBy'
+};
+
+exports.Prisma.AccountScalarFieldEnum = {
+  id: 'id',
+  accountId: 'accountId',
+  providerId: 'providerId',
+  userId: 'userId',
+  accessToken: 'accessToken',
+  refreshToken: 'refreshToken',
+  idToken: 'idToken',
+  accessTokenExpiresAt: 'accessTokenExpiresAt',
+  refreshTokenExpiresAt: 'refreshTokenExpiresAt',
+  scope: 'scope',
+  password: 'password',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.VerificationScalarFieldEnum = {
+  id: 'id',
+  identifier: 'identifier',
+  value: 'value',
+  expiresAt: 'expiresAt',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.PostScalarFieldEnum = {
+  id: 'id',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  content: 'content',
+  imageUrl: 'imageUrl',
+  authorId: 'authorId'
+};
+
+exports.Prisma.LikeScalarFieldEnum = {
+  id: 'id',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  userId: 'userId',
+  postId: 'postId'
+};
+
+exports.Prisma.CommentScalarFieldEnum = {
+  id: 'id',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  content: 'content',
+  authorId: 'authorId',
+  postId: 'postId'
+};
+
+exports.Prisma.FollowScalarFieldEnum = {
+  id: 'id',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  followerId: 'followerId',
+  followingId: 'followingId'
 };
 
 exports.Prisma.SortOrder = {
@@ -164,8 +220,13 @@ exports.Prisma.NullsOrder = {
 
 exports.Prisma.ModelName = {
   User: 'User',
-  Token: 'Token',
-  Session: 'Session'
+  Session: 'Session',
+  Account: 'Account',
+  Verification: 'Verification',
+  Post: 'Post',
+  Like: 'Like',
+  Comment: 'Comment',
+  Follow: 'Follow'
 };
 
 /**

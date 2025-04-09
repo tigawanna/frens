@@ -19,36 +19,128 @@ generator pothos {
 }
 
 model User {
-  id            String    @id @default(ulid())
-  createdAt     DateTime  @default(now())
-  updatedAt     DateTime  @updatedAt
-  email         String    @unique
-  name          String?
-  password      String // Hashed password
-  refreshTokens Token[] // Relation to refresh tokens
+  id            String    @id
+  name          String
+  email         String
+  emailVerified Boolean
+  image         String?
+  createdAt     DateTime
+  updatedAt     DateTime
   sessions      Session[]
-}
+  accounts      Account[]
 
-model Token {
-  id        String   @id @default(ulid())
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  type      String // e.g., "REFRESH"
-  value     String   @unique // The actual token value (hashed)
-  expires   DateTime
-  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-  userId    String
+  // Social aspects
+  posts      Post[]
+  likes      Like[]
+  comments   Comment[]
+  // Follow relationships
+  followers  Follow[]  @relation("following")
+  following  Follow[]  @relation("follower")
+  role       String?
+  banned     Boolean?
+  banReason  String?
+  banExpires DateTime?
+
+  @@unique([email])
+  @@map("user")
 }
 
 model Session {
+  id        String   @id
+  expiresAt DateTime
+  token     String
+  createdAt DateTime
+  updatedAt DateTime
+  ipAddress String?
+  userAgent String?
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  impersonatedBy String?
+
+  @@unique([token])
+  @@map("session")
+}
+
+model Account {
+  id                    String    @id
+  accountId             String
+  providerId            String
+  userId                String
+  user                  User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  accessToken           String?
+  refreshToken          String?
+  idToken               String?
+  accessTokenExpiresAt  DateTime?
+  refreshTokenExpiresAt DateTime?
+  scope                 String?
+  password              String?
+  createdAt             DateTime
+  updatedAt             DateTime
+
+  @@map("account")
+}
+
+model Verification {
+  id         String    @id
+  identifier String
+  value      String
+  expiresAt  DateTime
+  createdAt  DateTime?
+  updatedAt  DateTime?
+
+  @@map("verification")
+}
+
+model Post {
+  id        String    @id @default(ulid())
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  content   String
+  imageUrl  String?
+  // Relations
+  author    User      @relation(fields: [authorId], references: [id], onDelete: Cascade)
+  authorId  String
+  likes     Like[]
+  comments  Comment[]
+}
+
+model Like {
   id        String   @id @default(ulid())
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-  expires   DateTime
+  // Relations
   user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId    String
+  post      Post     @relation(fields: [postId], references: [id], onDelete: Cascade)
+  postId    String
 
-  // Additional session data if needed
-  ipAddress String?
-  userAgent String?
+  // Ensure a user can only like a post once
+  @@unique([userId, postId])
+}
+
+model Comment {
+  id        String   @id @default(ulid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  content   String
+  // Relations
+  author    User     @relation(fields: [authorId], references: [id], onDelete: Cascade)
+  authorId  String
+  post      Post     @relation(fields: [postId], references: [id], onDelete: Cascade)
+  postId    String
+}
+
+model Follow {
+  id          String   @id @default(ulid())
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  // Relations
+  follower    User     @relation("follower", fields: [followerId], references: [id], onDelete: Cascade)
+  followerId  String
+  following   User     @relation("following", fields: [followingId], references: [id], onDelete: Cascade)
+  followingId String
+
+  // Ensure unique follows
+  @@unique([followerId, followingId])
 }

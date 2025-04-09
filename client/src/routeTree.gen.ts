@@ -16,6 +16,7 @@ import { Route as AboutImport } from './routes/about'
 import { Route as DashboardLayoutImport } from './routes/dashboard/layout'
 import { Route as AuthLayoutImport } from './routes/auth/layout'
 import { Route as IndexImport } from './routes/index'
+import { Route as FrensIndexImport } from './routes/frens/index'
 import { Route as DashboardIndexImport } from './routes/dashboard/index'
 import { Route as AuthIndexImport } from './routes/auth/index'
 import { Route as AuthForgortPasswordImport } from './routes/auth/forgort-password'
@@ -51,6 +52,12 @@ const AuthLayoutRoute = AuthLayoutImport.update({
 const IndexRoute = IndexImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const FrensIndexRoute = FrensIndexImport.update({
+  id: '/frens/',
+  path: '/frens/',
   getParentRoute: () => rootRoute,
 } as any)
 
@@ -146,6 +153,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof DashboardIndexImport
       parentRoute: typeof DashboardLayoutImport
     }
+    '/frens/': {
+      id: '/frens/'
+      path: '/frens'
+      fullPath: '/frens'
+      preLoaderRoute: typeof FrensIndexImport
+      parentRoute: typeof rootRoute
+    }
     '/dashboard/gists/': {
       id: '/dashboard/gists/'
       path: '/gists'
@@ -204,6 +218,7 @@ export interface FileRoutesByFullPath {
   '/auth/forgort-password': typeof AuthForgortPasswordRoute
   '/auth/': typeof AuthIndexRoute
   '/dashboard/': typeof DashboardIndexRoute
+  '/frens': typeof FrensIndexRoute
   '/dashboard/gists': typeof DashboardGistsIndexRoute
   '/dashboard/repositories': typeof DashboardRepositoriesIndexRoute
 }
@@ -215,6 +230,7 @@ export interface FileRoutesByTo {
   '/auth/forgort-password': typeof AuthForgortPasswordRoute
   '/auth': typeof AuthIndexRoute
   '/dashboard': typeof DashboardIndexRoute
+  '/frens': typeof FrensIndexRoute
   '/dashboard/gists': typeof DashboardGistsIndexRoute
   '/dashboard/repositories': typeof DashboardRepositoriesIndexRoute
 }
@@ -229,6 +245,7 @@ export interface FileRoutesById {
   '/auth/forgort-password': typeof AuthForgortPasswordRoute
   '/auth/': typeof AuthIndexRoute
   '/dashboard/': typeof DashboardIndexRoute
+  '/frens/': typeof FrensIndexRoute
   '/dashboard/gists/': typeof DashboardGistsIndexRoute
   '/dashboard/repositories/': typeof DashboardRepositoriesIndexRoute
 }
@@ -244,6 +261,7 @@ export interface FileRouteTypes {
     | '/auth/forgort-password'
     | '/auth/'
     | '/dashboard/'
+    | '/frens'
     | '/dashboard/gists'
     | '/dashboard/repositories'
   fileRoutesByTo: FileRoutesByTo
@@ -254,6 +272,7 @@ export interface FileRouteTypes {
     | '/auth/forgort-password'
     | '/auth'
     | '/dashboard'
+    | '/frens'
     | '/dashboard/gists'
     | '/dashboard/repositories'
   id:
@@ -266,6 +285,7 @@ export interface FileRouteTypes {
     | '/auth/forgort-password'
     | '/auth/'
     | '/dashboard/'
+    | '/frens/'
     | '/dashboard/gists/'
     | '/dashboard/repositories/'
   fileRoutesById: FileRoutesById
@@ -277,6 +297,7 @@ export interface RootRouteChildren {
   DashboardLayoutRoute: typeof DashboardLayoutRouteWithChildren
   AboutRoute: typeof AboutRoute
   ProfileRoute: typeof ProfileRoute
+  FrensIndexRoute: typeof FrensIndexRoute
 }
 
 const rootRouteChildren: RootRouteChildren = {
@@ -285,6 +306,7 @@ const rootRouteChildren: RootRouteChildren = {
   DashboardLayoutRoute: DashboardLayoutRouteWithChildren,
   AboutRoute: AboutRoute,
   ProfileRoute: ProfileRoute,
+  FrensIndexRoute: FrensIndexRoute,
 }
 
 export const routeTree = rootRoute
@@ -301,7 +323,8 @@ export const routeTree = rootRoute
         "/auth",
         "/dashboard",
         "/about",
-        "/profile"
+        "/profile",
+        "/frens/"
       ]
     },
     "/": {
@@ -339,6 +362,9 @@ export const routeTree = rootRoute
     "/dashboard/": {
       "filePath": "dashboard/index.tsx",
       "parent": "/dashboard"
+    },
+    "/frens/": {
+      "filePath": "frens/index.tsx"
     },
     "/dashboard/gists/": {
       "filePath": "dashboard/gists/index.tsx",
