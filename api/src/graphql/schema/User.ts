@@ -1,12 +1,11 @@
 // import { builder } from "./builder";
 
-import type PrismaTypes from "@pothos/plugin-prisma/generated";
+import { prisma } from "@/dbclient";
+import type { PothosBuilderGenericTYpe } from "./builder";
 
 export function UserSchema(
   builder: PothosSchemaTypes.SchemaBuilder<
-    PothosSchemaTypes.ExtendDefaultTypes<{
-      PrismaTypes: PrismaTypes;
-    }>
+    PothosSchemaTypes.ExtendDefaultTypes<PothosBuilderGenericTYpe>
   >,
 ) {
   builder.prismaObject("User", {
@@ -27,9 +26,46 @@ export function UserSchema(
         },
         resolve: (parent, { name }) => `hello, ${name || "fren"}`,
       }),
+      me: t.prismaField({
+        type: "User",
+        resolve: async (query, root, args, ctx, info) => {
+          if (!ctx.currentUser) {
+            return;
+          }
+          return prisma.user.findUniqueOrThrow({
+            ...query,
+            where: { id: ctx.currentUser?.id },
+          });
+        },
+      }),
     }),
   });
+
+  builder.mutationType({
+    fields: (t) => ({
+      createUser: t.prismaField({
+        type: "User",
+        args: {
+          email: t.arg.string({ required: true }),
+          name: t.arg.string({ required: true }),
+          password: t.arg.string({ required: true }),
+        },
+        resolve: async (query, root, { email, name,password }, ctx, info) => {
+          if (!ctx.currentUser) {
+            return;
+          }
+          return prisma.user.create({
+            ...query,
+            data: {
+              email,
+              name,
+              password
+            },
+          });
+        },
+      })
+    })
+  });
+  
   return builder;
 }
-
-

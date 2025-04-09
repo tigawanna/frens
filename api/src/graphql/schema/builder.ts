@@ -2,12 +2,22 @@ import SchemaBuilder from '@pothos/core';
 import PrismaPlugin from '@pothos/plugin-prisma';
 import type PrismaTypes from '@pothos/plugin-prisma/generated';
 import { prisma } from '@/db/client';
+import type { User } from '@/dbgenerated/client';
 
-export const builder = new SchemaBuilder<{
+
+export type PothosBuilderGenericTYpe ={
   PrismaTypes: PrismaTypes;
-}>({
+  Context: {
+    currentUser?: Pick<User,"id" | "email" | "name">;
+  };
+
+}
+
+export const builder = new SchemaBuilder<PothosBuilderGenericTYpe>({
   plugins: [PrismaPlugin],
+
   prisma: {
+
     client: prisma,
     exposeDescriptions: true,
     // defaults to false, uses /// comments from prisma schema as descriptions

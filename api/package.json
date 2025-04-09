@@ -12,7 +12,8 @@
     "typecheck": "tsc --noEmit",
     "db:generate": "prisma generate",
     "db:migrate": "prisma migrate dev --skip-generate",
-    "db:deploy": "prisma migrate deploy"
+    "db:deploy": "prisma migrate deploy",
+    "db:studio": "prisma studio"
   },
   "keywords": [],
   "repository": {
@@ -24,8 +25,10 @@
     "@apollo/server": "^4.12.0",
     "@pothos/core": "^4.5.1",
     "@pothos/plugin-prisma": "^4.5.0",
+    "@pothos/plugin-relay": "^4.4.1",
     "@prisma/client": "^6.5.0",
     "bcrypt": "^5.1.1",
+    "better-auth": "^1.2.5",
     "cookie-parser": "^1.4.7",
     "cors": "^2.8.5",
     "dotenv": "^16.4.7",

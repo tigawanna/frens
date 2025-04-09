@@ -18,37 +18,99 @@ generator pothos {
   provider = "prisma-pothos-types"
 }
 
+
 model User {
-  id String @id @default(ulid())  
-  createdAt     DateTime  @default(now())
-  updatedAt     DateTime  @updatedAt
-  email         String    @unique
+  id            String     @id @default(ulid())
+  createdAt     DateTime   @default(now())
+  updatedAt     DateTime   @updatedAt
+  email         String     @unique
   name          String
-  password      String    // Hashed password
-  refreshTokens Token[]   // Relation to refresh tokens
-  sessions      Session[]
+  password      String     // Hashed password
+  avatarUrl     String?
+  bio           String?
+  
+  // Auth related
+  refreshTokens Token[]
+
+  // Social aspects
+  posts         Post[]
+  likes         Like[]
+  comments      Comment[]
+  
+  // Follow relationships
+  followers     Follow[]   @relation("following")
+  following     Follow[]   @relation("follower")
+  
 }
 
 model Token {
-  id String @id @default(ulid())  
+  id        String   @id @default(ulid())
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   type      String   // e.g., "REFRESH"
   value     String   @unique // The actual token value (hashed)
   expires   DateTime
+  
+  // Relations
   user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId    String
 }
 
-model Session {
-  id String @id @default(ulid())  
+model Post {
+  id        String     @id @default(ulid())
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
+  content   String
+  imageUrl  String?
+  
+  // Relations
+  author    User       @relation(fields: [authorId], references: [id], onDelete: Cascade)
+  authorId  String
+  likes     Like[]
+  comments  Comment[]
+}
+
+model Like {
+  id        String   @id @default(ulid())
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-  expires   DateTime
+  
+  // Relations
   user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId    String
-  
-  // Additional session data if needed
-  ipAddress String?
-  userAgent String?
+  post      Post     @relation(fields: [postId], references: [id], onDelete: Cascade)
+  postId    String
+
+  // Ensure a user can only like a post once
+  @@unique([userId, postId])
 }
+
+model Comment {
+  id        String   @id @default(ulid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  content   String
+  
+  // Relations
+  author    User     @relation(fields: [authorId], references: [id], onDelete: Cascade)
+  authorId  String
+  post      Post     @relation(fields: [postId], references: [id], onDelete: Cascade)
+  postId    String
+}
+
+model Follow {
+  id           String   @id @default(ulid())
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+  
+  // Relations
+  follower     User     @relation("follower", fields: [followerId], references: [id], onDelete: Cascade)
+  followerId   String
+  following    User     @relation("following", fields: [followingId], references: [id], onDelete: Cascade)
+  followingId  String
+
+  // Ensure unique follows
+  @@unique([followerId, followingId])
+}
+
+
