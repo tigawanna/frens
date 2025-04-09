@@ -1,7 +1,7 @@
 import { useSidebar } from "@/components/shadcn/ui/sidebar";
 import { useLocation } from "@tanstack/react-router";
 import { useViewer } from "@/lib/viewer/use-viewer";
-import { BadgeCheck, Bell, ChevronsUpDown, ShieldCheck, User } from "lucide-react";
+import { BadgeCheck, Bell, ChevronsUpDown, Moon, ShieldCheck, User } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/shadcn/ui/avatar";
 import {
   DropdownMenu,
@@ -19,15 +19,19 @@ interface MainDrawerFooterProps {}
 export function MainDrawerFooter({}: MainDrawerFooterProps) {
   const { state, isMobile } = useSidebar();
   const { viewer, logoutMutation } = useViewer();
+  const notCompact = state === "expanded" || isMobile;
   if (!viewer) {
     return (
-      <Link to="/auth" search={{ returnTo: window.location.pathname }}>
-        <User />
-      </Link>
+      <div className="flex flex-col gap-3 justify-center items-center max-w-[90%]">
+        <Link data-compact={!notCompact}  className="flex data-[compact=true]:btn-circle gap-2 btn btn-primary btn-outline w-full" to="/auth" search={{ returnTo: window.location.pathname }}>
+          <User />
+          {notCompact&&<span className="text-sm">Login</span>}
+        </Link>
+        <ThemeToggle compact={!notCompact} />
+      </div>
     );
   }
   const avatarUrl = viewer.avatar_url;
-  const notCompact = state === "expanded" || isMobile;
   return (
     <div className="w-full h-full flex  gap-3 flex-col items-center justify-center">
       {/* user */}
@@ -89,15 +93,7 @@ export function MainDrawerFooter({}: MainDrawerFooterProps) {
           </DropdownMenuGroup>
           <DropdownMenuSeparator />
 
-          {/* <MutationButton
-              className="btn-error max-w-[98%]"
-              onClick={() => {
-                logoutMutation.mutate();
-                tsrNavigate({ to: "/auth", search: { returnTo: "/" } });
-              }}
-              label="Logout"
-              mutation={logoutMutation}
-            /> */}
+
           <div className="flex gap-3 w-full">
             <button
               className="btn btn-error max-w-[98%] w-full"
@@ -107,10 +103,10 @@ export function MainDrawerFooter({}: MainDrawerFooterProps) {
               Logout
             </button>
           </div>
+        <ThemeToggle compact={!notCompact} />
         </DropdownMenuContent>
       </DropdownMenu>
       {/* theme toggle */}
-      <ThemeToggle compact={!notCompact} />
     </div>
   );
 }

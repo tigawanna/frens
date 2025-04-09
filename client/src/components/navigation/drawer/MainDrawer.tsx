@@ -24,7 +24,7 @@ interface MainDrawerProps {
 export function MainDrawer({ sidebar_props, children, links, header,footer }: MainDrawerProps) {
   return (
     <SidebarProvider defaultOpen={false}>
-      <Sidebar className="" collapsible="icon" {...sidebar_props}>
+      <Sidebar className="bg-base-200" collapsible="icon" {...sidebar_props}>
         <SidebarHeader>
           {/* {header} */}
           {header||<MainDrawerHeader />}
@@ -37,7 +37,7 @@ export function MainDrawer({ sidebar_props, children, links, header,footer }: Ma
         <SidebarRail />
       </Sidebar>
       <SidebarInset>
-        <header className="fixed z-30 flex h-10 items-center gap-2 bg-base-100 transition-[width,height] ease-linear group-has-data-[collapsible=icon]/sidebar-wrapper:h-12">
+        <header className="fixed z-30 flex h-10 items-center gap-2 bg-base-200 transition-[width,height] ease-linear group-has-data-[collapsible=icon]/sidebar-wrapper:h-12">
           <div className="flex items-center gap-2 ">
             <SidebarTrigger className="" icon={<OpenCloseDrawerIcons />} />
             <Separator orientation="vertical" className="h-4" />

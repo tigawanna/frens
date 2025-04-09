@@ -57,10 +57,10 @@ layer(base); */
   default: false;
   prefersdark: false;
   color-scheme: "light";
-  --color-base-100: oklch(95% 0.025 80);
-  --color-base-200: oklch(90% 0.035 80);
-  --color-base-300: oklch(85% 0.045 80);
-  --color-base-content: oklch(22% 0.035 45.911);
+  --color-base-100: oklch(98% 0.002 247.839);
+  --color-base-200: oklch(96% 0.003 264.542);
+  --color-base-300: oklch(92% 0.006 264.531);
+  --color-base-content: oklch(21% 0.034 264.665);
 
   --color-primary: oklch(75% 0.15 85);
   --color-primary-content: oklch(23% 0.035 45.911);

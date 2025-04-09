@@ -23,7 +23,7 @@ export function MainDrawerLinks({}: MainDrawerLinksProps) {
                 asChild
                 className={
                   pathname === route.href
-                    ? `flex w-full gap-3 rounded-lg bg-base-200 text-primary`
+                    ? `flex w-full gap-3 rounded-lg bg-primary/30 `
                     : `flex w-full gap-3 rounded-sm hover:bg-base-300`
                 }>
                 <Link
