@@ -11,21 +11,10 @@ export function RootComponent() {
     uri: "https://flyby-router-demo.herokuapp.com/",
     cache: new InMemoryCache(),
   });
-  const { data } = useQuery({
-    queryKey: ["getUser"],
-    queryFn: async () => {
-      const res = await fetch("http://localhost:5000/")
-      if (!res.ok) {
-        throw new Error("Network response was not ok");
-      }
-      const data = await res.json();
-      return data;
-    },
-  })
+
   return (
     <ApolloProvider client={client}>
       <div className="content min-h-screen w-full">
-        {JSON.stringify(data)}
         <TailwindIndicator />
         <Outlet />
         <TanStackRouterDevtools position="bottom-left" />

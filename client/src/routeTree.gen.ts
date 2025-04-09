@@ -17,6 +17,7 @@ import { Route as DashboardLayoutImport } from './routes/dashboard/layout'
 import { Route as IndexImport } from './routes/index'
 import { Route as DashboardIndexImport } from './routes/dashboard/index'
 import { Route as AuthIndexImport } from './routes/auth/index'
+import { Route as AuthForgortPasswordImport } from './routes/auth/forgort-password'
 import { Route as DashboardRepositoriesIndexImport } from './routes/dashboard/repositories/index'
 import { Route as DashboardGistsIndexImport } from './routes/dashboard/gists/index'
 
@@ -55,6 +56,12 @@ const DashboardIndexRoute = DashboardIndexImport.update({
 const AuthIndexRoute = AuthIndexImport.update({
   id: '/auth/',
   path: '/auth/',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const AuthForgortPasswordRoute = AuthForgortPasswordImport.update({
+  id: '/auth/forgort-password',
+  path: '/auth/forgort-password',
   getParentRoute: () => rootRoute,
 } as any)
 
@@ -102,6 +109,13 @@ declare module '@tanstack/react-router' {
       path: '/profile'
       fullPath: '/profile'
       preLoaderRoute: typeof ProfileImport
+      parentRoute: typeof rootRoute
+    }
+    '/auth/forgort-password': {
+      id: '/auth/forgort-password'
+      path: '/auth/forgort-password'
+      fullPath: '/auth/forgort-password'
+      preLoaderRoute: typeof AuthForgortPasswordImport
       parentRoute: typeof rootRoute
     }
     '/auth/': {
@@ -158,6 +172,7 @@ export interface FileRoutesByFullPath {
   '/dashboard': typeof DashboardLayoutRouteWithChildren
   '/about': typeof AboutRoute
   '/profile': typeof ProfileRoute
+  '/auth/forgort-password': typeof AuthForgortPasswordRoute
   '/auth': typeof AuthIndexRoute
   '/dashboard/': typeof DashboardIndexRoute
   '/dashboard/gists': typeof DashboardGistsIndexRoute
@@ -168,6 +183,7 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/profile': typeof ProfileRoute
+  '/auth/forgort-password': typeof AuthForgortPasswordRoute
   '/auth': typeof AuthIndexRoute
   '/dashboard': typeof DashboardIndexRoute
   '/dashboard/gists': typeof DashboardGistsIndexRoute
@@ -180,6 +196,7 @@ export interface FileRoutesById {
   '/dashboard': typeof DashboardLayoutRouteWithChildren
   '/about': typeof AboutRoute
   '/profile': typeof ProfileRoute
+  '/auth/forgort-password': typeof AuthForgortPasswordRoute
   '/auth/': typeof AuthIndexRoute
   '/dashboard/': typeof DashboardIndexRoute
   '/dashboard/gists/': typeof DashboardGistsIndexRoute
@@ -193,6 +210,7 @@ export interface FileRouteTypes {
     | '/dashboard'
     | '/about'
     | '/profile'
+    | '/auth/forgort-password'
     | '/auth'
     | '/dashboard/'
     | '/dashboard/gists'
@@ -202,6 +220,7 @@ export interface FileRouteTypes {
     | '/'
     | '/about'
     | '/profile'
+    | '/auth/forgort-password'
     | '/auth'
     | '/dashboard'
     | '/dashboard/gists'
@@ -212,6 +231,7 @@ export interface FileRouteTypes {
     | '/dashboard'
     | '/about'
     | '/profile'
+    | '/auth/forgort-password'
     | '/auth/'
     | '/dashboard/'
     | '/dashboard/gists/'
@@ -224,6 +244,7 @@ export interface RootRouteChildren {
   DashboardLayoutRoute: typeof DashboardLayoutRouteWithChildren
   AboutRoute: typeof AboutRoute
   ProfileRoute: typeof ProfileRoute
+  AuthForgortPasswordRoute: typeof AuthForgortPasswordRoute
   AuthIndexRoute: typeof AuthIndexRoute
 }
 
@@ -232,6 +253,7 @@ const rootRouteChildren: RootRouteChildren = {
   DashboardLayoutRoute: DashboardLayoutRouteWithChildren,
   AboutRoute: AboutRoute,
   ProfileRoute: ProfileRoute,
+  AuthForgortPasswordRoute: AuthForgortPasswordRoute,
   AuthIndexRoute: AuthIndexRoute,
 }
 
@@ -249,6 +271,7 @@ export const routeTree = rootRoute
         "/dashboard",
         "/about",
         "/profile",
+        "/auth/forgort-password",
         "/auth/"
       ]
     },
@@ -268,6 +291,9 @@ export const routeTree = rootRoute
     },
     "/profile": {
       "filePath": "profile.tsx"
+    },
+    "/auth/forgort-password": {
+      "filePath": "auth/forgort-password.tsx"
     },
     "/auth/": {
       "filePath": "auth/index.tsx"
