@@ -1,11 +1,12 @@
-import { createFileRoute } from "@tanstack/react-router";
-import { z } from "zod";
-import { SigninCard } from "./-components/SigninCard";
+import { createFileRoute } from '@tanstack/react-router'
+import { z } from 'zod';
+import { SignUpCard } from './-components/SignupCard';
+
 const searchparams = z.object({
   returnTo: z.string().default("/"),
 });
 
-export const Route = createFileRoute("/auth/")({
+export const Route = createFileRoute("/auth/signup")({
   component: RouteComponent,
   validateSearch: (search) => searchparams.parse(search),
 });
@@ -18,8 +19,8 @@ function RouteComponent() {
         src="/frens.webp"
       />
       <div className="w-full  sm:fixed inset-y-0 left-[20%]  right-0  overflow-auto">
-        <div className="w-full h-full justify-center items-center py-10 flex overflow-auto">
-          <SigninCard />
+        <div className="w-full   justify-center items-center py-10 flex overflow-auto">
+          <SignUpCard />
         </div>
       </div>
     </div>
