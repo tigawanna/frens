@@ -55,11 +55,20 @@ export function SigninCard() {
       });
     },
     onSuccess: (data) => {
-      makeHotToast({
-        title: "Welcome back",
-        description: `Welcome back ${data?.data?.user.name}`,
-        variant: "success",
-      });
+      if (data.error) {
+        makeHotToast({
+          title: "Login failed",
+          description: data.error.message,
+          variant: "error",
+          duration: 5000,
+        });
+      } else {
+        makeHotToast({
+          title: "Welcome back",
+          description: `Welcome back ${data?.data?.user.name}`,
+          variant: "success",
+        });
+      }
     },
     onError: (error) => {
       makeHotToast({

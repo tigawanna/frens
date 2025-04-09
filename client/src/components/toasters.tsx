@@ -18,7 +18,7 @@ export function makeHotToast({ title, description, variant = "info", ...props }:
       case "warning":
         return "shadow-warning text-warning";
       case "error":
-        return " shadow-error text-error";
+        return " shadow-error text-error-content";
       default:
         return "shadow-info text-info";
     }
@@ -29,7 +29,7 @@ export function makeHotToast({ title, description, variant = "info", ...props }:
         <div
           className={`${t.visible ? "animate-enter" : "animate-leave"} ${toastVariantStyle(
             variant
-          )} shadow-sm pointer-events-auto flex w-full max-w-md rounded-lg bg-base-100     dark:shadow-sm`}>
+          )} shadow-sm pointer-events-auto flex w-full max-w-md rounded-lg bg-base-100 dark:shadow-sm`}>
           <div className="w-0 flex-1 p-4">
             <div className="flex items-center justify-center">
               <div className="h-full flex-shrink-0 items-center justify-center pt-0.5">

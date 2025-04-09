@@ -18,7 +18,7 @@ import { Loader2, X } from "lucide-react";
 import { PasswordInput } from "@/components/shadcn/ui/password-input";
 import { FaGithub } from "react-icons/fa";
 import { Form, FormControl, FormField, FormItem, FormMessage } from "@/components/shadcn/ui/form";
-import { Link, useSearch } from "@tanstack/react-router";
+import { Link, useNavigate, useSearch } from "@tanstack/react-router";
 import { useMutation } from "@tanstack/react-query";
 import { makeHotToast } from "@/components/toasters";
 
@@ -41,6 +41,7 @@ export function SignUpCard() {
   const { returnTo } = useSearch({
     from: "/auth/signup",
   });
+  const navigate = useNavigate()
   const form = useForm<SignupFormValues>({
     resolver: zodResolver(signupSchema),
     defaultValues: {
@@ -63,11 +64,22 @@ export function SignUpCard() {
       });
     },
     onSuccess: (data) => {
-      makeHotToast({
-        title: "Welcome",
-        description: `Welcome ${data?.data?.user.name}`,
-        variant: "success",
-      });
+      if(data.error) {
+        makeHotToast({
+          title: "Signup failed",
+          description: data.error.message,
+          variant: "error",
+          duration: 5000,
+        });
+      }else{
+        makeHotToast({
+          title: "Welcome",
+          description: `Welcome ${data?.data?.user.name}`,
+          variant: "success",
+        });
+        navigate({ to: returnTo })
+
+      }
     },
     onError: (error) => {
       makeHotToast({
@@ -101,7 +113,7 @@ export function SignUpCard() {
                 name="name"
                 render={({ field }) => (
                   <FormItem className="grid gap-0.5">
-                    <Label htmlFor="first-name">First name</Label>
+                    <Label htmlFor="first-name">First</Label>
                     <FormControl>
                       <Input
                         id="first-name"
@@ -147,6 +159,7 @@ export function SignUpCard() {
                   <FormControl>
                     <PasswordInput
                       id="password"
+                      // name="password"
                       type="password"
                       className="ring-[1px] ring-base-content/40"
                       autoComplete="new-password"
@@ -164,10 +177,11 @@ export function SignUpCard() {
               name="passwordConfirmation"
               render={({ field }) => (
                 <FormItem className="grid gap-0.5">
-                  <Label htmlFor="password_confirmation">Confirm Password</Label>
+                  <Label htmlFor="passwordConfirmation">Confirm Password</Label>
                   <FormControl>
                     <PasswordInput
-                      id="password_confirmation"
+                      id="passwordConfirmation"
+                      // name="passwordConfirmation"
                       className="ring-[1px] ring-base-content/40"
                       autoComplete="new-password"
                       placeholder="Confirm Password"
