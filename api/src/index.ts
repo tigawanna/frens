@@ -1,14 +1,13 @@
 import "dotenv/config";
 import express from "express";
 import morgan from "morgan";
-import helmet from "helmet";
 import cors from "cors";
 import * as middlewares from "./middlewares.ts";
 import cookieParser from "cookie-parser";
 import { allowedOrigins, corsHeaders } from "./middleware/cors-stuff.ts";
 import requestIp from "request-ip";
 import { pothosSchema } from "./graphql/schema/root.schema.ts";
-import { createYoga } from 'graphql-yoga'
+import { createYoga } from "graphql-yoga";
 import { fromNodeHeaders, toNodeHandler } from "better-auth/node";
 import { auth } from "auth.ts";
 
@@ -26,7 +25,6 @@ app.use(morgan("dev"));
 app.use(requestIp.mw());
 app.use(cookieParser());
 
-
 // app.use((req, res, next) => {
 //   console.log("Request origin:", req.headers.origin);
 //   next();
@@ -36,7 +34,7 @@ app.use(corsHeaders);
 app.use(
   cors({
     origin: (origin, callback) => {
-      if(!origin) return callback(null, true);
+      if (!origin) return callback(null, true);
       if (allowedOrigins.includes(origin)) {
         callback(null, true);
       } else {
@@ -44,61 +42,67 @@ app.use(
       }
     },
     optionsSuccessStatus: 200,
-     methods: ["GET", "POST", "PUT", "DELETE"], 
+    methods: ["GET", "POST", "PUT", "DELETE"],
     credentials: true,
   }),
 );
 
 //  always put this before calling express.json
-app.all("/api/auth/*", toNodeHandler(auth)); 
+app.all("/api/auth/*", toNodeHandler(auth));
 
 app.use(express.json());
 
 app.get("/api/me", async (req, res) => {
- 	const session = await auth.api.getSession({
-      headers: fromNodeHeaders(req.headers),
-    });
-	res.json(session);
+  const session = await auth.api.getSession({
+    headers: fromNodeHeaders(req.headers),
+  });
+  res.json(session);
 });
-
-
 
 app.get("/", (req, res) => {
   res.json({ message: "welcome to frens api" });
 });
-app.get("/api", (req, res) => {
-  res.json({ message: "welcome to frens api" });
-});
 
+const yoga = createYoga<{
+  req: express.Request;
+  res: express.Response;
+}>({
+  schema: pothosSchema,
 
-
-const yoga = createYoga({
-  schema:pothosSchema,
-  // context: (req) => {
-  //   const context: ApolloContext = {
-  //     // authScope: req.requestIp,
-  //   };
-  //   return context;
-  // },
+  context: async (ctx) => {
+    const session = await auth.api.getSession({
+      headers: fromNodeHeaders(ctx.req.headers),
+    });
+    if(!session){
+      return {
+        currentUser: null,
+      };
+    }
+    return {
+      currentUser:{
+      id: session?.user.id,
+      email: session?.user.email,
+      name: session?.user.name,
+    }
+    }
+  },
   graphiql: true,
   logging: true,
   // maskedErrors: false,
   cors: true,
-})
- 
-// Bind GraphQL Yoga to the graphql endpoint to avoid rendering the playground on any path
-app.use(yoga.graphqlEndpoint, yoga)
+});
 
+// Bind GraphQL Yoga to the graphql endpoint to avoid rendering the playground on any path
+// @ts-expect-error
+app.use(yoga.graphqlEndpoint, yoga);
 
 app.use(middlewares.notFound);
 app.use(middlewares.errorHandler);
 
 const port = process.env.PORT || 5000;
 
-
-
 app.listen(port, () => {
   console.log(`🚀 Server ready at http://localhost:${port}/graphql`);
   console.log(`🚀 Server ready at http://localhost:${port}/`);
   // console.log('Running a GraphQL API server at http://localhost:4000/graphql')
-})
+});

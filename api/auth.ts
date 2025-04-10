@@ -19,5 +19,19 @@ export const auth = betterAuth({
       clientSecret: process.env.GITHUB_CLIENT_SECRET as string,
     },
   },
-  plugins: [openAPI(), admin(), apiKey() ],
+  plugins: [openAPI(), admin(), 
+    apiKey({
+      customAPIKeyGetter(ctx) {
+        const bearer_token = ctx.headers?.get('Authorization')
+        if(!bearer_token) return null
+        const token = bearer_token.split(' ')
+        if(token[0] !== 'Bearer') return null
+        if(token.length !== 2) return null
+        return token[1]
+      },
+  }) ],
 });
+
+// ctx.headers?.get("AUTHORIZATION")
+// ctx.headers?.get('Authorization')
+// ctx.headers?.get('authorization')
