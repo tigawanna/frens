@@ -1,71 +1,73 @@
 import { prisma } from "@/db/client";
 import { builder } from "./builder";
-import { printType,lexicographicSortSchema } from "graphql";
+import { printType, lexicographicSortSchema } from "graphql";
+import type { User } from "@/db/generated/client";
 // import { FrenSchema } from "./fren.schema";
 // import { UserSchema } from "./user.schema";
 
 // UserSchema(builder);
 // FrenSchema(builder);
 
+// Create a relay node based a prisma model
+// Pre-define the Fren reference first
+const FrenRef = builder.objectRef<User>('User');
+// Create a relay node based a prisma model
 
-
-builder.prismaObject('User', {
+const Follower = builder.prismaNode("User", {
+  variant: "Follower",
+  id: { field: "id" },
+  interfaces: [],
   fields: (t) => ({
-    // expose fields from the database
-    id: t.exposeID('id'),
-    email: t.exposeString('email'),
-    name: t.exposeString('name'),
-    // bio: t.string({
-    //   // automatically load the bio from the profile
-    //   // when this field is queried
-    //   select: {
-    //     profile: {
-    //       select: {
-    //         bio: true,
-    //       },
-    //     },
-    //   },
-    //   // user will be typed correctly to include the
-    //   // selected fields from above
-    //   resolve: (user) => user.profile.bio,
-    // }),
-    // Load posts as list field.
-    // posts: t.relation('posts', {
-    //   args: {
-    //     oldestFirst: t.arg.boolean(),
-    //   },
-    //   // Define custom query options that are applied when
-    //   // loading the post relation
-    //   query: (args, context) => ({
-    //     orderBy: {
-    //       createdAt: args.oldestFirst ? 'asc' : 'desc',
-    //     },
-    //   }),
-    // }),
-    // creates relay connection that handles pagination
-    // using prisma's built in cursor based pagination
-    // postsConnection: t.relatedConnection('posts', {
-    //   cursor: 'id',
-    // }),
+    name: t.exposeString("name"),
+    email: t.exposeString("email"),
+    image: t.exposeString("image"),
+    role: t.exposeString("role"),
+    createdAt: t.field({
+      type: "String",
+      resolve: (user) => {
+        return user.createdAt.toISOString();
+      },
+    }),
+  }),
+
+})
+const Fren = builder.prismaNode("User", {
+  variant: "Fren",
+  id: { field: "id" },
+  interfaces: [],
+  fields: (t) => ({
+    name: t.exposeString("name"),
+    email: t.exposeString("email"),
+    image: t.exposeString("image"),
+    role: t.exposeString("role"),
+    createdAt: t.field({
+      type: "String",
+      resolve: (user) => {
+        return user.createdAt.toISOString();
+      },
+    }),
+    followers: t.prismaConnection({
+      type: Follower,
+      cursor: "id",
+      resolve: (parent) => prisma.user.findMany({
+        // @ts-expect-error
+        where: { following: { some: { id:parent.cursor } } },
+      }),
+    }),
+    following: t.prismaConnection({
+      type: Follower, // You might want this too for bidirectional relationships
+      cursor: "id", 
+      resolve: (query, parent, args, context, info) => prisma.user.findMany({ ...query }),
+    })
   }),
 });
- 
-// Create a relay node based a prisma model
-// builder.prismaNode('User', {
-//   variant: 'Fren',
-//   id: { field: 'id' },
-//   fields: (t) => ({
-//     id: t.exposeString('id'),
-//     email: t.exposeString('email'),
-//   }),
-// });
 
- 
+
 builder.queryType({
   fields: (t) => ({
     // Define a field that issues an optimized prisma query
     me: t.prismaField({
-      type: 'User',
+      type: Fren,
       resolve: async (query, root, args, ctx, info) =>
         prisma.user.findUniqueOrThrow({
           // the `query` argument will add in `include`s or `select`s to
@@ -76,7 +78,6 @@ builder.queryType({
     }),
   }),
 });
-
 
 export const pothosSchema = builder.toSchema();
 
