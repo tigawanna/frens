@@ -41,3 +41,9 @@ export function wordToNumber(word: string): number {
         .toUpperCase() || "?"
     );
   };
+
+
+    export const copyToClipboard = (id: string,onCopied:(text:string)=>void) => {
+    navigator.clipboard.writeText(id);
+    onCopied(id);
+  };

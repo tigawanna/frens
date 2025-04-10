@@ -78,6 +78,26 @@ builder.queryType({
     }),
   }),
 });
+builder.mutationType({
+  name: "Mutation",
+  fields: (t) => ({
+    follow: t.prismaField({
+      type: Fren,
+      args:{
+        id: t.arg.string({ required: true }),
+      },
+      resolve: async (query, root, args, ctx, info) =>
+        prisma.user.update({
+          where: { id: ctx.currentUser?.id },
+          data: {
+            following: {
+              connect: { id: args.id },
+            },
+          },
+        }),
+    })
+  })
+})
 
 export const pothosSchema = builder.toSchema();
 
