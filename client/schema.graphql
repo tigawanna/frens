@@ -1,0 +1,153 @@
+type FeedPost implements Node {
+  constent: String
+  createdAt: String
+  id: ID!
+  imageUrl: String
+  likeCoount: Int
+  likedByMe: Boolean
+  updatedAt: String
+}
+
+"""input type for follow and unfollow"""
+input FollowInput {
+  userId: String!
+}
+
+type Follower implements Node {
+  createdAt: String
+  email: String
+  id: ID!
+  image: String
+  name: String
+  role: String
+}
+
+type Fren implements Node {
+  amFollowing: Boolean
+  createdAt: String
+  email: String
+  followerCount: Int
+  followers(after: String, before: String, first: Int, last: Int, sort: SortInput): FrenFollowersConnection
+  following(after: String, before: String, first: Int, last: Int, sort: SortInput): FrenFollowingConnection
+  followingCount: Int
+  id: ID!
+  image: String
+  isFollowingMe: Boolean
+  name: String
+  role: String
+}
+
+type FrenFollowersConnection {
+  edges: [FrenFollowersConnectionEdge]
+  pageInfo: PageInfo!
+}
+
+type FrenFollowersConnectionEdge {
+  cursor: String!
+  node: Follower
+}
+
+type FrenFollowingConnection {
+  edges: [FrenFollowingConnectionEdge]
+  pageInfo: PageInfo!
+}
+
+type FrenFollowingConnectionEdge {
+  cursor: String!
+  node: Follower
+}
+
+type Mutation {
+  createPost(content: String!, imageUrl: String): FeedPost
+  deletePost(id: String!): Boolean
+  follow(input: FollowInput!): Fren
+  likePost(postId: String!): FeedPost
+  unfollow(input: FollowInput!): Fren
+  unlikePost(postId: String!): FeedPost
+  updatePost(content: String, id: String!, imageUrl: String): FeedPost
+}
+
+interface Node {
+  id: ID!
+}
+
+"""Order type for sorting"""
+enum OrderType {
+  asc
+  desc
+}
+
+type PageInfo {
+  endCursor: String
+  hasNextPage: Boolean!
+  hasPreviousPage: Boolean!
+  startCursor: String
+}
+
+type Query {
+  feedPosts(after: String, before: String, first: Int, last: Int): QueryFeedPostsConnection
+  fren(id: String!): Fren
+  frens(after: String, before: String, first: Int, last: Int, sort: SortInput): QueryFrensConnection
+  me: ViewerFren
+  node(id: ID!): Node
+  nodes(ids: [ID!]!): [Node]!
+  oneFeedpopst(id: String!): FeedPost
+}
+
+type QueryFeedPostsConnection {
+  edges: [QueryFeedPostsConnectionEdge]
+  pageInfo: PageInfo!
+}
+
+type QueryFeedPostsConnectionEdge {
+  cursor: String!
+  node: FeedPost
+}
+
+type QueryFrensConnection {
+  edges: [QueryFrensConnectionEdge]
+  pageInfo: PageInfo!
+}
+
+type QueryFrensConnectionEdge {
+  cursor: String!
+  node: Fren
+}
+
+input SortInput {
+  field: String! = "id"
+  order: OrderType!
+}
+
+type ViewerFren implements Node {
+  createdAt: String
+  email: String
+  followerCount: Int
+  followers(after: String, before: String, first: Int, last: Int, sort: SortInput): ViewerFrenFollowersConnection
+  following(after: String, before: String, first: Int, last: Int, sort: SortInput): ViewerFrenFollowingConnection
+  followingCount: Int
+  id: ID!
+  image: String
+  name: String
+  role: String
+}
+
+type ViewerFrenFollowersConnection {
+  edges: [ViewerFrenFollowersConnectionEdge]
+  pageInfo: PageInfo!
+}
+
+type ViewerFrenFollowersConnectionEdge {
+  cursor: String!
+  node: Follower
+}
+
+type ViewerFrenFollowingConnection {
+  edges: [ViewerFrenFollowingConnectionEdge]
+  pageInfo: PageInfo!
+}
+
+type ViewerFrenFollowingConnectionEdge {
+  cursor: String!
+  node: Follower
+}

@@ -3,6 +3,7 @@ import { builder } from "./builder";
 import { FollowInput, SortInput } from "./inputs";
 import { Fren, ViewerFren } from "./fren.types";
 import { FeedPost } from "../post.type";
+import { lexicographicSortSchema, printSchema } from "graphql";
 
 // root query type
 builder.queryType({
@@ -285,3 +286,4 @@ builder.mutationType({
 export const pothosSchema = builder.toSchema();
 
 // export const schemaAsString = printType(lexicographicSortSchema(pothosSchema))
+export const pothosSchemaString = printSchema(lexicographicSortSchema(pothosSchema));

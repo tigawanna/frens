@@ -8,6 +8,7 @@
     "build": "tsc -b && vite build",
     "lint": "eslint .",
     "preview": "vite preview",
+    "sdl": "tsx src/lib/grapphql/getSdl.ts",
     "tsc": "tsc -b"
   },
   "dependencies": {
@@ -78,6 +79,7 @@
     "@types/react-dom": "^19.1.1",
     "@vitejs/plugin-react": "^4.3.4",
     "daisyui": "5.0.16",
+    "dotenv": "^16.4.7",
     "eslint": "^9.24.0",
     "eslint-plugin-react-hooks": "^5.2.0",
     "eslint-plugin-react-refresh": "^0.4.19",

@@ -6,7 +6,7 @@ import * as middlewares from "./middlewares.ts";
 import cookieParser from "cookie-parser";
 import { allowedOrigins, corsHeaders } from "./middleware/cors-stuff.ts";
 import requestIp from "request-ip";
-import { pothosSchema } from "./graphql/schema/root.schema.ts";
+import { pothosSchema, pothosSchemaString } from "./graphql/schema/root.schema.ts";
 import { createYoga } from "graphql-yoga";
 import { fromNodeHeaders, toNodeHandler } from "better-auth/node";
 import { auth } from "auth.ts";
@@ -61,6 +61,11 @@ app.get("/api/me", async (req, res) => {
 
 app.get("/", (req, res) => {
   res.json({ message: "welcome to frens api" });
+});
+app.get("/sdl", (req, res) => {
+  res.send(
+    pothosSchemaString
+  )
 });
 
 const port = process.env.PORT || 5000;
