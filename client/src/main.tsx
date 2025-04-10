@@ -9,7 +9,8 @@ import { RouterPendingComponent } from "./lib/tanstack/router/RouterPendingCompo
 import { MutationCache, QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import React from "react";
 import { App } from "./App";
-
+import { RelayEnvironmentProvider } from "react-relay";
+import { createRelayEnvironment } from "./lib/grapphql/relay/RelayEnvironment";
 
 export const queryClient = new QueryClient({
   mutationCache: new MutationCache({
@@ -61,11 +62,14 @@ declare module "@tanstack/react-router" {
 const rootElement = document.getElementById("root")!;
 if (!rootElement.innerHTML) {
   const root = ReactDOM.createRoot(rootElement);
+  const relayEnviroment= createRelayEnvironment()
   root.render(
     <React.StrictMode>
       <Suspense fallback={<RouterPendingComponent />}>
         <QueryClientProvider client={queryClient}>
-          <App />
+          <RelayEnvironmentProvider environment={relayEnviroment!}>
+            <App />
+          </RelayEnvironmentProvider>
         </QueryClientProvider>
       </Suspense>
     </React.StrictMode>
