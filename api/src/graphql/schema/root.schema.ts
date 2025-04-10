@@ -1,10 +1,12 @@
 import { prisma } from "@/db/client";
 import { builder } from "./builder";
-import { FrenSchema } from "./fren.schema";
-import { UserSchema } from "./user.schema";
+import { printType,lexicographicSortSchema } from "graphql";
+// import { FrenSchema } from "./fren.schema";
+// import { UserSchema } from "./user.schema";
 
 // UserSchema(builder);
 // FrenSchema(builder);
+
 
 
 builder.prismaObject('User', {
@@ -12,6 +14,7 @@ builder.prismaObject('User', {
     // expose fields from the database
     id: t.exposeID('id'),
     email: t.exposeString('email'),
+    name: t.exposeString('name'),
     // bio: t.string({
     //   // automatically load the bio from the profile
     //   // when this field is queried
@@ -27,34 +30,36 @@ builder.prismaObject('User', {
     //   resolve: (user) => user.profile.bio,
     // }),
     // Load posts as list field.
-    posts: t.relation('posts', {
-      args: {
-        oldestFirst: t.arg.boolean(),
-      },
-      // Define custom query options that are applied when
-      // loading the post relation
-      query: (args, context) => ({
-        orderBy: {
-          createdAt: args.oldestFirst ? 'asc' : 'desc',
-        },
-      }),
-    }),
+    // posts: t.relation('posts', {
+    //   args: {
+    //     oldestFirst: t.arg.boolean(),
+    //   },
+    //   // Define custom query options that are applied when
+    //   // loading the post relation
+    //   query: (args, context) => ({
+    //     orderBy: {
+    //       createdAt: args.oldestFirst ? 'asc' : 'desc',
+    //     },
+    //   }),
+    // }),
     // creates relay connection that handles pagination
     // using prisma's built in cursor based pagination
-    postsConnection: t.relatedConnection('posts', {
-      cursor: 'id',
-    }),
+    // postsConnection: t.relatedConnection('posts', {
+    //   cursor: 'id',
+    // }),
   }),
 });
  
 // Create a relay node based a prisma model
-builder.prismaNode('Post', {
-  id: { field: 'id' },
-  fields: (t) => ({
-    title: t.exposeString('content'),
-    author: t.relation('author'),
-  }),
-});
+// builder.prismaNode('User', {
+//   variant: 'Fren',
+//   id: { field: 'id' },
+//   fields: (t) => ({
+//     id: t.exposeString('id'),
+//     email: t.exposeString('email'),
+//   }),
+// });
+
  
 builder.queryType({
   fields: (t) => ({
@@ -74,3 +79,5 @@ builder.queryType({
 
 
 export const pothosSchema = builder.toSchema();
+
+// export const schemaAsString = printType(lexicographicSortSchema(pothosSchema))

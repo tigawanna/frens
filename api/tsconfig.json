@@ -17,7 +17,7 @@
     "strict": true,
     "types": ["node", "supertest"],
     "noEmit": true,
-    "noErrorTruncation": true,
+    // "noErrorTruncation": true,
     "lib": ["es2022"],
     "baseUrl": ".",
     "paths": {
