@@ -202,6 +202,30 @@ exports.Prisma.FollowScalarFieldEnum = {
   followingId: 'followingId'
 };
 
+exports.Prisma.ApikeyScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  start: 'start',
+  prefix: 'prefix',
+  key: 'key',
+  userId: 'userId',
+  refillInterval: 'refillInterval',
+  refillAmount: 'refillAmount',
+  lastRefillAt: 'lastRefillAt',
+  enabled: 'enabled',
+  rateLimitEnabled: 'rateLimitEnabled',
+  rateLimitTimeWindow: 'rateLimitTimeWindow',
+  rateLimitMax: 'rateLimitMax',
+  requestCount: 'requestCount',
+  remaining: 'remaining',
+  lastRequest: 'lastRequest',
+  expiresAt: 'expiresAt',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  permissions: 'permissions',
+  metadata: 'metadata'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -226,7 +250,8 @@ exports.Prisma.ModelName = {
   Post: 'Post',
   Like: 'Like',
   Comment: 'Comment',
-  Follow: 'Follow'
+  Follow: 'Follow',
+  Apikey: 'Apikey'
 };
 
 /**

@@ -5,6 +5,7 @@ import { AccountDetailsTab } from "./AccountDetailsTab";
 import { OverviewTab } from "./OverviewTab";
 import { ProfileHeader } from "./ProfileHeader";
 import { NotSignedIn } from "@/lib/viewer/cmponents/NotSignedin";
+import { AccountSettings } from "./AccountSettings";
 
 // Not Signed In Component
 
@@ -26,10 +27,11 @@ export function ProfileComponen({}: ProfileComponenProps) {
 
         {/* Tabs for different profile sections */}
         <Tabs defaultValue="overview" className="w-full">
-          <TabsList className="grid grid-cols-3 mb-6">
-            <TabsTrigger value="overview">Overview</TabsTrigger>
+          <TabsList className="grid grid-cols-2 md:grid-cols-4 mb-6 border-none">
+            <TabsTrigger  value="overview">Overview</TabsTrigger>
             <TabsTrigger value="details">Account Details</TabsTrigger>
             <TabsTrigger value="status">Account Status</TabsTrigger>
+            <TabsTrigger value="settings">Account Settings</TabsTrigger>
           </TabsList>
 
           {/* Overview Tab */}
@@ -45,6 +47,10 @@ export function ProfileComponen({}: ProfileComponenProps) {
           {/* Status Tab */}
           <TabsContent value="status">
             <AccountStatusTab viewer={viewer} />
+          </TabsContent>
+          {/* Settings Tab */}
+          <TabsContent value="settings">
+            <AccountSettings viewer={viewer} />
           </TabsContent>
         </Tabs>
       </div>

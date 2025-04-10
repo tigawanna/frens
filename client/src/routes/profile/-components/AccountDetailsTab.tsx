@@ -1,20 +1,6 @@
 import { Badge } from "@/components/shadcn/ui/badge";
-import {
-  CalendarIcon,
-  CheckCircle,
-  AlertTriangle,
-  ShieldCheck,
-  Clock,
-  Mail,
-  User,
-  Calendar,
-} from "lucide-react";
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/shadcn/ui/card";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/shadcn/ui/avatar";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/shadcn/ui/tabs";
-
 import { BetterAthViewer } from "@/lib/viewer/use-viewer";
-import { Separator } from "@/components/shadcn/ui/separator";
 import { format } from "date-fns";
 
 

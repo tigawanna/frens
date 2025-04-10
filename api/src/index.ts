@@ -62,6 +62,7 @@ app.get("/api/me", async (req, res) => {
 });
 
 
+
 app.get("/", (req, res) => {
   res.json({ message: "welcome to frens api" });
 });

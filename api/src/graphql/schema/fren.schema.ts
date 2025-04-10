@@ -119,26 +119,26 @@ const Fren =  builder.prismaObject('User', {
     }),
   });
 //  followers query
-  builder.queryType({
-    fields: (t) => ({
-      followers: t.field({
-        type: [Fren],
-        resolve: async (user, _, context) => {
-          if (!context.currentUser?.id) return null;
-          const follows = await prisma.follow.findMany({
-            where: {
-              followingId: user.id, // User is being followed
-            },
-            include: {
-              follower: true, // Include the users who are following
-            },
-          });
+  // builder.queryType({
+  //   fields: (t) => ({
+  //     followers: t.field({
+  //       type: [Fren],
+  //       resolve: async (user, _, context) => {
+  //         if (!context.currentUser?.id) return null;
+  //         const follows = await prisma.follow.findMany({
+  //           where: {
+  //             followingId: user.id, // User is being followed
+  //           },
+  //           include: {
+  //             follower: true, // Include the users who are following
+  //           },
+  //         });
           
-          return follows.map(follow => follow.follower);
-        }
-      }),
-    }),
-  });
+  //         return follows.map(follow => follow.follower);
+  //       }
+  //     }),
+  //   }),
+  // });
 
   // Commented out code block preserved but properly closed
 
