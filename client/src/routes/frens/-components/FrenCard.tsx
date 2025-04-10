@@ -2,6 +2,7 @@ import { Card, CardContent, CardFooter } from "@/components/shadcn/ui/card";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/shadcn/ui/avatar";
 import { CheckCircle, Mail } from "lucide-react";
 import { format } from "date-fns";
+import { getInitials } from "@/utils/string";
 
 interface Fren {
   id: string;
@@ -22,15 +23,6 @@ interface FrenCardProps {
 }
 
 export function FrenCard({fren}:FrenCardProps) {
-  // Get initials for avatar fallback
-  const getInitials = (name: string) => {
-    return name
-      .split(" ")
-      .map((n) => n[0])
-      .join("")
-      .toUpperCase();
-  };
-
 
   return (
     <Card className="overflow-hidden transition-all hover:shadow-md">

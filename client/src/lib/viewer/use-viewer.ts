@@ -1,8 +1,10 @@
 import { queryOptions, useQueryClient, useSuspenseQuery } from "@tanstack/react-query";
-import {  useRouteContext, } from "@tanstack/react-router";
 import { authClient } from "../better-auth/auth-client";
 
 
+export type BetterAuthUserPayload = NonNullable<Awaited<ReturnType<typeof fetchCurrentViewer>>["data"]>
+export type BetterAthViewer = BetterAuthUserPayload["user"]
+export type BetterAuthSession = BetterAuthUserPayload["session"]
 
 export function viewerQueryOptions(){
   return queryOptions({

@@ -9,8 +9,8 @@ import "./index.css";
 import { QueryClient } from "@tanstack/react-query";
 import { RootComponent } from "./-components/RootComponent";
 import { z } from "zod";
-import { fetchCurrentViewer } from "@/lib/viewer/use-viewer";
-import { authClient } from "@/lib/better-auth/auth-client";
+import { BetterAthViewer, BetterAuthSession } from "@/lib/viewer/use-viewer";
+
 
 const searchparams = z.object({
   globalPage: z.number().optional(),
@@ -21,13 +21,13 @@ const searchparams = z.object({
 
 // })
 
-type BetterAuthSession = NonNullable<Awaited<ReturnType<typeof fetchCurrentViewer>>["data"]>
+
 
 
 export const Route = createRootRouteWithContext<{
   queryClient: QueryClient;
-  viewer?: BetterAuthSession["user"];
-  session?: BetterAuthSession["session"]
+  viewer?: BetterAthViewer;
+  session?: BetterAuthSession;
 }>()({
   component: RootComponent,
   validateSearch: (search) => searchparams.parse(search),

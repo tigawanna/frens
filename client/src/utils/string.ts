@@ -31,3 +31,13 @@ export function wordToNumber(word: string): number {
 
   return (sum % 991) + 10; // 991 is a prime number close to 1000
 }
+
+  export const getInitials = (name: string) => {
+    return (
+      name
+        ?.split(" ")
+        .map((n) => n[0])
+        .join("")
+        .toUpperCase() || "?"
+    );
+  };
