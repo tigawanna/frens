@@ -1,27 +1,24 @@
-import { Suspense, useState } from "react";
+import { Suspense } from "react";
 import { graphql } from "relay-runtime";
-import { useLazyLoadQuery } from "react-relay";
+import { useFragment } from "react-relay";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/shadcn/ui/tabs";
 import { FrenBasicDetails } from "./FrenBasicDetails";
 import { CardsListSuspenseFallback } from "@/components/wrappers/GenericDataCardsListSuspenseFallback";
-import { FrenProfileContainerQuery } from "./__generated__/FrenProfileContainerQuery.graphql";
-import { FrenPosts } from "./posts/FrenPosts";
-import { FrenFollowers } from "./followers/FrenFollowers";
-import { FrenFollowing } from "./following/FrenFollowing";
+import { FrenPosts } from "../posts/FrenPosts";
+import { FrenFollowers } from "../followers/FrenFollowers";
+import { FrenFollowing } from "../following/FrenFollowing";
+import { FrenProfileTabsFragment_fren$key } from "./__generated__/FrenProfileTabsFragment_fren.graphql";
 
-interface FrenProfileContainerProps {}
+interface FrenProfileTabsProps {
+  frenRef?: FrenProfileTabsFragment_fren$key|null;
+}
 
-export function FrenProfileContainer({}: FrenProfileContainerProps) {
-  const queryData = useLazyLoadQuery<FrenProfileContainerQuery>(FrenProfileQuery, {
-    postsFirst: 5,
-    followersFirst: 10,
-    followingFirst: 10,
-  });
-
+export function FrenProfileTabs({ frenRef }: FrenProfileTabsProps) {
+  const fragData = useFragment(FrenProfileTabsFragment, frenRef);
   return (
     <div className="w-full h-full flex flex-col items-center justify-start p-4">
       <div className="w-full max-w-6xl space-y-6">
-        <FrenBasicDetails queryRef={queryData} />
+        <FrenBasicDetails queryRef={fragData} />
 
         <Tabs defaultValue="posts" className="w-full">
           <TabsList className="grid w-full grid-cols-3">
@@ -38,19 +35,19 @@ export function FrenProfileContainer({}: FrenProfileContainerProps) {
 
           <TabsContent value="posts" className="mt-6 space-y-4">
             <Suspense fallback={<CardsListSuspenseFallback />}>
-              <FrenPosts queryRef={queryData} />
+              <FrenPosts queryRef={fragData} />
             </Suspense>
           </TabsContent>
 
           <TabsContent value="followers" className="mt-6 space-y-4">
             <Suspense fallback={<CardsListSuspenseFallback />}>
-              <FrenFollowers queryRef={queryData} />
+              <FrenFollowers queryRef={fragData} />
             </Suspense>
           </TabsContent>
 
           <TabsContent value="following" className="mt-6 space-y-4">
             <Suspense fallback={<CardsListSuspenseFallback />}>
-              <FrenFollowing queryRef={queryData} />
+              <FrenFollowing queryRef={fragData} />
             </Suspense>
           </TabsContent>
         </Tabs>
@@ -59,20 +56,21 @@ export function FrenProfileContainer({}: FrenProfileContainerProps) {
   );
 }
 
-export const FrenProfileQuery = graphql`
-  query FrenProfileContainerQuery(
-    $postsFirst: Int = 5,
-    $postsAfter: String,
-    $followersFirst: Int = 10,
-    $followersAfter: String,
-    $followingFirst: Int = 10,
-    $followingAfter: String
+const FrenProfileTabsFragment = graphql`
+  fragment FrenProfileTabsFragment_fren on Fren
+  @argumentDefinitions(
+    postsFirst: { type: "Int", defaultValue: 5 }
+    postsAfter: { type: "String" }
+    followersFirst: { type: "Int", defaultValue: 10 }
+    followersAfter: { type: "String" }
+    followingFirst: { type: "Int", defaultValue: 10 }
+    followingAfter: { type: "String" }
   ) {
-    ...FrenBasicDetails_user
-    ...FrenPosts_user @arguments(first: $postsFirst, after: $postsAfter)
-    ...FrenFollowers_user @arguments(first: $followersFirst, after: $followersAfter)
-    ...FrenFollowing_user @arguments(first: $followingFirst, after: $followingAfter)
+    id
+    ...FrenBasicDetails_fren
+    ...FrenPosts_fren @arguments(first: $postsFirst, after: $postsAfter)
+    ...FrenFollowers_fren @arguments(first: $followersFirst, after: $followersAfter)
+    ...FrenFollowing_fren @arguments(first: $followingFirst, after: $followingAfter)
   }
 `;
-
 

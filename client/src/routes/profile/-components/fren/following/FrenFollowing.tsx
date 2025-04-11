@@ -1,24 +1,24 @@
 import { useState } from "react";
 import { graphql } from "relay-runtime";
 import { usePaginationFragment } from "react-relay";
-import { FrenFollowing_user$key } from "./__generated__/FrenFollowing_user.graphql";
+import { FrenFollowing_fren$key } from "./__generated__/FrenFollowing_fren.graphql";
 import { FrenFollowingPaginationQuery } from "./__generated__/FrenFollowingPaginationQuery.graphql";
 import { Button } from "@/components/shadcn/ui/button";
 import { Loader2, Users } from "lucide-react";
 import { FrenFollowingCard } from "./FrenFollowingCard";
 
 interface FrenFollowingProps {
-  queryRef: FrenFollowing_user$key;
+  queryRef?: FrenFollowing_fren$key | null;
 }
 
 export function FrenFollowing({ queryRef }: FrenFollowingProps) {
   const { data, loadNext, hasNext, isLoadingNext } = usePaginationFragment<
     FrenFollowingPaginationQuery,
-    FrenFollowing_user$key
+    FrenFollowing_fren$key
   >(FrenFollowingPaginatedFragment, queryRef);
 
-  const following = data?.me?.following?.edges?.map(edge => edge?.node) || [];
-  const followingCount = data?.me?.followingCount || 0;
+  const following = data?.following?.edges?.map(edge => edge?.node) || [];
+  const followingCount = data?.followingCount || 0;
 
   const loadMoreFollowing = () => {
     if (hasNext && !isLoadingNext) {
@@ -73,13 +73,12 @@ export function FrenFollowing({ queryRef }: FrenFollowingProps) {
 }
 
 export const FrenFollowingPaginatedFragment = graphql`
-  fragment FrenFollowing_user on Query 
+  fragment FrenFollowing_fren on Fren 
   @argumentDefinitions(
     first: { type: "Int", defaultValue: 10 }
     after: { type: "String" }
   )
   @refetchable(queryName: "FrenFollowingPaginationQuery") {
-    me {
       id
       followingCount
       following(first: $first, after: $after)
@@ -97,5 +96,4 @@ export const FrenFollowingPaginatedFragment = graphql`
         }
       }
     }
-  }
 `;

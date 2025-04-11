@@ -1,21 +1,21 @@
-import { graphql } from "relay-runtime";
+// import { graphql } from "relay-runtime";
 
-interface MeProps {
+// interface MeProps {
 
-}
+// }
 
-export function Me({}:MeProps){
-return (
- <div className='w-full h-full flex flex-col items-center justify-center'>
+// export function Me({}:MeProps){
+// return (
+//  <div className='w-full h-full flex flex-col items-center justify-center'>
 
- </div>
-);
-}
+//  </div>
+// );
+// }
 
-const MeQuery = graphql`
-  query MeQuery {
-    me {
-      ...MyFrensContainer_user
-    }
-  }
-`;
+// const MeQuery = graphql`
+//   query MeQuery {
+//     me {
+//       ...MyFrensContainer_user
+//     }
+//   }
+// `;

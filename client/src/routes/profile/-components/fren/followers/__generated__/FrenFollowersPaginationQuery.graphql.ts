@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<5bc321abbf5fea0f7181eb601e1e3d44>>
+ * @generated SignedSource<<b7fe1364a898f7ef1ccdd69f89e888d1>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -13,9 +13,12 @@ import { FragmentRefs } from "relay-runtime";
 export type FrenFollowersPaginationQuery$variables = {
   after?: string | null | undefined;
   first?: number | null | undefined;
+  id: string;
 };
 export type FrenFollowersPaginationQuery$data = {
-  readonly " $fragmentSpreads": FragmentRefs<"FrenFollowers_user">;
+  readonly node: {
+    readonly " $fragmentSpreads": FragmentRefs<"FrenFollowers_fren">;
+  } | null | undefined;
 };
 export type FrenFollowersPaginationQuery = {
   response: FrenFollowersPaginationQuery$data;
@@ -33,9 +36,21 @@ var v0 = [
     "defaultValue": 10,
     "kind": "LocalArgument",
     "name": "first"
+  },
+  {
+    "defaultValue": null,
+    "kind": "LocalArgument",
+    "name": "id"
   }
 ],
 v1 = [
+  {
+    "kind": "Variable",
+    "name": "id",
+    "variableName": "id"
+  }
+],
+v2 = [
   {
     "kind": "Variable",
     "name": "after",
@@ -47,7 +62,14 @@ v1 = [
     "variableName": "first"
   }
 ],
-v2 = {
+v3 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "__typename",
+  "storageKey": null
+},
+v4 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
@@ -62,9 +84,20 @@ return {
     "name": "FrenFollowersPaginationQuery",
     "selections": [
       {
+        "alias": null,
         "args": (v1/*: any*/),
-        "kind": "FragmentSpread",
-        "name": "FrenFollowers_user"
+        "concreteType": null,
+        "kind": "LinkedField",
+        "name": "node",
+        "plural": false,
+        "selections": [
+          {
+            "args": (v2/*: any*/),
+            "kind": "FragmentSpread",
+            "name": "FrenFollowers_fren"
+          }
+        ],
+        "storageKey": null
       }
     ],
     "type": "Query",
@@ -78,85 +111,111 @@ return {
     "selections": [
       {
         "alias": null,
-        "args": null,
-        "concreteType": "Fren",
+        "args": (v1/*: any*/),
+        "concreteType": null,
         "kind": "LinkedField",
-        "name": "me",
+        "name": "node",
         "plural": false,
         "selections": [
-          (v2/*: any*/),
+          (v3/*: any*/),
+          (v4/*: any*/),
           {
-            "alias": null,
-            "args": null,
-            "kind": "ScalarField",
-            "name": "followerCount",
-            "storageKey": null
-          },
-          {
-            "alias": null,
-            "args": (v1/*: any*/),
-            "concreteType": "FrenFollowersConnection",
-            "kind": "LinkedField",
-            "name": "followers",
-            "plural": false,
+            "kind": "InlineFragment",
             "selections": [
               {
                 "alias": null,
                 "args": null,
-                "concreteType": "FrenFollowersConnectionEdge",
+                "kind": "ScalarField",
+                "name": "followerCount",
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": (v2/*: any*/),
+                "concreteType": "FrenFollowersConnection",
                 "kind": "LinkedField",
-                "name": "edges",
-                "plural": true,
+                "name": "followers",
+                "plural": false,
                 "selections": [
                   {
                     "alias": null,
                     "args": null,
-                    "kind": "ScalarField",
-                    "name": "cursor",
+                    "concreteType": "FrenFollowersConnectionEdge",
+                    "kind": "LinkedField",
+                    "name": "edges",
+                    "plural": true,
+                    "selections": [
+                      {
+                        "alias": null,
+                        "args": null,
+                        "kind": "ScalarField",
+                        "name": "cursor",
+                        "storageKey": null
+                      },
+                      {
+                        "alias": null,
+                        "args": null,
+                        "concreteType": "Follower",
+                        "kind": "LinkedField",
+                        "name": "node",
+                        "plural": false,
+                        "selections": [
+                          (v4/*: any*/),
+                          {
+                            "alias": null,
+                            "args": null,
+                            "kind": "ScalarField",
+                            "name": "frenId",
+                            "storageKey": null
+                          },
+                          {
+                            "alias": null,
+                            "args": null,
+                            "kind": "ScalarField",
+                            "name": "name",
+                            "storageKey": null
+                          },
+                          {
+                            "alias": null,
+                            "args": null,
+                            "kind": "ScalarField",
+                            "name": "email",
+                            "storageKey": null
+                          },
+                          {
+                            "alias": null,
+                            "args": null,
+                            "kind": "ScalarField",
+                            "name": "image",
+                            "storageKey": null
+                          },
+                          (v3/*: any*/)
+                        ],
+                        "storageKey": null
+                      }
+                    ],
                     "storageKey": null
                   },
                   {
                     "alias": null,
                     "args": null,
-                    "concreteType": "Follower",
+                    "concreteType": "PageInfo",
                     "kind": "LinkedField",
-                    "name": "node",
+                    "name": "pageInfo",
                     "plural": false,
                     "selections": [
-                      (v2/*: any*/),
                       {
                         "alias": null,
                         "args": null,
                         "kind": "ScalarField",
-                        "name": "frenId",
+                        "name": "hasNextPage",
                         "storageKey": null
                       },
                       {
                         "alias": null,
                         "args": null,
                         "kind": "ScalarField",
-                        "name": "name",
-                        "storageKey": null
-                      },
-                      {
-                        "alias": null,
-                        "args": null,
-                        "kind": "ScalarField",
-                        "name": "email",
-                        "storageKey": null
-                      },
-                      {
-                        "alias": null,
-                        "args": null,
-                        "kind": "ScalarField",
-                        "name": "image",
-                        "storageKey": null
-                      },
-                      {
-                        "alias": null,
-                        "args": null,
-                        "kind": "ScalarField",
-                        "name": "__typename",
+                        "name": "endCursor",
                         "storageKey": null
                       }
                     ],
@@ -167,40 +226,16 @@ return {
               },
               {
                 "alias": null,
-                "args": null,
-                "concreteType": "PageInfo",
-                "kind": "LinkedField",
-                "name": "pageInfo",
-                "plural": false,
-                "selections": [
-                  {
-                    "alias": null,
-                    "args": null,
-                    "kind": "ScalarField",
-                    "name": "hasNextPage",
-                    "storageKey": null
-                  },
-                  {
-                    "alias": null,
-                    "args": null,
-                    "kind": "ScalarField",
-                    "name": "endCursor",
-                    "storageKey": null
-                  }
-                ],
-                "storageKey": null
+                "args": (v2/*: any*/),
+                "filters": null,
+                "handle": "connection",
+                "key": "FrenFollowers_followers",
+                "kind": "LinkedHandle",
+                "name": "followers"
               }
             ],
-            "storageKey": null
-          },
-          {
-            "alias": null,
-            "args": (v1/*: any*/),
-            "filters": null,
-            "handle": "connection",
-            "key": "FrenFollowers_followers",
-            "kind": "LinkedHandle",
-            "name": "followers"
+            "type": "Fren",
+            "abstractKey": null
           }
         ],
         "storageKey": null
@@ -208,16 +243,16 @@ return {
     ]
   },
   "params": {
-    "cacheID": "2ab4937e3e7a69e62e09169e38075209",
+    "cacheID": "15a3bac37243e4e087cc95419ec9d36d",
     "id": null,
     "metadata": {},
     "name": "FrenFollowersPaginationQuery",
     "operationKind": "query",
-    "text": "query FrenFollowersPaginationQuery(\n  $after: String\n  $first: Int = 10\n) {\n  ...FrenFollowers_user_2HEEH6\n}\n\nfragment FrenFollowerCard_follower on Follower {\n  id\n  frenId\n  name\n  email\n  image\n}\n\nfragment FrenFollowers_user_2HEEH6 on Query {\n  me {\n    id\n    followerCount\n    followers(first: $first, after: $after) {\n      edges {\n        cursor\n        node {\n          id\n          ...FrenFollowerCard_follower\n          __typename\n        }\n      }\n      pageInfo {\n        hasNextPage\n        endCursor\n      }\n    }\n  }\n}\n"
+    "text": "query FrenFollowersPaginationQuery(\n  $after: String\n  $first: Int = 10\n  $id: ID!\n) {\n  node(id: $id) {\n    __typename\n    ...FrenFollowers_fren_2HEEH6\n    id\n  }\n}\n\nfragment FrenFollowerCard_follower on Follower {\n  id\n  frenId\n  name\n  email\n  image\n}\n\nfragment FrenFollowers_fren_2HEEH6 on Fren {\n  id\n  followerCount\n  followers(first: $first, after: $after) {\n    edges {\n      cursor\n      node {\n        id\n        ...FrenFollowerCard_follower\n        __typename\n      }\n    }\n    pageInfo {\n      hasNextPage\n      endCursor\n    }\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "9cc4e92ecff56442ebe77888bbcf8ada";
+(node as any).hash = "87faf8b3ded105d197f5d5ce1a17f552";
 
 export default node;

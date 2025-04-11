@@ -2,18 +2,18 @@ import { Card } from "@/components/shadcn/ui/card";
 import { UserCircle } from "lucide-react";
 import { graphql } from "relay-runtime";
 import { useFragment } from "react-relay";
-import { FrenBasicDetails_user$key } from "./__generated__/FrenBasicDetails_user.graphql";
 import { ClipboardButton } from "@/components/wrappers/ClipboardButton";
+import { FrenBasicDetails_fren$key } from "./__generated__/FrenBasicDetails_fren.graphql";
 
 
 interface FrenBasicDetailsProps {
-  queryRef: FrenBasicDetails_user$key;
+  queryRef?: FrenBasicDetails_fren$key | null;
 }
 
 export function FrenBasicDetails({ queryRef }: FrenBasicDetailsProps) {
-  const data = useFragment<FrenBasicDetails_user$key>(FrenBasicDetailsFragment, queryRef);
+  const data = useFragment<FrenBasicDetails_fren$key>(FrenBasicDetailsFragment, queryRef);
 
-  const me = data.me
+  const me = data
   
 
   if (!me) return null;
@@ -62,8 +62,7 @@ export function FrenBasicDetails({ queryRef }: FrenBasicDetailsProps) {
 }
 
 export const FrenBasicDetailsFragment = graphql`
-  fragment FrenBasicDetails_user on Query {
-    me {
+  fragment FrenBasicDetails_fren on Fren {
       id
       name
       email
@@ -71,6 +70,6 @@ export const FrenBasicDetailsFragment = graphql`
       frenId
       followerCount
       followingCount
-    }
+  
   }
 `;

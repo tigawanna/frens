@@ -3,7 +3,7 @@ import { authGuard } from "@/lib/viewer/auth0guard";
 import { createFileRoute } from "@tanstack/react-router";
 
 import { Suspense } from "react";
-import { Me } from "./-components/Me";
+// import { Me } from "./-components/Me";
 
 
 export const Route = createFileRoute("/frens/")({
@@ -17,7 +17,7 @@ function RouteComponent() {
   return (
     <div className="flex flex-col gap-4">
       <Suspense fallback={<CardsListSuspenseFallback />}>
-        <Me/>
+        {/* <Me/> */}
       </Suspense>
     </div>
   );

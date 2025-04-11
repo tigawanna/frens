@@ -1,24 +1,24 @@
 import { useState } from "react";
 import { graphql } from "relay-runtime";
 import { usePaginationFragment } from "react-relay";
-import { FrenPosts_user$key } from "./__generated__/FrenPosts_user.graphql";
+import { FrenPosts_fren$key } from "./__generated__/FrenPosts_fren.graphql";
 import { FrenPostsPaginationQuery } from "./__generated__/FrenPostsPaginationQuery.graphql";
 import { Button } from "@/components/shadcn/ui/button";
 import { Loader2, FileX } from "lucide-react";
 import { FrenPostcard } from "./FrenPostcard";
 
 interface FrenPostsProps {
-  queryRef: FrenPosts_user$key;
+  queryRef?: FrenPosts_fren$key|null;
 }
 
 export function FrenPosts({ queryRef }: FrenPostsProps) {
   const { data, loadNext, hasNext, isLoadingNext } = usePaginationFragment<
     FrenPostsPaginationQuery,
-    FrenPosts_user$key
+    FrenPosts_fren$key
   >(FrenPostsPaginatedFragment, queryRef);
 
-  const posts = data?.me?.posts?.edges?.map(edge => edge?.node) || [];
-  const postsCount = data?.me?.postsCount || 0;
+  const posts = data?.posts?.edges?.map(edge => edge?.node) || [];
+  const postsCount = data?.postsCount || 0;
 
   const loadMorePosts = () => {
     if (hasNext && !isLoadingNext) {
@@ -73,13 +73,12 @@ export function FrenPosts({ queryRef }: FrenPostsProps) {
 }
 
 const FrenPostsPaginatedFragment=  graphql`
-      fragment FrenPosts_user on Query
+      fragment FrenPosts_fren on Fren
       @argumentDefinitions(
         first: { type: "Int", defaultValue: 5 },
         after: { type: "String" }
       )
       @refetchable(queryName: "FrenPostsPaginationQuery") {
-        me {
           id
           postsCount
           posts(first: $first, after: $after)
@@ -97,5 +96,5 @@ const FrenPostsPaginatedFragment=  graphql`
             }
           }
         }
-      }
+      
     `
