@@ -5,6 +5,9 @@ import { Button } from "@/components/shadcn/ui/button";
 import { Loader2 } from "lucide-react";
 import { MainFeedPaginationQuery } from "./__generated__/MainFeedPaginationQuery.graphql";
 import { PostCard } from "./FeedCard";
+import { CreatePostModal } from "./form/PostDialogs";
+import { useState } from "react";
+import { useViewer } from "@/lib/viewer/use-viewer";
 
 
 interface FeedProps {
@@ -13,11 +16,14 @@ interface FeedProps {
 
 // Feed component that handles pagination
 export function Feed({ queryRef }: FeedProps) {
-  const { data, loadNext, hasNext, isLoadingNext } = usePaginationFragment<
+  const fragData = usePaginationFragment<
     MainFeedPaginationQuery, 
     MainFeed_feedPosts$key
   >(MainFeedFragment, queryRef);
-  
+
+    const { data, loadNext, hasNext, isLoadingNext } = fragData
+  const [open, setOpen] = useState(false);
+  const {viewer} = useViewer()
   const loadMorePosts = () => {
     if (isLoadingNext || !hasNext) return;
     loadNext(5);
@@ -35,26 +41,23 @@ export function Feed({ queryRef }: FeedProps) {
   
   return (
     <div className="w-full max-w-2xl mx-auto">
-      {posts.map(post => post && <PostCard key={post.id} post={post} />)}
-      
+      {posts.map((post) => post && <PostCard viewer={viewer} key={post.id} postRef={post} />)}
+
       {hasNext && (
         <div className="flex justify-center my-4">
-          <Button 
-            onClick={loadMorePosts} 
-            variant="outline" 
-            disabled={isLoadingNext}
-          >
+          <Button onClick={loadMorePosts} variant="outline" disabled={isLoadingNext}>
             {isLoadingNext ? (
               <>
                 <Loader2 className="mr-2 h-4 w-4 animate-spin" />
                 Loading more posts...
               </>
             ) : (
-              'Load More Posts'
+              "Load More Posts"
             )}
           </Button>
         </div>
       )}
+      <CreatePostModal open={open} setOpen={setOpen} />
     </div>
   );
 }
@@ -70,20 +73,7 @@ export const MainFeedFragment = graphql`
         cursor
         node {
           id
-          imageUrl
-          postId
-          content
-          createdAt
-          likeCount
-          likedByMe
-          updatedAt
-          postedBy {
-            name
-            email
-            amFollowing
-            amFollowing
-            image
-          }
+          ...FeedCard_post
         }
       }
       pageInfo {

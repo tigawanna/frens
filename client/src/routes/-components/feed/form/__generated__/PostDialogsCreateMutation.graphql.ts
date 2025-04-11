@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<7dde433fbf5875264e77b62d4d743da1>>
+ * @generated SignedSource<<e7ae8dc351cfae795635edfdc5ef20e5>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -9,19 +9,14 @@
 // @ts-nocheck
 
 import { ConcreteRequest } from 'relay-runtime';
+import { FragmentRefs } from "relay-runtime";
 export type PostDialogsCreateMutation$variables = {
   content: string;
   imageUrl?: string | null | undefined;
 };
 export type PostDialogsCreateMutation$data = {
   readonly createPost: {
-    readonly content: string | null | undefined;
-    readonly createdAt: string | null | undefined;
-    readonly id: string;
-    readonly imageUrl: string | null | undefined;
-    readonly likeCount: number | null | undefined;
-    readonly likedByMe: boolean | null | undefined;
-    readonly postId: string;
+    readonly " $fragmentSpreads": FragmentRefs<"FeedCard_post">;
   } | null | undefined;
 };
 export type PostDialogsCreateMutation = {
@@ -44,84 +39,47 @@ var v0 = [
 ],
 v1 = [
   {
-    "alias": null,
-    "args": [
-      {
-        "kind": "Variable",
-        "name": "content",
-        "variableName": "content"
-      },
-      {
-        "kind": "Variable",
-        "name": "imageUrl",
-        "variableName": "imageUrl"
-      }
-    ],
-    "concreteType": "FeedPost",
-    "kind": "LinkedField",
-    "name": "createPost",
-    "plural": false,
-    "selections": [
-      {
-        "alias": null,
-        "args": null,
-        "kind": "ScalarField",
-        "name": "id",
-        "storageKey": null
-      },
-      {
-        "alias": null,
-        "args": null,
-        "kind": "ScalarField",
-        "name": "content",
-        "storageKey": null
-      },
-      {
-        "alias": null,
-        "args": null,
-        "kind": "ScalarField",
-        "name": "imageUrl",
-        "storageKey": null
-      },
-      {
-        "alias": null,
-        "args": null,
-        "kind": "ScalarField",
-        "name": "createdAt",
-        "storageKey": null
-      },
-      {
-        "alias": null,
-        "args": null,
-        "kind": "ScalarField",
-        "name": "likeCount",
-        "storageKey": null
-      },
-      {
-        "alias": null,
-        "args": null,
-        "kind": "ScalarField",
-        "name": "likedByMe",
-        "storageKey": null
-      },
-      {
-        "alias": null,
-        "args": null,
-        "kind": "ScalarField",
-        "name": "postId",
-        "storageKey": null
-      }
-    ],
-    "storageKey": null
+    "kind": "Variable",
+    "name": "content",
+    "variableName": "content"
+  },
+  {
+    "kind": "Variable",
+    "name": "imageUrl",
+    "variableName": "imageUrl"
   }
-];
+],
+v2 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "id",
+  "storageKey": null
+};
 return {
   "fragment": {
     "argumentDefinitions": (v0/*: any*/),
     "kind": "Fragment",
     "metadata": null,
     "name": "PostDialogsCreateMutation",
-    "selections": (v1/*: any*/),
+    "selections": [
+      {
+        "alias": null,
+        "args": (v1/*: any*/),
+        "concreteType": "FeedPost",
+        "kind": "LinkedField",
+        "name": "createPost",
+        "plural": false,
+        "selections": [
+          {
+            "args": null,
+            "kind": "FragmentSpread",
+            "name": "FeedCard_post"
+          }
+        ],
+        "storageKey": null
+      }
+    ],
     "type": "Mutation",
     "abstractKey": null
   },
@@ -130,19 +88,128 @@ return {
     "argumentDefinitions": (v0/*: any*/),
     "kind": "Operation",
     "name": "PostDialogsCreateMutation",
-    "selections": (v1/*: any*/)
+    "selections": [
+      {
+        "alias": null,
+        "args": (v1/*: any*/),
+        "concreteType": "FeedPost",
+        "kind": "LinkedField",
+        "name": "createPost",
+        "plural": false,
+        "selections": [
+          (v2/*: any*/),
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "imageUrl",
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "postId",
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "content",
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "createdAt",
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "likeCount",
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "likedByMe",
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "updatedAt",
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "concreteType": "Fren",
+            "kind": "LinkedField",
+            "name": "postedBy",
+            "plural": false,
+            "selections": [
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "frenId",
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "name",
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "email",
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "amFollowing",
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "image",
+                "storageKey": null
+              },
+              (v2/*: any*/)
+            ],
+            "storageKey": null
+          }
+        ],
+        "storageKey": null
+      }
+    ]
   },
   "params": {
-    "cacheID": "b2f048564ac3aca51ee0ca24f1aee5b9",
+    "cacheID": "699f8582a44e00e33639a10ad8616967",
     "id": null,
     "metadata": {},
     "name": "PostDialogsCreateMutation",
     "operationKind": "mutation",
-    "text": "mutation PostDialogsCreateMutation(\n  $content: String!\n  $imageUrl: String\n) {\n  createPost(content: $content, imageUrl: $imageUrl) {\n    id\n    content\n    imageUrl\n    createdAt\n    likeCount\n    likedByMe\n    postId\n  }\n}\n"
+    "text": "mutation PostDialogsCreateMutation(\n  $content: String!\n  $imageUrl: String\n) {\n  createPost(content: $content, imageUrl: $imageUrl) {\n    ...FeedCard_post\n    id\n  }\n}\n\nfragment FeedCard_post on FeedPost {\n  id\n  imageUrl\n  postId\n  content\n  createdAt\n  likeCount\n  likedByMe\n  updatedAt\n  postedBy {\n    frenId\n    name\n    email\n    amFollowing\n    image\n    id\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "57f3e6f6e9a87854e4ded6c40a521d04";
+(node as any).hash = "d633ea46b89f83b05c3a7aec5f0220e9";
 
 export default node;

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<2654650a7ae896180e1e535b98544a5c>>
+ * @generated SignedSource<<f04bc60d0054f1b516d1ed7eaf8eeefa>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -173,6 +173,13 @@ return {
                         "alias": null,
                         "args": null,
                         "kind": "ScalarField",
+                        "name": "frenId",
+                        "storageKey": null
+                      },
+                      {
+                        "alias": null,
+                        "args": null,
+                        "kind": "ScalarField",
                         "name": "name",
                         "storageKey": null
                       },
@@ -268,12 +275,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "310449d6f6b317e60d0b69dda55e83b8",
+    "cacheID": "e10a820a428556a93c9ebdc5da41b30a",
     "id": null,
     "metadata": {},
     "name": "MainFeedContainerQuery",
     "operationKind": "query",
-    "text": "query MainFeedContainerQuery(\n  $first: Int!\n  $after: String\n) {\n  ...MainFeed_feedPosts_2HEEH6\n}\n\nfragment MainFeed_feedPosts_2HEEH6 on Query {\n  feedPosts(first: $first, after: $after) {\n    edges {\n      cursor\n      node {\n        id\n        imageUrl\n        postId\n        content\n        createdAt\n        likeCount\n        likedByMe\n        updatedAt\n        postedBy {\n          name\n          email\n          amFollowing\n          image\n          id\n        }\n        __typename\n      }\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n      hasPreviousPage\n      startCursor\n    }\n  }\n}\n"
+    "text": "query MainFeedContainerQuery(\n  $first: Int!\n  $after: String\n) {\n  ...MainFeed_feedPosts_2HEEH6\n}\n\nfragment FeedCard_post on FeedPost {\n  id\n  imageUrl\n  postId\n  content\n  createdAt\n  likeCount\n  likedByMe\n  updatedAt\n  postedBy {\n    frenId\n    name\n    email\n    amFollowing\n    image\n    id\n  }\n}\n\nfragment MainFeed_feedPosts_2HEEH6 on Query {\n  feedPosts(first: $first, after: $after) {\n    edges {\n      cursor\n      node {\n        id\n        ...FeedCard_post\n        __typename\n      }\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n      hasPreviousPage\n      startCursor\n    }\n  }\n}\n"
   }
 };
 })();

@@ -1,7 +1,7 @@
 import { Button } from "@/components/shadcn/ui/button";
 import { Heart } from "lucide-react";
 import { useState, useOptimistic } from "react";
-import { graphql, useMutation } from "react-relay";
+import { ConnectionHandler, graphql, useMutation } from "react-relay";
 import { LikePostLikeMutation } from "./__generated__/LikePostLikeMutation.graphql";
 import { LikePostUnlikeMutation } from "./__generated__/LikePostUnlikeMutation.graphql";
 import { FeedPostCard } from "./FeedCard";
@@ -10,13 +10,7 @@ import { FeedPostCard } from "./FeedCard";
 const likePostMutation = graphql`
   mutation LikePostLikeMutation($postId: String!) {
     likePost(postId: $postId) {
-      content
-      createdAt
-      id
-      imageUrl
-      likeCount
-      likedByMe
-      updatedAt
+      ...FeedCard_post
     }
   }
 `;
@@ -24,13 +18,7 @@ const likePostMutation = graphql`
 const unlikePostMutation = graphql`
   mutation LikePostUnlikeMutation($postId: String!) {
     unlikePost(postId: $postId) {
-      content
-      createdAt
-      id
-      imageUrl
-      likeCount
-      likedByMe
-      updatedAt
+      ...FeedCard_post
     }
   }
 `;
@@ -55,11 +43,11 @@ export function LikeButton({
   className = "",
 }: LikeButtonProps) {
   // Base state from props
-  const [state, setState] = useState<LikeState>({
+  const state = {
     isLiked: isLiked || false,
     count: likeCount || 0,
-  });
-// Set up the mutations
+  }
+  // Set up the mutations
   const [commitLike, commitingLikepending] = useMutation<LikePostLikeMutation>(likePostMutation);
   const [commitUnlike, commitingUnlikepending] =
     useMutation<LikePostUnlikeMutation>(unlikePostMutation);
@@ -74,26 +62,65 @@ export function LikeButton({
         console.error("Unlike operation failed:", errors);
         return;
       }
-      const likedPost = (response?.likePost || response?.unlikePost) as FeedPostCard;
-      console.log("Like operation completed:", likedPost);
-      // setState((prev) => {
-      //   {
-      //     return {
-      //       isLiked: likedPost?.likedByMe || prev.isLiked,
-      //       count: likedPost?.likeCount || prev.count,
-      //     };
-      //   }
-      // });
     },
+
   };
   const toggleLike = () => {
     if (isLoading) return;
     if (state.isLiked) {
       console.log("unlike post");
-      commitLike(mutationOptions);
+      commitLike({
+        ...mutationOptions,
+        // updater: (store) => {
+        //   // Get the new post record
+        //   const payload = store.getRootField("createPost");
+        //   // Get the connection
+        //   const root = store.getRoot();
+        //   const connection = ConnectionHandler.getConnection(
+        //     root,
+        //     "MainFeed_feedPosts" // This matches your @connection key in MainFeed.tsx
+        //   );
+        //   if (connection && payload) {
+        //     // Create a new edge with the post as the node
+        //     const edge = ConnectionHandler.createEdge(
+        //       store,
+        //       connection,
+        //       payload,
+        //       "QueryFeedPostsConnectionEdge" // Edge type from your schema
+        //     );
+
+        //     // Insert at the beginning of the feed
+        //     ConnectionHandler.insertEdgeBefore(connection, edge);
+        //   }
+        // },
+      });
     } else {
       console.log("like post");
-      commitUnlike(mutationOptions);
+      commitUnlike({
+        ...mutationOptions,
+        // updater: (store) => {
+        //   // Get the new post record
+        //   const payload = store.getRootField("createPost");
+        //   // Get the connection
+        //   const root = store.getRoot();
+        //   const connection = ConnectionHandler.getConnection(
+        //     root,
+        //     "MainFeed_feedPosts" // This matches your @connection key in MainFeed.tsx
+        //   );
+        //   if (connection && payload) {
+        //     // Create a new edge with the post as the node
+        //     const edge = ConnectionHandler.createEdge(
+        //       store,
+        //       connection,
+        //       payload,
+        //       "QueryFeedPostsConnectionEdge" // Edge type from your schema
+        //     );
+
+        //     // Insert at the beginning of the feed
+        //     ConnectionHandler.insertEdgeBefore(connection, edge);
+        //   }
+        // },
+      });
     }
   };
 

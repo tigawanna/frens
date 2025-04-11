@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<292e05bcb08429a4a4b25db3517e168f>>
+ * @generated SignedSource<<58942ba88da76eac18e826899bc7c872>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -15,20 +15,8 @@ export type MainFeed_feedPosts$data = {
     readonly edges: ReadonlyArray<{
       readonly cursor: string;
       readonly node: {
-        readonly content: string | null | undefined;
-        readonly createdAt: string | null | undefined;
         readonly id: string;
-        readonly imageUrl: string | null | undefined;
-        readonly likeCount: number | null | undefined;
-        readonly likedByMe: boolean | null | undefined;
-        readonly postId: string;
-        readonly postedBy: {
-          readonly amFollowing: boolean | null | undefined;
-          readonly email: string;
-          readonly image: string | null | undefined;
-          readonly name: string;
-        } | null | undefined;
-        readonly updatedAt: string | null | undefined;
+        readonly " $fragmentSpreads": FragmentRefs<"FeedCard_post">;
       } | null | undefined;
     } | null | undefined> | null | undefined;
     readonly pageInfo: {
@@ -128,92 +116,9 @@ return {
                   "storageKey": null
                 },
                 {
-                  "alias": null,
                   "args": null,
-                  "kind": "ScalarField",
-                  "name": "imageUrl",
-                  "storageKey": null
-                },
-                {
-                  "alias": null,
-                  "args": null,
-                  "kind": "ScalarField",
-                  "name": "postId",
-                  "storageKey": null
-                },
-                {
-                  "alias": null,
-                  "args": null,
-                  "kind": "ScalarField",
-                  "name": "content",
-                  "storageKey": null
-                },
-                {
-                  "alias": null,
-                  "args": null,
-                  "kind": "ScalarField",
-                  "name": "createdAt",
-                  "storageKey": null
-                },
-                {
-                  "alias": null,
-                  "args": null,
-                  "kind": "ScalarField",
-                  "name": "likeCount",
-                  "storageKey": null
-                },
-                {
-                  "alias": null,
-                  "args": null,
-                  "kind": "ScalarField",
-                  "name": "likedByMe",
-                  "storageKey": null
-                },
-                {
-                  "alias": null,
-                  "args": null,
-                  "kind": "ScalarField",
-                  "name": "updatedAt",
-                  "storageKey": null
-                },
-                {
-                  "alias": null,
-                  "args": null,
-                  "concreteType": "Fren",
-                  "kind": "LinkedField",
-                  "name": "postedBy",
-                  "plural": false,
-                  "selections": [
-                    {
-                      "alias": null,
-                      "args": null,
-                      "kind": "ScalarField",
-                      "name": "name",
-                      "storageKey": null
-                    },
-                    {
-                      "alias": null,
-                      "args": null,
-                      "kind": "ScalarField",
-                      "name": "email",
-                      "storageKey": null
-                    },
-                    {
-                      "alias": null,
-                      "args": null,
-                      "kind": "ScalarField",
-                      "name": "amFollowing",
-                      "storageKey": null
-                    },
-                    {
-                      "alias": null,
-                      "args": null,
-                      "kind": "ScalarField",
-                      "name": "image",
-                      "storageKey": null
-                    }
-                  ],
-                  "storageKey": null
+                  "kind": "FragmentSpread",
+                  "name": "FeedCard_post"
                 },
                 {
                   "alias": null,
@@ -276,6 +181,6 @@ return {
 };
 })();
 
-(node as any).hash = "bda6bfb23b49257c533e0b9061ab1ec6";
+(node as any).hash = "ff9d6a0339581414b1161b738748c03b";
 
 export default node;

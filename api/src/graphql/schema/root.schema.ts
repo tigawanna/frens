@@ -4,6 +4,7 @@ import { FollowInput, SortInput } from "./inputs";
 import { Fren, ViewerFren } from "./fren.types";
 import { FeedPost } from "./post.type";
 import { lexicographicSortSchema, printSchema } from "graphql";
+import { console } from "inspector";
 
 // root query type
 builder.queryType({
@@ -133,7 +134,6 @@ builder.mutationType({
       },
       resolve: async (query, root, args, ctx, info) => {
         // Check if the user is authenticated
-        console.log("current user === ",ctx.currentUser);
         if (!ctx.currentUser?.id) {
           throw new Error("User not authenticated");
         }
@@ -223,6 +223,9 @@ builder.mutationType({
         postId: t.arg.string({ required: true }),
       },
       resolve: async (query, root, args, ctx, info) => {
+        console.log(' === like post  === ',args.postId)
+        console.log('ctx.currentUser === ', ctx.currentUser)
+        console.log(' === args === ', args)
         // Check if the user is authenticated
         if (!ctx.currentUser?.id) {
           throw new Error("User not authenticated");
@@ -237,28 +240,41 @@ builder.mutationType({
           throw new Error(`Post with ID ${args.postId} not found`);
         }
         
-        // Check if like already exists
-        const existingLike = await prisma.like.findFirst({
+        const upsertLike = await prisma.like.upsert({
           where: {
+            userId_postId: {
+              postId: args.postId,
+              userId: ctx.currentUser.id,
+            },
+          },
+          update: {},
+          create: {
             postId: args.postId,
             userId: ctx.currentUser.id,
+            // include any other required fields
           },
-        });
+        })
+        console.log("upsertLike === ",upsertLike)
+        // Check if like exists first
+        // const existingLike = await prisma.like.findUnique({
+        //   where: {
+        //     userId_postId: {
+        //       postId: args.postId,
+        //       userId: ctx.currentUser.id,
+        //     },
+        //   },
+        // });
 
-        // Create like if it doesn't exist
-        if (!existingLike) {
-          try {
-            await prisma.like.create({
-              data: {
-                postId: args.postId,
-                userId: ctx.currentUser.id,
-              },
-            });
-          } catch (error) {
-            console.error("Error creating like:", error);
-            throw new Error("Failed to like post. The post may have been deleted.");
-          }
-        }
+        // Only create if it doesn't exist
+        // if (!existingLike) {
+        //   await prisma.like.create({
+        //     data: {
+        //       postId: args.postId,
+        //       userId: ctx.currentUser.id,
+        //       // include any other required fields
+        //     },
+        //   });
+        // }
 
         // Return the updated post
         return prisma.post.findUniqueOrThrow({
@@ -268,6 +284,37 @@ builder.mutationType({
       },
     }),
 
+    toggleLikedPost: t.prismaField({
+      type: FeedPost,
+      args: {
+        postId: t.arg.string({ required: true }),
+      },
+      resolve: async (query, root, args, ctx, info) => {
+        console.log(' === toggle like post  === ',args.postId)
+        console.log('ctx.currentUser === ', ctx.currentUser)
+        // Check if the user is authenticated
+        if (!ctx.currentUser?.id) {
+          throw new Error("User not authenticated");
+        }
+        // Check if the post exists
+        const post = await prisma.like.create({
+          data: {
+            postId: args.postId,
+            userId: ctx.currentUser.id,
+          },
+        })
+
+
+        return prisma.post.findUniqueOrThrow({
+          ...query,
+          where: { id: args.postId },
+        });
+
+
+      }
+
+    }),
+
     // Unlike post mutation
     unlikePost: t.prismaField({
       type: FeedPost,
@@ -275,6 +322,11 @@ builder.mutationType({
         postId: t.arg.string({ required: true }),
       },
       resolve: async (query, root, args, ctx, info) => {
+
+       console.log(' === unlike post  === ')
+        console.log('ctx.currentUser === ', ctx.currentUser)
+        console.log(' === args === ', args)
+
         // Check if the user is authenticated
         if (!ctx.currentUser?.id) {
           throw new Error("User not authenticated");

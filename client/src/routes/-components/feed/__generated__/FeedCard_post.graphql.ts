@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<342535510b09ebccf178f64fc46b6ae2>>
+ * @generated SignedSource<<8564a3cea545600badccffb2618c36b1>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -21,6 +21,7 @@ export type FeedCard_post$data = {
   readonly postedBy: {
     readonly amFollowing: boolean | null | undefined;
     readonly email: string;
+    readonly frenId: string;
     readonly image: string | null | undefined;
     readonly name: string;
   } | null | undefined;
@@ -106,6 +107,13 @@ const node: ReaderFragment = {
           "alias": null,
           "args": null,
           "kind": "ScalarField",
+          "name": "frenId",
+          "storageKey": null
+        },
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
           "name": "name",
           "storageKey": null
         },
@@ -138,6 +146,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "8b87cbd878034d56d84805c22ad005b6";
+(node as any).hash = "5d4b6325c1faecd619800ef336fdc160";
 
 export default node;
