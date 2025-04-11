@@ -1,7 +1,9 @@
+import { CardsListSuspenseFallback } from "@/components/wrappers/GenericDataCardsListSuspenseFallback copy";
 import { authGuard } from "@/lib/viewer/auth0guard";
 import { createFileRoute } from "@tanstack/react-router";
-import { MyFrensContainer, FrensSuspenseFallBck } from "./-components/MyFrensContainer";
+
 import { Suspense } from "react";
+import { Me } from "./-components/Me";
 
 
 export const Route = createFileRoute("/frens/")({
@@ -14,8 +16,8 @@ export const Route = createFileRoute("/frens/")({
 function RouteComponent() {
   return (
     <div className="flex flex-col gap-4">
-      <Suspense fallback={<FrensSuspenseFallBck />}>
-        <MyFrensContainer />
+      <Suspense fallback={<CardsListSuspenseFallback />}>
+        <Me/>
       </Suspense>
     </div>
   );

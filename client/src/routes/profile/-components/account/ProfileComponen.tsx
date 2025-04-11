@@ -3,7 +3,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/shadcn/ui
 import { AccountStatusTab } from "./AccountStatusTab";
 import { AccountDetailsTab } from "./AccountDetailsTab";
 import { OverviewTab } from "./OverviewTab";
-import { ProfileHeader } from "../ProfileHeader";
+import { ProfileHeader } from "./ProfileHeader";
 import { NotSignedIn } from "@/lib/viewer/cmponents/NotSignedin";
 import { AccountSettings } from "./AccountSettings";
 

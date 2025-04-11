@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<dd76e34c827497dd485ca6b4cf0f3d13>>
+ * @generated SignedSource<<3ee55176e55fd0f8d09e71dd1bc9bea1>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,15 +11,13 @@
 import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type MyFrensContainer_user$data = {
-  readonly me: {
-    readonly email: string;
-    readonly followerCount: number | null | undefined;
-    readonly followingCount: number | null | undefined;
-    readonly frenId: string;
-    readonly id: string;
-    readonly image: string | null | undefined;
-    readonly name: string;
-  } | null | undefined;
+  readonly email: string;
+  readonly followerCount: number | null | undefined;
+  readonly followingCount: number | null | undefined;
+  readonly frenId: string;
+  readonly id: string;
+  readonly image: string | null | undefined;
+  readonly name: string;
   readonly " $fragmentType": "MyFrensContainer_user";
 };
 export type MyFrensContainer_user$key = {
@@ -36,68 +34,57 @@ const node: ReaderFragment = {
     {
       "alias": null,
       "args": null,
-      "concreteType": "Fren",
-      "kind": "LinkedField",
-      "name": "me",
-      "plural": false,
-      "selections": [
-        {
-          "alias": null,
-          "args": null,
-          "kind": "ScalarField",
-          "name": "id",
-          "storageKey": null
-        },
-        {
-          "alias": null,
-          "args": null,
-          "kind": "ScalarField",
-          "name": "name",
-          "storageKey": null
-        },
-        {
-          "alias": null,
-          "args": null,
-          "kind": "ScalarField",
-          "name": "email",
-          "storageKey": null
-        },
-        {
-          "alias": null,
-          "args": null,
-          "kind": "ScalarField",
-          "name": "image",
-          "storageKey": null
-        },
-        {
-          "alias": null,
-          "args": null,
-          "kind": "ScalarField",
-          "name": "frenId",
-          "storageKey": null
-        },
-        {
-          "alias": null,
-          "args": null,
-          "kind": "ScalarField",
-          "name": "followerCount",
-          "storageKey": null
-        },
-        {
-          "alias": null,
-          "args": null,
-          "kind": "ScalarField",
-          "name": "followingCount",
-          "storageKey": null
-        }
-      ],
+      "kind": "ScalarField",
+      "name": "id",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "name",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "email",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "image",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "frenId",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "followerCount",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "followingCount",
       "storageKey": null
     }
   ],
-  "type": "Query",
+  "type": "Fren",
   "abstractKey": null
 };
 
-(node as any).hash = "2ff14693c7cf60f9d8e24d252d2a6d45";
+(node as any).hash = "611c821e2b558ca23bb175f737431245";
 
 export default node;
