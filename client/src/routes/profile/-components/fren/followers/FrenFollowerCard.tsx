@@ -2,7 +2,7 @@ import { Card } from "@/components/shadcn/ui/card";
 import { Button } from "@/components/shadcn/ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/shadcn/ui/avatar";
 import { UserCircle } from "lucide-react";
-import { graphql } from "relay-runtime";
+import { ConnectionHandler, graphql } from "relay-runtime";
 import { useFragment, useMutation } from "react-relay";
 import { FrenFollowerCard_follower$key } from "./__generated__/FrenFollowerCard_follower.graphql";
 import { Link } from "@tanstack/react-router";
@@ -41,6 +41,29 @@ export function FrenFollowerCard({ followerRef }: FrenFollowerCardProps) {
           userId: follower.frenId,
         },
       },
+            updater: (store) => {
+              // Get the new post record
+              const payload = store.getRootField("follow");
+              // Get the connection
+              const root = store.getRoot();
+              const connection = ConnectionHandler.getConnection(
+                root,
+                "FrenFollowers_followers" // This matches your @connection key in MainFeed.tsx
+              );
+              if (connection && payload) {
+                // Create a new edge with the post as the node
+                const edge = ConnectionHandler.createEdge(
+                  store,
+                  connection,
+                  payload,
+                  "FrenFollowersConnectionEdge" // Edge type from your schema
+                );
+      
+                // Insert at the beginning of the feed
+                // ConnectionHandler.insertEdgeBefore(connection, edge);
+                ConnectionHandler.deleteNode(connection, follower.id);
+              }
+            },
     });
   };
 
