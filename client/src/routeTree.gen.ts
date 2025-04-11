@@ -12,6 +12,7 @@
 
 import { Route as rootRoute } from './routes/__root'
 import { Route as AboutImport } from './routes/about'
+import { Route as ProfileLayoutImport } from './routes/profile/layout'
 import { Route as AuthLayoutImport } from './routes/auth/layout'
 import { Route as IndexImport } from './routes/index'
 import { Route as ProfileIndexImport } from './routes/profile/index'
@@ -20,12 +21,19 @@ import { Route as AuthIndexImport } from './routes/auth/index'
 import { Route as AdminIndexImport } from './routes/admin/index'
 import { Route as AuthSignupImport } from './routes/auth/signup'
 import { Route as AuthForgortPasswordImport } from './routes/auth/forgort-password'
+import { Route as ProfileAccountIndexImport } from './routes/profile/account/index'
 
 // Create/Update Routes
 
 const AboutRoute = AboutImport.update({
   id: '/about',
   path: '/about',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const ProfileLayoutRoute = ProfileLayoutImport.update({
+  id: '/profile',
+  path: '/profile',
   getParentRoute: () => rootRoute,
 } as any)
 
@@ -42,9 +50,9 @@ const IndexRoute = IndexImport.update({
 } as any)
 
 const ProfileIndexRoute = ProfileIndexImport.update({
-  id: '/profile/',
-  path: '/profile/',
-  getParentRoute: () => rootRoute,
+  id: '/',
+  path: '/',
+  getParentRoute: () => ProfileLayoutRoute,
 } as any)
 
 const FrensIndexRoute = FrensIndexImport.update({
@@ -77,6 +85,12 @@ const AuthForgortPasswordRoute = AuthForgortPasswordImport.update({
   getParentRoute: () => AuthLayoutRoute,
 } as any)
 
+const ProfileAccountIndexRoute = ProfileAccountIndexImport.update({
+  id: '/account/',
+  path: '/account/',
+  getParentRoute: () => ProfileLayoutRoute,
+} as any)
+
 // Populate the FileRoutesByPath interface
 
 declare module '@tanstack/react-router' {
@@ -93,6 +107,13 @@ declare module '@tanstack/react-router' {
       path: '/auth'
       fullPath: '/auth'
       preLoaderRoute: typeof AuthLayoutImport
+      parentRoute: typeof rootRoute
+    }
+    '/profile': {
+      id: '/profile'
+      path: '/profile'
+      fullPath: '/profile'
+      preLoaderRoute: typeof ProfileLayoutImport
       parentRoute: typeof rootRoute
     }
     '/about': {
@@ -139,10 +160,17 @@ declare module '@tanstack/react-router' {
     }
     '/profile/': {
       id: '/profile/'
-      path: '/profile'
-      fullPath: '/profile'
+      path: '/'
+      fullPath: '/profile/'
       preLoaderRoute: typeof ProfileIndexImport
-      parentRoute: typeof rootRoute
+      parentRoute: typeof ProfileLayoutImport
+    }
+    '/profile/account/': {
+      id: '/profile/account/'
+      path: '/account'
+      fullPath: '/profile/account'
+      preLoaderRoute: typeof ProfileAccountIndexImport
+      parentRoute: typeof ProfileLayoutImport
     }
   }
 }
@@ -165,16 +193,32 @@ const AuthLayoutRouteWithChildren = AuthLayoutRoute._addFileChildren(
   AuthLayoutRouteChildren,
 )
 
+interface ProfileLayoutRouteChildren {
+  ProfileIndexRoute: typeof ProfileIndexRoute
+  ProfileAccountIndexRoute: typeof ProfileAccountIndexRoute
+}
+
+const ProfileLayoutRouteChildren: ProfileLayoutRouteChildren = {
+  ProfileIndexRoute: ProfileIndexRoute,
+  ProfileAccountIndexRoute: ProfileAccountIndexRoute,
+}
+
+const ProfileLayoutRouteWithChildren = ProfileLayoutRoute._addFileChildren(
+  ProfileLayoutRouteChildren,
+)
+
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/auth': typeof AuthLayoutRouteWithChildren
+  '/profile': typeof ProfileLayoutRouteWithChildren
   '/about': typeof AboutRoute
   '/auth/forgort-password': typeof AuthForgortPasswordRoute
   '/auth/signup': typeof AuthSignupRoute
   '/admin': typeof AdminIndexRoute
   '/auth/': typeof AuthIndexRoute
   '/frens': typeof FrensIndexRoute
-  '/profile': typeof ProfileIndexRoute
+  '/profile/': typeof ProfileIndexRoute
+  '/profile/account': typeof ProfileAccountIndexRoute
 }
 
 export interface FileRoutesByTo {
@@ -186,12 +230,14 @@ export interface FileRoutesByTo {
   '/auth': typeof AuthIndexRoute
   '/frens': typeof FrensIndexRoute
   '/profile': typeof ProfileIndexRoute
+  '/profile/account': typeof ProfileAccountIndexRoute
 }
 
 export interface FileRoutesById {
   __root__: typeof rootRoute
   '/': typeof IndexRoute
   '/auth': typeof AuthLayoutRouteWithChildren
+  '/profile': typeof ProfileLayoutRouteWithChildren
   '/about': typeof AboutRoute
   '/auth/forgort-password': typeof AuthForgortPasswordRoute
   '/auth/signup': typeof AuthSignupRoute
@@ -199,6 +245,7 @@ export interface FileRoutesById {
   '/auth/': typeof AuthIndexRoute
   '/frens/': typeof FrensIndexRoute
   '/profile/': typeof ProfileIndexRoute
+  '/profile/account/': typeof ProfileAccountIndexRoute
 }
 
 export interface FileRouteTypes {
@@ -206,13 +253,15 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/auth'
+    | '/profile'
     | '/about'
     | '/auth/forgort-password'
     | '/auth/signup'
     | '/admin'
     | '/auth/'
     | '/frens'
-    | '/profile'
+    | '/profile/'
+    | '/profile/account'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -223,10 +272,12 @@ export interface FileRouteTypes {
     | '/auth'
     | '/frens'
     | '/profile'
+    | '/profile/account'
   id:
     | '__root__'
     | '/'
     | '/auth'
+    | '/profile'
     | '/about'
     | '/auth/forgort-password'
     | '/auth/signup'
@@ -234,25 +285,26 @@ export interface FileRouteTypes {
     | '/auth/'
     | '/frens/'
     | '/profile/'
+    | '/profile/account/'
   fileRoutesById: FileRoutesById
 }
 
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AuthLayoutRoute: typeof AuthLayoutRouteWithChildren
+  ProfileLayoutRoute: typeof ProfileLayoutRouteWithChildren
   AboutRoute: typeof AboutRoute
   AdminIndexRoute: typeof AdminIndexRoute
   FrensIndexRoute: typeof FrensIndexRoute
-  ProfileIndexRoute: typeof ProfileIndexRoute
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AuthLayoutRoute: AuthLayoutRouteWithChildren,
+  ProfileLayoutRoute: ProfileLayoutRouteWithChildren,
   AboutRoute: AboutRoute,
   AdminIndexRoute: AdminIndexRoute,
   FrensIndexRoute: FrensIndexRoute,
-  ProfileIndexRoute: ProfileIndexRoute,
 }
 
 export const routeTree = rootRoute
@@ -267,10 +319,10 @@ export const routeTree = rootRoute
       "children": [
         "/",
         "/auth",
+        "/profile",
         "/about",
         "/admin/",
-        "/frens/",
-        "/profile/"
+        "/frens/"
       ]
     },
     "/": {
@@ -282,6 +334,13 @@ export const routeTree = rootRoute
         "/auth/forgort-password",
         "/auth/signup",
         "/auth/"
+      ]
+    },
+    "/profile": {
+      "filePath": "profile/layout.tsx",
+      "children": [
+        "/profile/",
+        "/profile/account/"
       ]
     },
     "/about": {
@@ -306,7 +365,12 @@ export const routeTree = rootRoute
       "filePath": "frens/index.tsx"
     },
     "/profile/": {
-      "filePath": "profile/index.tsx"
+      "filePath": "profile/index.tsx",
+      "parent": "/profile"
+    },
+    "/profile/account/": {
+      "filePath": "profile/account/index.tsx",
+      "parent": "/profile"
     }
   }
 }

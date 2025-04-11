@@ -3,7 +3,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { MainDrawer } from "../components/navigation/drawer/MainDrawer";
 import { MainDrawerLinks } from "../components/navigation/drawer/MainDrawerLinks";
 import { MainDrawerFooter } from "@/components/navigation/drawer/MainDrawerFooter";
-import { BulkusresCreate } from "./profile/-components/BulkusresCreate";
+import { BulkusresCreate } from "./profile/-components/account/BulkusresCreate";
 import MainFeedWrapper from "./-components/feed/MainFeedContainer";
 
 export const Route = createFileRoute("/")({

@@ -1,33 +1,38 @@
 import { authClient } from "@/lib/better-auth/auth-client";
 import { BetterAthViewer } from "@/lib/viewer/use-viewer";
 import { useSuspenseQuery } from "@tanstack/react-query";
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/shadcn/ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/shadcn/ui/card";
 import { Badge } from "@/components/shadcn/ui/badge";
 import { formatDistanceToNow } from "date-fns";
-import { Copy, Key } from "lucide-react";
+import { Copy, FileWarningIcon, Key } from "lucide-react";
 import { makeHotToast } from "@/components/toasters";
 import { Button } from "@/components/shadcn/ui/button";
 import { CreateApiKeyButton } from "./CreateApikey";
 import { DeleteKey } from "./DeleteAPIKey";
 
-
 interface AccountApikeysProps {
   viewer: BetterAthViewer;
 }
 
-export function AccountApikeys({viewer}:AccountApikeysProps){
+export function AccountApikeys({ viewer }: AccountApikeysProps) {
   const query = useSuspenseQuery({
     queryKey: ["viwer", viewer.id, "apikeys"],
-    queryFn:async()=>{
-        const result = await authClient.apiKey.list();
-        return result;
-    }
-  }) 
+    queryFn: async () => {
+      const result = await authClient.apiKey.list();
+      return result;
+    },
+  });
 
-  
-  const apiKeys = query.data.data
-  const error = query.data.error
-  
+  const apiKeys = query.data.data;
+  const error = query.data.error;
+
   const copyToClipboard = (text: string) => {
     navigator.clipboard.writeText(text);
     makeHotToast({
@@ -35,10 +40,10 @@ export function AccountApikeys({viewer}:AccountApikeysProps){
       description: "API key copied to clipboard",
       duration: 2000,
       variant: "success",
-    })
+    });
   };
 
-  if(!apiKeys || apiKeys.length === 0 || error) {
+  if (!apiKeys || apiKeys.length === 0 || error) {
     return (
       <div className="w-full min-h-[60vh] h-full flex items-center justify-center">
         <Card className="w-full max-w-md border-dashed">
@@ -51,7 +56,7 @@ export function AccountApikeys({viewer}:AccountApikeysProps){
               </p>
             </div>
             {/* <Button className="mt-2 bg-primary/70 text-primary-content">Create API Key</Button> */}
-            <CreateApiKeyButton/>
+            <CreateApiKeyButton />
           </CardContent>
         </Card>
       </div>
@@ -60,9 +65,9 @@ export function AccountApikeys({viewer}:AccountApikeysProps){
 
   return (
     <div className="w-full flex flex-col gap-4">
-    <div className="w-full flex flex-col items-end gap-4">
-      <CreateApiKeyButton/>
-    </div>
+      <div className="w-full flex flex-col items-end gap-4">
+        <CreateApiKeyButton />
+      </div>
 
       {apiKeys.map((apiKey) => (
         <Card key={apiKey.id} className="w-full">
@@ -82,13 +87,13 @@ export function AccountApikeys({viewer}:AccountApikeysProps){
                 )}
               </div>
             </div>
-            <CardDescription className="flex items-center mt-1">
-              <div className="font-mono bg-muted p-1 px-2 rounded text-xs flex items-center">
-                {apiKey.id}
-                <button className="btn btn-sm" onClick={() => copyToClipboard(apiKey.id)}>
-                  <Copy className="h-3 w-3" />
-                </button>
-              </div>
+            <CardDescription className="flex flex-col  mt-1">
+                Key ID:{apiKey.id}
+                <span className="text-sm italic text-warning-content/60 flex gap-2 items-center">
+                  <FileWarningIcon className="size-4" /> This isn't the actual key , if you lost it consider deleting
+                  this one and cratinga anew one
+                </span>
+        
             </CardDescription>
           </CardHeader>
           <CardContent className="pb-2">
@@ -144,4 +149,3 @@ export function AccountApikeys({viewer}:AccountApikeysProps){
     </div>
   );
 }
-
