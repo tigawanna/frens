@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<6bd67a00e9334b79f8c4fd2ace2ed05a>>
+ * @generated SignedSource<<dd76e34c827497dd485ca6b4cf0f3d13>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -20,7 +20,6 @@ export type MyFrensContainer_user$data = {
     readonly image: string | null | undefined;
     readonly name: string;
   } | null | undefined;
-  readonly " $fragmentSpreads": FragmentRefs<"Followers_query" | "Following_query">;
   readonly " $fragmentType": "MyFrensContainer_user";
 };
 export type MyFrensContainer_user$key = {
@@ -93,22 +92,12 @@ const node: ReaderFragment = {
         }
       ],
       "storageKey": null
-    },
-    {
-      "args": null,
-      "kind": "FragmentSpread",
-      "name": "Followers_query"
-    },
-    {
-      "args": null,
-      "kind": "FragmentSpread",
-      "name": "Following_query"
     }
   ],
   "type": "Query",
   "abstractKey": null
 };
 
-(node as any).hash = "6e9645c8b9f95426b86b586898311a7c";
+(node as any).hash = "2ff14693c7cf60f9d8e24d252d2a6d45";
 
 export default node;
