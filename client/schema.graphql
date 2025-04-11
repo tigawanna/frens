@@ -87,9 +87,9 @@ type FrenPostsConnectionEdge {
 type Mutation {
   createPost(content: String!, imageUrl: String): FeedPost
   deletePost(id: String!): Boolean
-  follow(input: FollowInput!): Fren
+  follow(input: FollowInput!): Follower
   toggleLiked(postId: String!): FeedPost
-  unfollow(input: FollowInput!): Fren
+  unfollow(input: FollowInput!): Follower
   updatePost(content: String, id: String!, imageUrl: String): FeedPost
 }
 

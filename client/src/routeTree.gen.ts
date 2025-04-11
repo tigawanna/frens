@@ -22,6 +22,7 @@ import { Route as AdminIndexImport } from './routes/admin/index'
 import { Route as AuthSignupImport } from './routes/auth/signup'
 import { Route as AuthForgortPasswordImport } from './routes/auth/forgort-password'
 import { Route as ProfileAccountIndexImport } from './routes/profile/account/index'
+import { Route as ProfileFrenIdIndexImport } from './routes/profile/$frenId/index'
 
 // Create/Update Routes
 
@@ -88,6 +89,12 @@ const AuthForgortPasswordRoute = AuthForgortPasswordImport.update({
 const ProfileAccountIndexRoute = ProfileAccountIndexImport.update({
   id: '/account/',
   path: '/account/',
+  getParentRoute: () => ProfileLayoutRoute,
+} as any)
+
+const ProfileFrenIdIndexRoute = ProfileFrenIdIndexImport.update({
+  id: '/$frenId/',
+  path: '/$frenId/',
   getParentRoute: () => ProfileLayoutRoute,
 } as any)
 
@@ -165,6 +172,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ProfileIndexImport
       parentRoute: typeof ProfileLayoutImport
     }
+    '/profile/$frenId/': {
+      id: '/profile/$frenId/'
+      path: '/$frenId'
+      fullPath: '/profile/$frenId'
+      preLoaderRoute: typeof ProfileFrenIdIndexImport
+      parentRoute: typeof ProfileLayoutImport
+    }
     '/profile/account/': {
       id: '/profile/account/'
       path: '/account'
@@ -195,11 +209,13 @@ const AuthLayoutRouteWithChildren = AuthLayoutRoute._addFileChildren(
 
 interface ProfileLayoutRouteChildren {
   ProfileIndexRoute: typeof ProfileIndexRoute
+  ProfileFrenIdIndexRoute: typeof ProfileFrenIdIndexRoute
   ProfileAccountIndexRoute: typeof ProfileAccountIndexRoute
 }
 
 const ProfileLayoutRouteChildren: ProfileLayoutRouteChildren = {
   ProfileIndexRoute: ProfileIndexRoute,
+  ProfileFrenIdIndexRoute: ProfileFrenIdIndexRoute,
   ProfileAccountIndexRoute: ProfileAccountIndexRoute,
 }
 
@@ -218,6 +234,7 @@ export interface FileRoutesByFullPath {
   '/auth/': typeof AuthIndexRoute
   '/frens': typeof FrensIndexRoute
   '/profile/': typeof ProfileIndexRoute
+  '/profile/$frenId': typeof ProfileFrenIdIndexRoute
   '/profile/account': typeof ProfileAccountIndexRoute
 }
 
@@ -230,6 +247,7 @@ export interface FileRoutesByTo {
   '/auth': typeof AuthIndexRoute
   '/frens': typeof FrensIndexRoute
   '/profile': typeof ProfileIndexRoute
+  '/profile/$frenId': typeof ProfileFrenIdIndexRoute
   '/profile/account': typeof ProfileAccountIndexRoute
 }
 
@@ -245,6 +263,7 @@ export interface FileRoutesById {
   '/auth/': typeof AuthIndexRoute
   '/frens/': typeof FrensIndexRoute
   '/profile/': typeof ProfileIndexRoute
+  '/profile/$frenId/': typeof ProfileFrenIdIndexRoute
   '/profile/account/': typeof ProfileAccountIndexRoute
 }
 
@@ -261,6 +280,7 @@ export interface FileRouteTypes {
     | '/auth/'
     | '/frens'
     | '/profile/'
+    | '/profile/$frenId'
     | '/profile/account'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -272,6 +292,7 @@ export interface FileRouteTypes {
     | '/auth'
     | '/frens'
     | '/profile'
+    | '/profile/$frenId'
     | '/profile/account'
   id:
     | '__root__'
@@ -285,6 +306,7 @@ export interface FileRouteTypes {
     | '/auth/'
     | '/frens/'
     | '/profile/'
+    | '/profile/$frenId/'
     | '/profile/account/'
   fileRoutesById: FileRoutesById
 }
@@ -340,6 +362,7 @@ export const routeTree = rootRoute
       "filePath": "profile/layout.tsx",
       "children": [
         "/profile/",
+        "/profile/$frenId/",
         "/profile/account/"
       ]
     },
@@ -366,6 +389,10 @@ export const routeTree = rootRoute
     },
     "/profile/": {
       "filePath": "profile/index.tsx",
+      "parent": "/profile"
+    },
+    "/profile/$frenId/": {
+      "filePath": "profile/$frenId/index.tsx",
       "parent": "/profile"
     },
     "/profile/account/": {

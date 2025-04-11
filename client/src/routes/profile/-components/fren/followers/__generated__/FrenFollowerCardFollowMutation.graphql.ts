@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<43dac8bbeeea9302bc577c6d3f6cb299>>
+ * @generated SignedSource<<663879bf5fcbb8f3d6a7008f49b31bbd>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -9,6 +9,7 @@
 // @ts-nocheck
 
 import { ConcreteRequest } from 'relay-runtime';
+import { FragmentRefs } from "relay-runtime";
 export type FollowInput = {
   userId: string;
 };
@@ -17,8 +18,7 @@ export type FrenFollowerCardFollowMutation$variables = {
 };
 export type FrenFollowerCardFollowMutation$data = {
   readonly follow: {
-    readonly amFollowing: boolean | null | undefined;
-    readonly id: string;
+    readonly " $fragmentSpreads": FragmentRefs<"FrenFollowerCard_follower">;
   } | null | undefined;
 };
 export type FrenFollowerCardFollowMutation = {
@@ -36,35 +36,9 @@ var v0 = [
 ],
 v1 = [
   {
-    "alias": null,
-    "args": [
-      {
-        "kind": "Variable",
-        "name": "input",
-        "variableName": "input"
-      }
-    ],
-    "concreteType": "Fren",
-    "kind": "LinkedField",
-    "name": "follow",
-    "plural": false,
-    "selections": [
-      {
-        "alias": null,
-        "args": null,
-        "kind": "ScalarField",
-        "name": "id",
-        "storageKey": null
-      },
-      {
-        "alias": null,
-        "args": null,
-        "kind": "ScalarField",
-        "name": "amFollowing",
-        "storageKey": null
-      }
-    ],
-    "storageKey": null
+    "kind": "Variable",
+    "name": "input",
+    "variableName": "input"
   }
 ];
 return {
@@ -73,7 +47,24 @@ return {
     "kind": "Fragment",
     "metadata": null,
     "name": "FrenFollowerCardFollowMutation",
-    "selections": (v1/*: any*/),
+    "selections": [
+      {
+        "alias": null,
+        "args": (v1/*: any*/),
+        "concreteType": "Follower",
+        "kind": "LinkedField",
+        "name": "follow",
+        "plural": false,
+        "selections": [
+          {
+            "args": null,
+            "kind": "FragmentSpread",
+            "name": "FrenFollowerCard_follower"
+          }
+        ],
+        "storageKey": null
+      }
+    ],
     "type": "Mutation",
     "abstractKey": null
   },
@@ -82,19 +73,66 @@ return {
     "argumentDefinitions": (v0/*: any*/),
     "kind": "Operation",
     "name": "FrenFollowerCardFollowMutation",
-    "selections": (v1/*: any*/)
+    "selections": [
+      {
+        "alias": null,
+        "args": (v1/*: any*/),
+        "concreteType": "Follower",
+        "kind": "LinkedField",
+        "name": "follow",
+        "plural": false,
+        "selections": [
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "id",
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "frenId",
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "name",
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "email",
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "image",
+            "storageKey": null
+          }
+        ],
+        "storageKey": null
+      }
+    ]
   },
   "params": {
-    "cacheID": "62f5c398c3230bd818d2d19da6af0f7e",
+    "cacheID": "e500d136ff849ec41aa0144a0d89e020",
     "id": null,
     "metadata": {},
     "name": "FrenFollowerCardFollowMutation",
     "operationKind": "mutation",
-    "text": "mutation FrenFollowerCardFollowMutation(\n  $input: FollowInput!\n) {\n  follow(input: $input) {\n    id\n    amFollowing\n  }\n}\n"
+    "text": "mutation FrenFollowerCardFollowMutation(\n  $input: FollowInput!\n) {\n  follow(input: $input) {\n    ...FrenFollowerCard_follower\n    id\n  }\n}\n\nfragment FrenFollowerCard_follower on Follower {\n  id\n  frenId\n  name\n  email\n  image\n}\n"
   }
 };
 })();
 
-(node as any).hash = "26abde7e8ea8af79b4cec8accddd2291";
+(node as any).hash = "621e7d894805e1d9c10372c5620030b2";
 
 export default node;

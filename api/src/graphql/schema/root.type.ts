@@ -1,7 +1,7 @@
 import { prisma } from "@/db/client";
 import { builder } from "./builder";
 import { FollowInput, SortInput } from "./inputs";
-import { Fren } from "./fren.types";
+import { Follower, Fren } from "./fren.types";
 import { FeedPost } from "./post.type";
 import { lexicographicSortSchema, printSchema } from "graphql";
 import { console } from "inspector";
@@ -83,7 +83,7 @@ builder.mutationType({
   fields: (t) => ({
     // follow fren resolver
     follow: t.prismaField({
-      type: Fren,
+      type: Follower,
       args: {
         input: t.arg({ type: FollowInput, required: true }),
       },
@@ -104,7 +104,7 @@ builder.mutationType({
 
     // unfollow  fren resolver
     unfollow: t.prismaField({
-      type: Fren,
+      type: Follower,
       args: {
         input: t.arg({ type: FollowInput, required: true }),
       },

@@ -6,7 +6,7 @@ import * as middlewares from "./middlewares.ts";
 import cookieParser from "cookie-parser";
 import { allowedOrigins, corsHeaders } from "./middleware/cors-stuff.ts";
 import requestIp from "request-ip";
-import { pothosSchema, pothosSchemaString } from "./graphql/schema/root.schema.ts";
+import { pothosSchema, pothosSchemaString } from "./graphql/schema/root.type.ts";
 import { createYoga } from "graphql-yoga";
 import { fromNodeHeaders, toNodeHandler } from "better-auth/node";
 import { auth } from "auth.ts";
