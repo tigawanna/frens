@@ -17,10 +17,11 @@ input FollowInput {
 
 type Follower implements Node {
   createdAt: String
-  email: String
+  email: String!
+  frenId: String!
   id: ID!
   image: String
-  name: String
+  name: String!
   role: String
 }
 
@@ -37,6 +38,8 @@ type Fren implements Node {
   image: String
   isFollowingMe: Boolean
   name: String!
+  posts(after: String, before: String, first: Int, last: Int, sort: SortInput): FrenPostsConnection
+  postsCount: Int
   role: String
 }
 
@@ -58,6 +61,27 @@ type FrenFollowingConnection {
 type FrenFollowingConnectionEdge {
   cursor: String!
   node: Follower
+}
+
+type FrenPost implements Node {
+  content: String
+  createdAt: String
+  id: ID!
+  imageUrl: String
+  likeCount: Int
+  likedByMe: Boolean
+  postId: String!
+  updatedAt: String
+}
+
+type FrenPostsConnection {
+  edges: [FrenPostsConnectionEdge]
+  pageInfo: PageInfo!
+}
+
+type FrenPostsConnectionEdge {
+  cursor: String!
+  node: FrenPost
 }
 
 type Mutation {
@@ -119,37 +143,4 @@ type QueryFrensConnectionEdge {
 input SortInput {
   field: String! = "id"
   order: OrderType!
-}
-
-type ViewerFren implements Node {
-  createdAt: String
-  email: String
-  followerCount: Int
-  followers(after: String, before: String, first: Int, last: Int, sort: SortInput): ViewerFrenFollowersConnection
-  following(after: String, before: String, first: Int, last: Int, sort: SortInput): ViewerFrenFollowingConnection
-  followingCount: Int
-  id: ID!
-  image: String
-  name: String
-  role: String
-}
-
-type ViewerFrenFollowersConnection {
-  edges: [ViewerFrenFollowersConnectionEdge]
-  pageInfo: PageInfo!
-}
-
-type ViewerFrenFollowersConnectionEdge {
-  cursor: String!
-  node: Follower
-}
-
-type ViewerFrenFollowingConnection {
-  edges: [ViewerFrenFollowingConnectionEdge]
-  pageInfo: PageInfo!
-}
-
-type ViewerFrenFollowingConnectionEdge {
-  cursor: String!
-  node: Follower
 }

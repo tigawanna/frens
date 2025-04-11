@@ -15,7 +15,7 @@ export const MainFeedQuery = graphql`
 // Main component that fetches data and renders the feed
 export function MainFeed() {
   // Use the renamed type
-  const queryData = useLazyLoadQuery<MainFeedContainerQuery>(MainFeedQuery, { first: 10 });
+  const queryData = useLazyLoadQuery<MainFeedContainerQuery>(MainFeedQuery, { first: 24 });
 
   return (
     <div className="w-full py-4">

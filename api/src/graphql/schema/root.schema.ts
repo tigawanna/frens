@@ -1,7 +1,7 @@
 import { prisma } from "@/db/client";
 import { builder } from "./builder";
 import { FollowInput, SortInput } from "./inputs";
-import { Fren, ViewerFren } from "./fren.types";
+import { Fren } from "./fren.types";
 import { FeedPost } from "./post.type";
 import { lexicographicSortSchema, printSchema } from "graphql";
 import { console } from "inspector";

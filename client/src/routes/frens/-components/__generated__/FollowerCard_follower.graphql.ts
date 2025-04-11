@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<f71c35775b3931cd4f4f7178b1d410a3>>
+ * @generated SignedSource<<94e3d199f1fac09cb3c9976d2007b6b7>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -12,10 +12,10 @@ import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type FollowerCard_follower$data = {
   readonly createdAt: string | null | undefined;
-  readonly email: string | null | undefined;
+  readonly email: string;
   readonly id: string;
   readonly image: string | null | undefined;
-  readonly name: string | null | undefined;
+  readonly name: string;
   readonly role: string | null | undefined;
   readonly " $fragmentType": "FollowerCard_follower";
 };

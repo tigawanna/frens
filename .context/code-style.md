@@ -27,4 +27,8 @@ Backend
 - Node.js & Express: create the server-side logic and handle requests. - GraphQL: Design and implement the API to serve client data. Use GraphQL to efficiently fetch the data required by your frontend. 
 - Prisma ORM & PostgreSQL: manage your database interactions, design your schema, and perform queries through Prisma while persisting data in PostgreSQL. 
 
-
+When defining relay graphql fragments:
+- try building the UI and make sure the types are imported and passed in correctly
+- define the fragments at the bottom of the components
+- do not inline into the useLazyLoadQuery. usePaginatedQuery or useFragment...
+- and never forget to pass in the required generics into those hooks
