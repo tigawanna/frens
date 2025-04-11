@@ -65,6 +65,7 @@ type Mutation {
   deletePost(id: String!): Boolean
   follow(input: FollowInput!): Fren
   likePost(postId: String!): FeedPost
+  toggleLiked(postId: String!): FeedPost
   unfollow(input: FollowInput!): Fren
   unlikePost(postId: String!): FeedPost
   updatePost(content: String, id: String!, imageUrl: String): FeedPost

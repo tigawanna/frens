@@ -284,35 +284,56 @@ builder.mutationType({
       },
     }),
 
-    toggleLikedPost: t.prismaField({
+    toggleLiked: t.prismaField({
       type: FeedPost,
       args: {
         postId: t.arg.string({ required: true }),
       },
       resolve: async (query, root, args, ctx, info) => {
-        console.log(' === toggle like post  === ',args.postId)
-        console.log('ctx.currentUser === ', ctx.currentUser)
         // Check if the user is authenticated
         if (!ctx.currentUser?.id) {
           throw new Error("User not authenticated");
         }
-        // Check if the post exists
-        const post = await prisma.like.create({
-          data: {
-            postId: args.postId,
-            userId: ctx.currentUser.id,
-          },
-        })
+        
+        // Try to create a like
+        try {
+          await prisma.like.create({
+            data: {
+              postId: args.postId,
+              userId: ctx.currentUser.id,
+            },
+          });
+        } catch (err: any) {
+          // P2002: Unique constraint violation (like already exists)
+          if (err.code === 'P2002') {
+            await prisma.like.deleteMany({
+              where: {
+                postId: args.postId,
+                userId: ctx.currentUser.id,
+              },
+            });
+          } 
+          // P2003: Foreign key constraint failed (post doesn't exist)
+          else if (err.code === 'P2003') {
+            throw new Error(`Post with ID ${args.postId} not found`);
+          }
+          // P2025: Record not found (trying to like a non-existent post)
+          else if (err.code === 'P2025') {
+            throw new Error(`Post with ID ${args.postId} not found`);
+          }
+          // Handle any other unexpected errors
+          else {
+            console.error("Error toggling like:", err);
+            throw new Error("An error occurred while toggling the like");
+          }
+        }
 
-
+        // Return the updated post
         return prisma.post.findUniqueOrThrow({
           ...query,
           where: { id: args.postId },
         });
-
-
-      }
-
+      },
     }),
 
     // Unlike post mutation
