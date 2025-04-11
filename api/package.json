@@ -13,14 +13,15 @@
     "db:generate": "prisma generate",
     "db:migrate": "prisma migrate dev --skip-generate",
     "db:deploy": "prisma migrate deploy",
-    "db:studio": "prisma studio"
+    "db:studio": "prisma studio",
+    "gen:bulk":"tsx src/api/admin.ts"
   },
   "keywords": [],
   "repository": {
     "type": "git"
   },
   "license": "MIT",
-  "type": "module",
+
   "dependencies": {
     "@apollo/server": "^4.12.0",
     "@pothos/core": "^4.5.1",

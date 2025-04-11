@@ -2,7 +2,7 @@ import { graphql } from "relay-runtime";
 import { usePaginationFragment } from 'react-relay';
 import { MainFeed_feedPosts$key } from './__generated__/MainFeed_feedPosts.graphql';
 import { Button } from "@/components/shadcn/ui/button";
-import { Loader2 } from "lucide-react";
+import { Coffee, Link, Loader2, PenSquare, UserPlus } from "lucide-react";
 import { MainFeedPaginationQuery } from "./__generated__/MainFeedPaginationQuery.graphql";
 import { PostCard } from "./FeedCard";
 import { CreatePostModal } from "./form/PostDialogs";
@@ -33,8 +33,39 @@ export function Feed({ queryRef }: FeedProps) {
   
   if (posts.length === 0) {
     return (
-      <div className="w-full py-12 text-center">
-        <p className="text-muted-foreground">No posts in your feed yet.</p>
+      <div className="w-full max-w-2xl min-h-screen flex flex-col justify-center mx-auto">
+        <div className="bg-muted/20 rounded-lg p-8 flex flex-col items-center justify-center gap-4 border border-dashed">
+          <div className="rounded-full bg-primary/10 p-4">
+            <Coffee className="h-10 w-10 text-primary" />
+          </div>
+
+          <div className="text-center space-y-2">
+            <h3 className="text-xl font-semibold tracking-tight">Your feed is empty</h3>
+            <p className="text-muted-foreground max-w-md">
+              Start following some frens or create your first post to see updates in your feed.
+            </p>
+          </div>
+
+          <div className="flex flex-col sm:flex-row gap-3 mt-4">
+            <Button
+              onClick={() => setOpen(true)}
+              variant="default"
+              className="flex items-center gap-2">
+              <PenSquare className="h-4 w-4" />
+              Create a Post
+            </Button>
+
+            <Button variant="outline" asChild className="flex items-center gap-2">
+              <Link to="/profile/explore">
+                <UserPlus className="h-4 w-4" />
+                Find Frens to Follow
+              </Link>
+            </Button>
+          </div>
+        </div>
+
+        {/* Keep the modal here but it will be opened by the button click */}
+        <CreatePostModal open={open} setOpen={setOpen} />
       </div>
     );
   }

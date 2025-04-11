@@ -1,29 +1,25 @@
 {
   "compilerOptions": {
-    /* Base Options: */
-    "esModuleInterop": true,
-    "skipLibCheck": true,
-    "target": "es2022",
-    "allowJs": true,
-    "resolveJsonModule": true,
-    "moduleDetection": "force",
-    "isolatedModules": true,
-    "verbatimModuleSyntax": true,
+    "target": "ES2018",
     "module": "ESNext",
     "moduleResolution": "Bundler",
-    "allowImportingTsExtensions": true,
-    "noImplicitOverride": true,
-    "outDir": "./dist",
-    "strict": true,
-    "types": ["node", "supertest"],
-    "noEmit": true,
-    // "noErrorTruncation": true,
-    "lib": ["es2022"],
     "baseUrl": ".",
     "paths": {
       "@/*": ["./src/*"],
       "@/db/*": ["./prisma/*"]
-    }
+    },
+    "outDir": "./dist",
+    "strict": true,
+    "noImplicitOverride": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "resolveJsonModule": true,
+    "sourceMap": true,
+    "noErrorTruncation": true,
+    "allowJs": true,
+    "types": ["node", "supertest"],
+    "lib": ["es2022"],
+    "verbatimModuleSyntax": true
   },
   "tsc-alias": {
     "resolveFullPaths": true

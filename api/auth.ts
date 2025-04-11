@@ -1,9 +1,10 @@
-import { PrismaClient } from "@/db/generated/client";
+// import { PrismaClient } from "@/db/generated/client";
 import { allowedOrigins } from "@/middleware/cors-stuff";
 import { betterAuth } from "better-auth";
 import { prismaAdapter } from "better-auth/adapters/prisma";
 import { openAPI, admin,apiKey } from "better-auth/plugins";
-const prisma = new PrismaClient();
+import { prisma } from "./prisma/client";
+// const prisma = new PrismaClient();
 
 export const auth = betterAuth({
   trustedOrigins:allowedOrigins,

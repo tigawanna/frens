@@ -43,7 +43,7 @@ export function createNewDummyUser(fren: string) {
 }
 
 function createaDummyUsers() {
-  const frens = Array.from({ length: 100 }, (_, i) => `fren${i}`);
+  const frens = Array.from({ length: 20 }, (_, i) => `fren${i}`);
   const promises = frens.map((fren) => createNewDummyUser(fren));
   return Promise.allSettled(promises);
 }

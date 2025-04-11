@@ -2,14 +2,15 @@ import "dotenv/config";
 import express from "express";
 import morgan from "morgan";
 import cors from "cors";
-import * as middlewares from "./middlewares.ts";
+import * as middlewares from "./middlewares";
 import cookieParser from "cookie-parser";
-import { allowedOrigins, corsHeaders } from "./middleware/cors-stuff.ts";
+import { allowedOrigins, corsHeaders } from "./middleware/cors-stuff";
 import requestIp from "request-ip";
-import { pothosSchema, pothosSchemaString } from "./graphql/schema/root.type.ts";
+import { pothosSchema, pothosSchemaString } from "./graphql/schema/root.type";
 import { createYoga } from "graphql-yoga";
 import { fromNodeHeaders, toNodeHandler } from "better-auth/node";
-import { auth } from "auth.ts";
+import { auth } from "../auth";
+
 
 declare global {
   namespace Express {
