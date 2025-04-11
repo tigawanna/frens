@@ -4,8 +4,10 @@
   "description": " A basic starter for an express.js API with Typescript",
   "scripts": {
     "dev": "tsx watch src/index.ts",
+    "tsup:build": "tsup src/index.ts --format cjs,esm --dts --sourcemap --out-dir dist",
+    "tsup:start": "tsup src/index.ts --format cjs,esm --dts --sourcemap --out-dir dist --watch",
     "start": "node ./dist/src/index.js",
-    "build": "tsc && tsc-alias",
+    "build": "npx prisma generate && tsc && tsc-alias",
     "start:tsx": "tsx src/index.ts",
     "lint": "eslint --fix src test",
     "test": "jest",
