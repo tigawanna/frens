@@ -1,40 +1,40 @@
 import { usePaginationFragment } from "react-relay";
 import { graphql } from "relay-runtime";
-import { Following_query$key } from "./__generated__/Following_query.graphql";
-import { FollowingPaginationQuery } from "./__generated__/FollowingPaginationQuery.graphql";
+import { Followers_query$key } from "./__generated__/Followers_query.graphql";
+import { FollowersPaginationQuery } from "./__generated__/FollowersPaginationQuery.graphql";
 import { Button } from "@/components/shadcn/ui/button";
 import { Input } from "@/components/shadcn/ui/input";
 import { Loader2, Search, Users } from "lucide-react";
 import { useState } from "react";
 import { FrenCard } from "./FrenCard";
 
-interface FollowingProps {
-  queryRef: Following_query$key;
+interface FollowersProps {
+  queryRef: Followers_query$key;
 }
 
-export function Following({ queryRef }: FollowingProps) {
+export function Followers({ queryRef }: FollowersProps) {
   const [searchQuery, setSearchQuery] = useState("");
 
   const { data, loadNext, hasNext, isLoadingNext } = usePaginationFragment<
-    FollowingPaginationQuery,
-    Following_query$key
+    FollowersPaginationQuery,
+    Followers_query$key
   >(
-    followingFragment,
+    followersFragment,
     queryRef
   );
 
-  const following = data?.me?.following?.edges?.map(edge => edge?.node) || [];
-  const followingCount = data?.me?.followingCount || 0;
+  const followers = data?.me?.followers?.edges?.map(edge => edge?.node) || [];
+  const followerCount = data?.me?.followerCount || 0;
 
-  // Filter following based on search query
-//   const filteredFollowing = searchQuery 
-//     ? following.filter(f => 
-//         f?.name?.toLowerCase().includes(searchQuery.toLowerCase()) || 
-//         f?.email?.toLowerCase().includes(searchQuery.toLowerCase())
-//       )
-//     : following;
+  // Filter followers based on search query
+  const filteredFollowers = searchQuery 
+    ? followers.filter(f => 
+        f?.name?.toLowerCase().includes(searchQuery.toLowerCase()) || 
+        f?.email?.toLowerCase().includes(searchQuery.toLowerCase())
+      )
+    : followers;
 
-  const loadMoreFollowing = () => {
+  const loadMoreFollowers = () => {
     if (hasNext && !isLoadingNext) {
       loadNext(10);
     }
@@ -43,11 +43,11 @@ export function Following({ queryRef }: FollowingProps) {
   return (
     <div className="w-full h-full flex flex-col items-center justify-start">
       <div className="w-full flex items-center justify-between mb-4">
-        <h2 className="text-xl font-bold">Following ({followingCount})</h2>
+        <h2 className="text-xl font-bold">Followers ({followerCount})</h2>
         <div className="relative w-full max-w-sm">
           <Search className="absolute left-2 top-3 h-4 w-4 text-muted-foreground" />
           <Input
-            placeholder="Search following..."
+            placeholder="Search followers..."
             className="pl-8"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
@@ -55,21 +55,21 @@ export function Following({ queryRef }: FollowingProps) {
         </div>
       </div>
 
-      {data?.length === 0 ? (
+      {filteredFollowers.length === 0 ? (
         <div className="text-center py-12 w-full">
           <Users className="mx-auto h-12 w-12 text-muted-foreground" />
-          <h3 className="mt-4 text-lg font-medium">Not following anyone yet</h3>
+          <h3 className="mt-4 text-lg font-medium">No followers yet</h3>
           <p className="text-muted-foreground mt-2">
-            Start following other users to see them here.
+            Share your profile with others to gain followers.
           </p>
         </div>
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 w-full">
-          {data?.map((followingUser) => (
-            followingUser && (
+          {filteredFollowers.map((follower) => (
+            follower && (
               <FrenCard 
-                key={followingUser.id} 
-                fren={followingUser} 
+                key={follower.id} 
+                frenRef={follower} 
               />
             )
           ))}
@@ -80,7 +80,7 @@ export function Following({ queryRef }: FollowingProps) {
         <div className="flex justify-center mt-6">
           <Button 
             variant="outline" 
-            onClick={loadMoreFollowing}
+            onClick={loadMoreFollowers}
             disabled={isLoadingNext}
           >
             {isLoadingNext ? (
@@ -98,15 +98,15 @@ export function Following({ queryRef }: FollowingProps) {
   );
 }
 
-// Fragment to fetch following data with pagination
-export const followingFragment = graphql`
-  fragment Following_query on Query
+// Fragment to fetch followers data with pagination
+export const followersFragment = graphql`
+  fragment Followers_query on Query
   @argumentDefinitions(first: { type: "Int", defaultValue: 10 }, after: { type: "String" })
-  @refetchable(queryName: "FollowingPaginationQuery") {
+  @refetchable(queryName: "FollowersPaginationQuery") {
     me {
       id
-      followingCount
-      following(first: $first, after: $after) @connection(key: "Following_following") {
+      followerCount
+      followers(first: $first, after: $after) @connection(key: "Followers_followers") {
         edges {
           cursor
           node {
@@ -121,3 +121,5 @@ export const followingFragment = graphql`
     }
   }
 `;
+
+

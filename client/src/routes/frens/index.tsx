@@ -1,18 +1,24 @@
-import { authGuard } from '@/lib/viewer/auth0guard';
-import { createFileRoute } from '@tanstack/react-router'
-import { FrensContainer } from './-components/FrensContainer';
+import { authGuard } from "@/lib/viewer/auth0guard";
+import { createFileRoute } from "@tanstack/react-router";
+import { MyFrensContainer, FrensSuspenseFallBck } from "./-components/MyFrensContainer";
+import { Suspense } from "react";
 
-export const Route = createFileRoute('/frens/')({
+
+export const Route = createFileRoute("/frens/")({
   component: RouteComponent,
-    beforeLoad(ctx) {
-      authGuard(ctx);
-    },
-})
+  beforeLoad(ctx) {
+    authGuard(ctx);
+  },
+});
 
 function RouteComponent() {
   return (
-    <div>
-      <FrensContainer/>
+    <div className="flex flex-col gap-4">
+      <Suspense fallback={<FrensSuspenseFallBck />}>
+        <MyFrensContainer />
+      </Suspense>
     </div>
-  )
+  );
 }
+
+

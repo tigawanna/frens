@@ -216,74 +216,6 @@ builder.mutationType({
       },
     }),
 
-    // Like post mutation
-    likePost: t.prismaField({
-      type: FeedPost,
-      args: {
-        postId: t.arg.string({ required: true }),
-      },
-      resolve: async (query, root, args, ctx, info) => {
-        console.log(' === like post  === ',args.postId)
-        console.log('ctx.currentUser === ', ctx.currentUser)
-        console.log(' === args === ', args)
-        // Check if the user is authenticated
-        if (!ctx.currentUser?.id) {
-          throw new Error("User not authenticated");
-        }
-        
-        // First, check if the post exists
-        const post = await prisma.post.findUnique({
-          where: { id: args.postId },
-        });
-        
-        if (!post) {
-          throw new Error(`Post with ID ${args.postId} not found`);
-        }
-        
-        const upsertLike = await prisma.like.upsert({
-          where: {
-            userId_postId: {
-              postId: args.postId,
-              userId: ctx.currentUser.id,
-            },
-          },
-          update: {},
-          create: {
-            postId: args.postId,
-            userId: ctx.currentUser.id,
-            // include any other required fields
-          },
-        })
-        console.log("upsertLike === ",upsertLike)
-        // Check if like exists first
-        // const existingLike = await prisma.like.findUnique({
-        //   where: {
-        //     userId_postId: {
-        //       postId: args.postId,
-        //       userId: ctx.currentUser.id,
-        //     },
-        //   },
-        // });
-
-        // Only create if it doesn't exist
-        // if (!existingLike) {
-        //   await prisma.like.create({
-        //     data: {
-        //       postId: args.postId,
-        //       userId: ctx.currentUser.id,
-        //       // include any other required fields
-        //     },
-        //   });
-        // }
-
-        // Return the updated post
-        return prisma.post.findUniqueOrThrow({
-          ...query,
-          where: { id: args.postId },
-        });
-      },
-    }),
-
     toggleLiked: t.prismaField({
       type: FeedPost,
       args: {
@@ -336,38 +268,7 @@ builder.mutationType({
       },
     }),
 
-    // Unlike post mutation
-    unlikePost: t.prismaField({
-      type: FeedPost,
-      args: {
-        postId: t.arg.string({ required: true }),
-      },
-      resolve: async (query, root, args, ctx, info) => {
 
-       console.log(' === unlike post  === ')
-        console.log('ctx.currentUser === ', ctx.currentUser)
-        console.log(' === args === ', args)
-
-        // Check if the user is authenticated
-        if (!ctx.currentUser?.id) {
-          throw new Error("User not authenticated");
-        }
-
-        // Delete the like directly using IDs
-        await prisma.like.deleteMany({
-          where: {
-            postId: args.postId,
-            userId: ctx.currentUser.id,
-          },
-        });
-
-        // Return the updated post
-        return prisma.post.findUniqueOrThrow({
-          ...query,
-          where: { id: args.postId },
-        });
-      },
-    }),
   }),
 });
 
