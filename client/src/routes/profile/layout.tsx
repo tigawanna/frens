@@ -1,7 +1,7 @@
 import { MainDrawer } from "@/components/navigation/drawer/MainDrawer";
 import { MainDrawerFooter } from "@/components/navigation/drawer/MainDrawerFooter";
 import { MainDrawerLinks } from "@/components/navigation/drawer/MainDrawerLinks";
-import { createFileRoute, Outlet } from "@tanstack/react-router";
+import { createFileRoute, Link, Outlet } from "@tanstack/react-router";
 
 export const Route = createFileRoute("/profile")({
   component: RouteComponent,
@@ -10,10 +10,15 @@ export const Route = createFileRoute("/profile")({
 function RouteComponent() {
   return (
     <MainDrawer links={<MainDrawerLinks />} footer={<MainDrawerFooter />}>
-      <div className="min-h-screen flex flex-col items-center gap-3">
-        {/* <div className="min-h-[70vh] w-full flex flex-col items-center gap-3 justify-center">
-            <ProfileComponen />
-          </div> */}
+      <div className="min-h-screen flex w-full flex-col items-center gap-1">
+        <nav className="w-full flex justify-evenly gap-3">
+          <Link className="btn " to="/profile/account">
+            Accoutn
+          </Link>
+          <Link className="btn btn-sm" to="/profile/explore">
+            Explore
+          </Link>
+        </nav>
         <Outlet />
       </div>
     </MainDrawer>

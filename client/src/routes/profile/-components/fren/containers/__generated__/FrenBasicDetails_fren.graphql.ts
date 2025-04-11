@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<64f1c50b0367b9528ed12facb84da4e5>>
+ * @generated SignedSource<<33c11bba83e71231f845e2bfe4e6e7c3>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,12 +11,14 @@
 import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type FrenBasicDetails_fren$data = {
+  readonly amFollowing: boolean | null | undefined;
   readonly email: string;
   readonly followerCount: number | null | undefined;
   readonly followingCount: number | null | undefined;
   readonly frenId: string;
   readonly id: string;
   readonly image: string | null | undefined;
+  readonly isFollowingMe: boolean | null | undefined;
   readonly isMe: boolean | null | undefined;
   readonly name: string;
   readonly " $fragmentType": "FrenBasicDetails_fren";
@@ -85,6 +87,20 @@ const node: ReaderFragment = {
       "alias": null,
       "args": null,
       "kind": "ScalarField",
+      "name": "isFollowingMe",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "amFollowing",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
       "name": "isMe",
       "storageKey": null
     }
@@ -93,6 +109,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "de6b490369344ece3533ac200bde76f6";
+(node as any).hash = "0eb8ebb891ba9497ecb9ae07f734308a";
 
 export default node;

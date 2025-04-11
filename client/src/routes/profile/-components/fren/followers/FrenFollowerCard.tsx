@@ -73,8 +73,7 @@ export function FrenFollowerCard({ followerRef }: FrenFollowerCardProps) {
         <Link
           to="/profile/$frenId"
           params={{ frenId: follower.frenId }}
-          className="flex items-center gap-3"
-        >
+          className="flex items-center gap-3 p-2 px-4 rounded-2xl hover:bg-primary/20">
           <Avatar>
             {follower.image ? (
               <AvatarImage src={follower.image} alt={follower.name} />
@@ -90,12 +89,7 @@ export function FrenFollowerCard({ followerRef }: FrenFollowerCardProps) {
           </div>
         </Link>
 
-        <Button
-          variant="outline"
-          size="sm"
-          onClick={handleFollow}
-          disabled={isFollowing}
-        >
+        <Button variant="outline" size="sm" onClick={handleFollow} disabled={isFollowing}>
           {isFollowing ? "Following..." : "Follow Back"}
         </Button>
       </div>

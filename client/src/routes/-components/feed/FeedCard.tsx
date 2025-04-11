@@ -12,6 +12,7 @@ import { BetterAthViewer } from "@/lib/viewer/use-viewer";
 import { EditPostModal } from "./form/PostDialogs";
 import { useState } from "react";
 import { ClipboardButton } from "@/components/wrappers/ClipboardButton";
+import { Link } from "@tanstack/react-router";
 
 // Define the interface for a post based on your GraphQL schema
 
@@ -44,7 +45,7 @@ export function PostCard({ postRef, viewer }: PostCardProps) {
     <Card className="w-full mb-4 border-none bg-base-300">
       <CardContent className="pt-6">
         <div className="flex items-center justify-between gap-3 mb-4 ">
-          <div className="flex items-center gap-3 ">
+          <Link to="/profile/$frenId" params={{frenId: postData.postedBy?.frenId??""}} className="flex items-center gap-3 p-2 px-4 rounded-2xl hover:bg-primary/20">
             <Avatar>
               <AvatarFallback className="bg-primary/10 flex items-center justify-center h-10 w-10 rounded-full text-primary font-medium">
                 {postIdFirstChars}
@@ -54,7 +55,7 @@ export function PostCard({ postRef, viewer }: PostCardProps) {
               <div className="font-medium">{postData.postedBy?.name}</div>
               <div className="text-xs text-muted-foreground">{timeAgo}</div>
             </div>
-          </div>
+          </Link>
           <div className="">
             {viewer && viewer.id === postData?.postedBy?.frenId && (
               <EditPostModal post={postData} open={open} setOpen={setOpen} />

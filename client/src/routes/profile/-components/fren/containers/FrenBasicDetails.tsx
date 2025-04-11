@@ -4,6 +4,7 @@ import { graphql } from "relay-runtime";
 import { useFragment } from "react-relay";
 import { ClipboardButton } from "@/components/wrappers/ClipboardButton";
 import { FrenBasicDetails_fren$key } from "./__generated__/FrenBasicDetails_fren.graphql";
+import { FrenDetalsFollowStatus } from "./FrenDetalsFollowStatus";
 
 
 interface FrenBasicDetailsProps {
@@ -29,7 +30,7 @@ export function FrenBasicDetails({ queryRef }: FrenBasicDetailsProps) {
           )}
         </div>
 
-        <div className="flex-1 space-y-4 text-center md:text-left">
+        <div className="flex-1 w-full space-y-4 text-center md:text-left">
           <div>
             <h2 className="text-2xl font-bold">{me.name}</h2>
             <p className="text-muted-foreground">{me.email}</p>
@@ -47,6 +48,7 @@ export function FrenBasicDetails({ queryRef }: FrenBasicDetailsProps) {
             </div>
           </div>
 
+        </div>
           <div>
             <ClipboardButton
               text={`${window.location.origin}/frens/${me.frenId}`}
@@ -54,8 +56,10 @@ export function FrenBasicDetails({ queryRef }: FrenBasicDetailsProps) {
               className="inline-flex"
               showFullText={false}
             />
+            <FrenDetalsFollowStatus  
+            fren={me}
+            />
           </div>
-        </div>
       </div>
     </Card>
   );
@@ -63,14 +67,15 @@ export function FrenBasicDetails({ queryRef }: FrenBasicDetailsProps) {
 
 export const FrenBasicDetailsFragment = graphql`
   fragment FrenBasicDetails_fren on Fren {
-      id
-      name
-      email
-      image
-      frenId
-      followerCount
-      followingCount
-      isMe
-  
+    id
+    name
+    email
+    image
+    frenId
+    followerCount
+    followingCount
+    isFollowingMe
+    amFollowing
+    isMe
   }
 `;

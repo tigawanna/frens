@@ -20,6 +20,7 @@ import { Route as AuthIndexImport } from './routes/auth/index'
 import { Route as AdminIndexImport } from './routes/admin/index'
 import { Route as AuthSignupImport } from './routes/auth/signup'
 import { Route as AuthForgortPasswordImport } from './routes/auth/forgort-password'
+import { Route as ProfileExploreIndexImport } from './routes/profile/explore/index'
 import { Route as ProfileAccountIndexImport } from './routes/profile/account/index'
 import { Route as ProfileFrenIdIndexImport } from './routes/profile/$frenId/index'
 
@@ -77,6 +78,12 @@ const AuthForgortPasswordRoute = AuthForgortPasswordImport.update({
   id: '/forgort-password',
   path: '/forgort-password',
   getParentRoute: () => AuthLayoutRoute,
+} as any)
+
+const ProfileExploreIndexRoute = ProfileExploreIndexImport.update({
+  id: '/explore/',
+  path: '/explore/',
+  getParentRoute: () => ProfileLayoutRoute,
 } as any)
 
 const ProfileAccountIndexRoute = ProfileAccountIndexImport.update({
@@ -172,6 +179,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ProfileAccountIndexImport
       parentRoute: typeof ProfileLayoutImport
     }
+    '/profile/explore/': {
+      id: '/profile/explore/'
+      path: '/explore'
+      fullPath: '/profile/explore'
+      preLoaderRoute: typeof ProfileExploreIndexImport
+      parentRoute: typeof ProfileLayoutImport
+    }
   }
 }
 
@@ -197,12 +211,14 @@ interface ProfileLayoutRouteChildren {
   ProfileIndexRoute: typeof ProfileIndexRoute
   ProfileFrenIdIndexRoute: typeof ProfileFrenIdIndexRoute
   ProfileAccountIndexRoute: typeof ProfileAccountIndexRoute
+  ProfileExploreIndexRoute: typeof ProfileExploreIndexRoute
 }
 
 const ProfileLayoutRouteChildren: ProfileLayoutRouteChildren = {
   ProfileIndexRoute: ProfileIndexRoute,
   ProfileFrenIdIndexRoute: ProfileFrenIdIndexRoute,
   ProfileAccountIndexRoute: ProfileAccountIndexRoute,
+  ProfileExploreIndexRoute: ProfileExploreIndexRoute,
 }
 
 const ProfileLayoutRouteWithChildren = ProfileLayoutRoute._addFileChildren(
@@ -221,6 +237,7 @@ export interface FileRoutesByFullPath {
   '/profile/': typeof ProfileIndexRoute
   '/profile/$frenId': typeof ProfileFrenIdIndexRoute
   '/profile/account': typeof ProfileAccountIndexRoute
+  '/profile/explore': typeof ProfileExploreIndexRoute
 }
 
 export interface FileRoutesByTo {
@@ -233,6 +250,7 @@ export interface FileRoutesByTo {
   '/profile': typeof ProfileIndexRoute
   '/profile/$frenId': typeof ProfileFrenIdIndexRoute
   '/profile/account': typeof ProfileAccountIndexRoute
+  '/profile/explore': typeof ProfileExploreIndexRoute
 }
 
 export interface FileRoutesById {
@@ -248,6 +266,7 @@ export interface FileRoutesById {
   '/profile/': typeof ProfileIndexRoute
   '/profile/$frenId/': typeof ProfileFrenIdIndexRoute
   '/profile/account/': typeof ProfileAccountIndexRoute
+  '/profile/explore/': typeof ProfileExploreIndexRoute
 }
 
 export interface FileRouteTypes {
@@ -264,6 +283,7 @@ export interface FileRouteTypes {
     | '/profile/'
     | '/profile/$frenId'
     | '/profile/account'
+    | '/profile/explore'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -275,6 +295,7 @@ export interface FileRouteTypes {
     | '/profile'
     | '/profile/$frenId'
     | '/profile/account'
+    | '/profile/explore'
   id:
     | '__root__'
     | '/'
@@ -288,6 +309,7 @@ export interface FileRouteTypes {
     | '/profile/'
     | '/profile/$frenId/'
     | '/profile/account/'
+    | '/profile/explore/'
   fileRoutesById: FileRoutesById
 }
 
@@ -340,7 +362,8 @@ export const routeTree = rootRoute
       "children": [
         "/profile/",
         "/profile/$frenId/",
-        "/profile/account/"
+        "/profile/account/",
+        "/profile/explore/"
       ]
     },
     "/about": {
@@ -371,6 +394,10 @@ export const routeTree = rootRoute
     },
     "/profile/account/": {
       "filePath": "profile/account/index.tsx",
+      "parent": "/profile"
+    },
+    "/profile/explore/": {
+      "filePath": "profile/explore/index.tsx",
       "parent": "/profile"
     }
   }

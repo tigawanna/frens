@@ -200,6 +200,7 @@ export const Fren = builder.prismaNode("User", {
       resolve: (query, parent, args, context, info) =>
         prisma.post.findMany({
           ...query,
+          where: { authorId: parent.id },
           orderBy: {},
         }),
     }),

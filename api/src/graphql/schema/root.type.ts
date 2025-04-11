@@ -37,10 +37,17 @@ builder.queryType({
         cursor: "id",
         args: {
           sort: t.arg({ type: SortInput, required: false }),
+          search: t.arg.string({ required: false,defaultValue:"" }),
         },
         resolve: (query, parent, args, context, info) => {
           return prisma.user.findMany({
             ...query,
+            where: {
+            OR: [
+              { name: { contains: args.search??"" } },
+              { email: { contains: args.search??"" } },
+            ],
+            },
             orderBy: {
               [args.sort?.field as string]: args.sort?.order,
             },
@@ -125,6 +132,60 @@ builder.mutationType({
       },
     }),
 
+    toggleFollow: t.prismaField({
+      type: Fren,
+      args: {
+        input: t.arg({ type: FollowInput, required: true }),
+      },
+      resolve: async (query, root, args, ctx, info) => {
+        // Check if the user is authenticated
+        if (!ctx.currentUser?.id) {
+          throw new Error("User not authenticated");
+        }
+
+        // // First check if the target user exists
+        // const targetUser = await prisma.user.findUnique({
+        //   where: { id: args.input.userId },
+        // });
+
+        // if (!targetUser) {
+        //   throw new Error(`User with ID ${args.input.userId} not found`);
+        // }
+
+        try {
+          // Try to create a follow relationship
+          await prisma.follow.create({
+            data: {
+              followerId: ctx.currentUser.id,
+              followingId: args.input.userId,
+            },
+          });
+        } catch (err: any) {
+          // P2002: Unique constraint violation (follow relationship already exists)
+          if (err.code === "P2002") {
+            // Delete the existing follow
+            await prisma.follow.deleteMany({
+              where: {
+                followerId: ctx.currentUser.id,
+                followingId: args.input.userId,
+              },
+            });
+          } else {
+            // Handle any other unexpected errors
+            console.error("Error toggling follow:", err);
+            throw new Error(
+              "An error occurred while toggling the follow relationship",
+            );
+          }
+        }
+
+        // Return the updated user
+        return prisma.user.findUniqueOrThrow({
+          ...query,
+          where: { id: ctx.currentUser.id },
+        });
+      },
+    }),
     // create post resolver
     createPost: t.prismaField({
       type: FeedPost,
@@ -177,7 +238,9 @@ builder.mutationType({
           ...query,
           where: { id: args.id },
           data: {
-            ...(args.content !== undefined && { content: args.content as (string|undefined) }),
+            ...(args.content !== undefined && {
+              content: args.content as string | undefined,
+            }),
             ...(args.imageUrl !== undefined && { imageUrl: args.imageUrl }),
           },
         });
@@ -226,7 +289,7 @@ builder.mutationType({
         if (!ctx.currentUser?.id) {
           throw new Error("User not authenticated");
         }
-        
+
         // Try to create a like
         try {
           await prisma.like.create({
@@ -237,20 +300,20 @@ builder.mutationType({
           });
         } catch (err: any) {
           // P2002: Unique constraint violation (like already exists)
-          if (err.code === 'P2002') {
+          if (err.code === "P2002") {
             await prisma.like.deleteMany({
               where: {
                 postId: args.postId,
                 userId: ctx.currentUser.id,
               },
             });
-          } 
+          }
           // P2003: Foreign key constraint failed (post doesn't exist)
-          else if (err.code === 'P2003') {
+          else if (err.code === "P2003") {
             throw new Error(`Post with ID ${args.postId} not found`);
           }
           // P2025: Record not found (trying to like a non-existent post)
-          else if (err.code === 'P2025') {
+          else if (err.code === "P2025") {
             throw new Error(`Post with ID ${args.postId} not found`);
           }
           // Handle any other unexpected errors
@@ -267,12 +330,12 @@ builder.mutationType({
         });
       },
     }),
-
-
   }),
 });
 
 export const pothosSchema = builder.toSchema();
 
 // export const schemaAsString = printType(lexicographicSortSchema(pothosSchema))
-export const pothosSchemaString = printSchema(lexicographicSortSchema(pothosSchema));
+export const pothosSchemaString = printSchema(
+  lexicographicSortSchema(pothosSchema),
+);

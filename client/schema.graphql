@@ -94,6 +94,7 @@ type Mutation {
   createPost(content: String!, imageUrl: String): FeedPost
   deletePost(id: String!): Boolean
   follow(input: FollowInput!): Follower
+  toggleFollow(input: FollowInput!): Fren
   toggleLiked(postId: String!): FeedPost
   unfollow(input: FollowInput!): Follower
   updatePost(content: String, id: String!, imageUrl: String): FeedPost
@@ -119,7 +120,7 @@ type PageInfo {
 type Query {
   feedPosts(after: String, before: String, first: Int, last: Int): QueryFeedPostsConnection
   fren(id: String!): Fren
-  frens(after: String, before: String, first: Int, last: Int, sort: SortInput): QueryFrensConnection
+  frens(after: String, before: String, first: Int, last: Int, search: String = "", sort: SortInput): QueryFrensConnection
   me: Fren
   node(id: ID!): Node
   nodes(ids: [ID!]!): [Node]!

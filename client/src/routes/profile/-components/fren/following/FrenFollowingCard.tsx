@@ -50,7 +50,7 @@ export function FrenFollowingCard({ followingRef }: FrenFollowingCardProps) {
         <Link
           to="/profile/$frenId"
           params={{ frenId: following.frenId }}
-          className="flex items-center gap-3"
+          className="flex items-center gap-3 p-2 px-4 rounded-2xl hover:bg-primary/20"
         >
           <Avatar>
             {following.image ? (
