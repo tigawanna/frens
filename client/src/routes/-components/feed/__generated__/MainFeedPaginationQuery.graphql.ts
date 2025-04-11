@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<5ece26db45a670b10e6aa37006cd3156>>
+ * @generated SignedSource<<d7149ce44fa088a24432f22bc5a7bbbd>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -46,7 +46,14 @@ v1 = [
     "name": "first",
     "variableName": "first"
   }
-];
+],
+v2 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "id",
+  "storageKey": null
+};
 return {
   "fragment": {
     "argumentDefinitions": (v0/*: any*/),
@@ -100,13 +107,7 @@ return {
                 "name": "node",
                 "plural": false,
                 "selections": [
-                  {
-                    "alias": null,
-                    "args": null,
-                    "kind": "ScalarField",
-                    "name": "id",
-                    "storageKey": null
-                  },
+                  (v2/*: any*/),
                   {
                     "alias": null,
                     "args": null,
@@ -154,6 +155,46 @@ return {
                     "args": null,
                     "kind": "ScalarField",
                     "name": "updatedAt",
+                    "storageKey": null
+                  },
+                  {
+                    "alias": null,
+                    "args": null,
+                    "concreteType": "Fren",
+                    "kind": "LinkedField",
+                    "name": "postedBy",
+                    "plural": false,
+                    "selections": [
+                      {
+                        "alias": null,
+                        "args": null,
+                        "kind": "ScalarField",
+                        "name": "name",
+                        "storageKey": null
+                      },
+                      {
+                        "alias": null,
+                        "args": null,
+                        "kind": "ScalarField",
+                        "name": "email",
+                        "storageKey": null
+                      },
+                      {
+                        "alias": null,
+                        "args": null,
+                        "kind": "ScalarField",
+                        "name": "amFollowing",
+                        "storageKey": null
+                      },
+                      {
+                        "alias": null,
+                        "args": null,
+                        "kind": "ScalarField",
+                        "name": "image",
+                        "storageKey": null
+                      },
+                      (v2/*: any*/)
+                    ],
                     "storageKey": null
                   },
                   {
@@ -223,16 +264,16 @@ return {
     ]
   },
   "params": {
-    "cacheID": "51ad43f18fb7997ebd8977bd0b3c3220",
+    "cacheID": "c7dfaf7d961a589225ffa401da1b9fe6",
     "id": null,
     "metadata": {},
     "name": "MainFeedPaginationQuery",
     "operationKind": "query",
-    "text": "query MainFeedPaginationQuery(\n  $after: String\n  $first: Int = 24\n) {\n  ...MainFeed_feedPosts_2HEEH6\n}\n\nfragment MainFeed_feedPosts_2HEEH6 on Query {\n  feedPosts(first: $first, after: $after) {\n    edges {\n      cursor\n      node {\n        id\n        imageUrl\n        postId\n        content\n        createdAt\n        likeCount\n        likedByMe\n        updatedAt\n        __typename\n      }\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n      hasPreviousPage\n      startCursor\n    }\n  }\n}\n"
+    "text": "query MainFeedPaginationQuery(\n  $after: String\n  $first: Int = 24\n) {\n  ...MainFeed_feedPosts_2HEEH6\n}\n\nfragment MainFeed_feedPosts_2HEEH6 on Query {\n  feedPosts(first: $first, after: $after) {\n    edges {\n      cursor\n      node {\n        id\n        imageUrl\n        postId\n        content\n        createdAt\n        likeCount\n        likedByMe\n        updatedAt\n        postedBy {\n          name\n          email\n          amFollowing\n          image\n          id\n        }\n        __typename\n      }\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n      hasPreviousPage\n      startCursor\n    }\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "f503c0c4c82427e410cc86ad7e8fc270";
+(node as any).hash = "bda6bfb23b49257c533e0b9061ab1ec6";
 
 export default node;

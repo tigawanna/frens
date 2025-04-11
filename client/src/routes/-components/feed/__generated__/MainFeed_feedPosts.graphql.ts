@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<7ad12da89b7dd5f73637bdd20fc99b93>>
+ * @generated SignedSource<<292e05bcb08429a4a4b25db3517e168f>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -22,6 +22,12 @@ export type MainFeed_feedPosts$data = {
         readonly likeCount: number | null | undefined;
         readonly likedByMe: boolean | null | undefined;
         readonly postId: string;
+        readonly postedBy: {
+          readonly amFollowing: boolean | null | undefined;
+          readonly email: string;
+          readonly image: string | null | undefined;
+          readonly name: string;
+        } | null | undefined;
         readonly updatedAt: string | null | undefined;
       } | null | undefined;
     } | null | undefined> | null | undefined;
@@ -173,6 +179,45 @@ return {
                 {
                   "alias": null,
                   "args": null,
+                  "concreteType": "Fren",
+                  "kind": "LinkedField",
+                  "name": "postedBy",
+                  "plural": false,
+                  "selections": [
+                    {
+                      "alias": null,
+                      "args": null,
+                      "kind": "ScalarField",
+                      "name": "name",
+                      "storageKey": null
+                    },
+                    {
+                      "alias": null,
+                      "args": null,
+                      "kind": "ScalarField",
+                      "name": "email",
+                      "storageKey": null
+                    },
+                    {
+                      "alias": null,
+                      "args": null,
+                      "kind": "ScalarField",
+                      "name": "amFollowing",
+                      "storageKey": null
+                    },
+                    {
+                      "alias": null,
+                      "args": null,
+                      "kind": "ScalarField",
+                      "name": "image",
+                      "storageKey": null
+                    }
+                  ],
+                  "storageKey": null
+                },
+                {
+                  "alias": null,
+                  "args": null,
                   "kind": "ScalarField",
                   "name": "__typename",
                   "storageKey": null
@@ -231,6 +276,6 @@ return {
 };
 })();
 
-(node as any).hash = "f503c0c4c82427e410cc86ad7e8fc270";
+(node as any).hash = "bda6bfb23b49257c533e0b9061ab1ec6";
 
 export default node;

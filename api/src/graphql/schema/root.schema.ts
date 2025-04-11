@@ -10,7 +10,7 @@ builder.queryType({
   fields: (t) => ({
     // hooman queries
     me: t.prismaField({
-      type: ViewerFren,
+      type: Fren,
       resolve: async (query, root, args, ctx, info) =>
         prisma.user.findUniqueOrThrow({
           // the `query` argument will add in `include`s or `select`s to
@@ -133,6 +133,7 @@ builder.mutationType({
       },
       resolve: async (query, root, args, ctx, info) => {
         // Check if the user is authenticated
+        console.log("current user === ",ctx.currentUser);
         if (!ctx.currentUser?.id) {
           throw new Error("User not authenticated");
         }

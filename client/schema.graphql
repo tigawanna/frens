@@ -91,7 +91,7 @@ type Query {
   feedPosts(after: String, before: String, first: Int, last: Int): QueryFeedPostsConnection
   fren(id: String!): Fren
   frens(after: String, before: String, first: Int, last: Int, sort: SortInput): QueryFrensConnection
-  me: ViewerFren
+  me: Fren
   node(id: ID!): Node
   nodes(ids: [ID!]!): [Node]!
   oneFeedpopst(id: String!): FeedPost

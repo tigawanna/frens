@@ -38,7 +38,7 @@ export function PostCard({ post }: PostCardProps) {
             </AvatarFallback>
           </Avatar>
           <div>
-            <div className="font-medium">Anonymous</div>
+            <div className="font-medium">{post.postedBy?.name}</div>
             <div className="text-xs text-muted-foreground">{timeAgo}</div>
           </div>
         </div>

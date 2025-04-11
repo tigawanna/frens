@@ -62,14 +62,10 @@ export function Feed({ queryRef }: FeedProps) {
 
 // Define a fragment for the feed posts that supports pagination
 export const MainFeedFragment = graphql`
-  fragment MainFeed_feedPosts on Query 
-  @argumentDefinitions(
-    first: { type: "Int", defaultValue: 24 }
-    after: { type: "String" }
-  )
+  fragment MainFeed_feedPosts on Query
+  @argumentDefinitions(first: { type: "Int", defaultValue: 24 }, after: { type: "String" })
   @refetchable(queryName: "MainFeedPaginationQuery") {
-    feedPosts(first: $first, after: $after)
-      @connection(key: "MainFeed_feedPosts", filters: []) {
+    feedPosts(first: $first, after: $after) @connection(key: "MainFeed_feedPosts", filters: []) {
       edges {
         cursor
         node {
@@ -81,6 +77,13 @@ export const MainFeedFragment = graphql`
           likeCount
           likedByMe
           updatedAt
+          postedBy {
+            name
+            email
+            amFollowing
+            amFollowing
+            image
+          }
         }
       }
       pageInfo {

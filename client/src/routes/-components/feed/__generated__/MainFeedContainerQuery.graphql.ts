@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<b3ef0eb46fd6af16755276e1630ec766>>
+ * @generated SignedSource<<2654650a7ae896180e1e535b98544a5c>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -44,7 +44,14 @@ v2 = [
     "name": "first",
     "variableName": "first"
   }
-];
+],
+v3 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "id",
+  "storageKey": null
+};
 return {
   "fragment": {
     "argumentDefinitions": [
@@ -104,13 +111,7 @@ return {
                 "name": "node",
                 "plural": false,
                 "selections": [
-                  {
-                    "alias": null,
-                    "args": null,
-                    "kind": "ScalarField",
-                    "name": "id",
-                    "storageKey": null
-                  },
+                  (v3/*: any*/),
                   {
                     "alias": null,
                     "args": null,
@@ -158,6 +159,46 @@ return {
                     "args": null,
                     "kind": "ScalarField",
                     "name": "updatedAt",
+                    "storageKey": null
+                  },
+                  {
+                    "alias": null,
+                    "args": null,
+                    "concreteType": "Fren",
+                    "kind": "LinkedField",
+                    "name": "postedBy",
+                    "plural": false,
+                    "selections": [
+                      {
+                        "alias": null,
+                        "args": null,
+                        "kind": "ScalarField",
+                        "name": "name",
+                        "storageKey": null
+                      },
+                      {
+                        "alias": null,
+                        "args": null,
+                        "kind": "ScalarField",
+                        "name": "email",
+                        "storageKey": null
+                      },
+                      {
+                        "alias": null,
+                        "args": null,
+                        "kind": "ScalarField",
+                        "name": "amFollowing",
+                        "storageKey": null
+                      },
+                      {
+                        "alias": null,
+                        "args": null,
+                        "kind": "ScalarField",
+                        "name": "image",
+                        "storageKey": null
+                      },
+                      (v3/*: any*/)
+                    ],
                     "storageKey": null
                   },
                   {
@@ -227,12 +268,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "3c1bdbacf3d471b85ccaf495e49f66ea",
+    "cacheID": "310449d6f6b317e60d0b69dda55e83b8",
     "id": null,
     "metadata": {},
     "name": "MainFeedContainerQuery",
     "operationKind": "query",
-    "text": "query MainFeedContainerQuery(\n  $first: Int!\n  $after: String\n) {\n  ...MainFeed_feedPosts_2HEEH6\n}\n\nfragment MainFeed_feedPosts_2HEEH6 on Query {\n  feedPosts(first: $first, after: $after) {\n    edges {\n      cursor\n      node {\n        id\n        imageUrl\n        postId\n        content\n        createdAt\n        likeCount\n        likedByMe\n        updatedAt\n        __typename\n      }\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n      hasPreviousPage\n      startCursor\n    }\n  }\n}\n"
+    "text": "query MainFeedContainerQuery(\n  $first: Int!\n  $after: String\n) {\n  ...MainFeed_feedPosts_2HEEH6\n}\n\nfragment MainFeed_feedPosts_2HEEH6 on Query {\n  feedPosts(first: $first, after: $after) {\n    edges {\n      cursor\n      node {\n        id\n        imageUrl\n        postId\n        content\n        createdAt\n        likeCount\n        likedByMe\n        updatedAt\n        postedBy {\n          name\n          email\n          amFollowing\n          image\n          id\n        }\n        __typename\n      }\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n      hasPreviousPage\n      startCursor\n    }\n  }\n}\n"
   }
 };
 })();
