@@ -19,6 +19,65 @@ export const Follower = builder.prismaNode("User", {
         return user.createdAt.toISOString();
       },
     }),
+    isMe: t.field({
+      type: "Boolean",
+      resolve: (parent, args, context) => {
+        if (!context.currentUser?.id) return false;
+        return parent.id === context.currentUser.id;
+      },
+    }),
+        // Am I following this user?
+    amFollowing: t.field({
+      type: "Boolean",
+      resolve: async (parent, args, context) => {
+        if (!context.currentUser?.id) return false;
+        const follow = await prisma.follow.findFirst({
+          where: {
+            followerId: context.currentUser.id,
+            followingId: parent.id,
+          },
+        });
+
+        return !!follow;
+      },
+    }),
+    // Is this user following me?
+    isFollowingMe: t.field({
+      type: "Boolean",
+      resolve: async (parent, args, context) => {
+        if (!context.currentUser?.id) return false;
+        const follow = await prisma.follow.findFirst({
+          where: {
+            followerId: parent.id,
+            followingId: context.currentUser.id,
+          },
+        });
+
+        return !!follow;
+      },
+    }),
+        // Follower count
+    followerCount: t.field({
+      type: "Int",
+      resolve: async (parent) => {
+        return prisma.follow.count({
+          where: {
+            followingId: parent.id,
+          },
+        });
+      },
+    }),
+    // Following count
+    followingCount: t.field({
+      type: "Int",
+      resolve: async (parent) => {
+        return prisma.follow.count({
+          where: {
+            followerId: parent.id,
+          },
+        });
+      },
+    }),
   }),
 });
 
@@ -35,6 +94,13 @@ export const Fren = builder.prismaNode("User", {
       type: "String",
       resolve: (user) => {
         return user.createdAt.toISOString();
+      },
+    }),
+    isMe: t.field({
+      type: "Boolean",
+      resolve: (parent, args, context) => {
+        if (!context.currentUser?.id) return false;
+        return parent.id === context.currentUser.id;
       },
     }),
     // Am I following this user?
@@ -112,21 +178,20 @@ export const Fren = builder.prismaNode("User", {
         // frenId: t.arg.string({ required: true }),
         sort: t.arg({ type: SortInput, required: false }),
       },
-      resolve: (query, parent, args, context, info) =>{
+      resolve: (query, parent, args, context, info) => {
         // console.log("=== parent==== ",parent.id)
-       return  prisma.user.findMany({
+        return prisma.user.findMany({
           ...query,
           orderBy: {
             [args.sort?.field as string]: args.sort?.order,
           },
           where: {
-            followers: { some: { followerId:  parent.id } },
+            followers: { some: { followerId: parent.id } },
           },
-        })
-
+        });
       },
     }),
-    posts:t.prismaConnection({
+    posts: t.prismaConnection({
       type: FrenPost,
       cursor: "id",
       args: {
@@ -135,9 +200,8 @@ export const Fren = builder.prismaNode("User", {
       resolve: (query, parent, args, context, info) =>
         prisma.post.findMany({
           ...query,
-          orderBy: {
-        
-      }})
+          orderBy: {},
+        }),
     }),
     postsCount: t.field({
       type: "Int",
@@ -147,8 +211,7 @@ export const Fren = builder.prismaNode("User", {
             authorId: parent.id,
           },
         });
-      } 
+      },
+    }),
   }),
-})
 });
-

@@ -44,7 +44,7 @@ export const FrenPost = builder.prismaNode("Post", {
         });
         return !!like;
       }
-    })
+    }),
   })
 })
 

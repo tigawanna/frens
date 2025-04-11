@@ -16,11 +16,16 @@ input FollowInput {
 }
 
 type Follower implements Node {
+  amFollowing: Boolean
   createdAt: String
   email: String!
+  followerCount: Int
+  followingCount: Int
   frenId: String!
   id: ID!
   image: String
+  isFollowingMe: Boolean
+  isMe: Boolean
   name: String!
   role: String
 }
@@ -37,6 +42,7 @@ type Fren implements Node {
   id: ID!
   image: String
   isFollowingMe: Boolean
+  isMe: Boolean
   name: String!
   posts(after: String, before: String, first: Int, last: Int, sort: SortInput): FrenPostsConnection
   postsCount: Int

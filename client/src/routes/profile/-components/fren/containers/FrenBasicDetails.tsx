@@ -70,6 +70,7 @@ export const FrenBasicDetailsFragment = graphql`
       frenId
       followerCount
       followingCount
+      isMe
   
   }
 `;

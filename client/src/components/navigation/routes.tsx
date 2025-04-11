@@ -33,12 +33,6 @@ export const routes:Readonly<Routes>[] = [
     children: undefined,
   },
   {
-    name: "Frens",
-    href: "/frens",
-    icon: <LayoutDashboard />,
-    // children: dashboard_routes,
-  },
-  {
     name: "Profile",
     href: "/profile",
     icon: <User />,

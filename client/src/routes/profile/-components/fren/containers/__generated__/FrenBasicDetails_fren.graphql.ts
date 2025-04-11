@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<610449d847e9f80111a8c5013af05375>>
+ * @generated SignedSource<<64f1c50b0367b9528ed12facb84da4e5>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -17,6 +17,7 @@ export type FrenBasicDetails_fren$data = {
   readonly frenId: string;
   readonly id: string;
   readonly image: string | null | undefined;
+  readonly isMe: boolean | null | undefined;
   readonly name: string;
   readonly " $fragmentType": "FrenBasicDetails_fren";
 };
@@ -79,12 +80,19 @@ const node: ReaderFragment = {
       "kind": "ScalarField",
       "name": "followingCount",
       "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "isMe",
+      "storageKey": null
     }
   ],
   "type": "Fren",
   "abstractKey": null
 };
 
-(node as any).hash = "2db96d64685748d386f64de9775de90e";
+(node as any).hash = "de6b490369344ece3533ac200bde76f6";
 
 export default node;
