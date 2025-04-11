@@ -1,13 +1,25 @@
+import { ValidRoutes } from "@/lib/tanstack/router/router-types";
 import { Droplet, Home, LayoutDashboard, NotepadText, SearchSlash, ShieldCheck, Store, User, Users, Wallet, Zap } from "lucide-react";
+import React, { JSX } from "react";
 
 export const dashboard_routes = [
   { name: "repositories", href: "/dashboard/repositories", icon: <Store /> },
   { name: "gists", href: "/dashboard/gists", icon: <Store /> },
-] as const;
+];
 
 
 
-export const routes = [
+type Routes = {
+  name: string;
+  href: ValidRoutes;
+  icon: React.ReactNode;
+  children?: {
+    name: string;
+    href: ValidRoutes;
+    icon: JSX.Element;
+  }[];
+};
+export const routes:Readonly<Routes>[] = [
   {
     name: "Home",
     href: "/",
@@ -21,10 +33,10 @@ export const routes = [
     children: undefined,
   },
   {
-    name: "Dashboard",
-    href: "/dashboard",
+    name: "Frens",
+    href: "/frens",
     icon: <LayoutDashboard />,
-    children: dashboard_routes,
+    // children: dashboard_routes,
   },
   {
     name: "Profile",

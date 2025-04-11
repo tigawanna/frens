@@ -12,30 +12,20 @@
 
 import { Route as rootRoute } from './routes/__root'
 import { Route as AboutImport } from './routes/about'
-import { Route as DashboardLayoutImport } from './routes/dashboard/layout'
 import { Route as AuthLayoutImport } from './routes/auth/layout'
 import { Route as IndexImport } from './routes/index'
 import { Route as ProfileIndexImport } from './routes/profile/index'
 import { Route as FrensIndexImport } from './routes/frens/index'
-import { Route as DashboardIndexImport } from './routes/dashboard/index'
 import { Route as AuthIndexImport } from './routes/auth/index'
 import { Route as AdminIndexImport } from './routes/admin/index'
 import { Route as AuthSignupImport } from './routes/auth/signup'
 import { Route as AuthForgortPasswordImport } from './routes/auth/forgort-password'
-import { Route as DashboardRepositoriesIndexImport } from './routes/dashboard/repositories/index'
-import { Route as DashboardGistsIndexImport } from './routes/dashboard/gists/index'
 
 // Create/Update Routes
 
 const AboutRoute = AboutImport.update({
   id: '/about',
   path: '/about',
-  getParentRoute: () => rootRoute,
-} as any)
-
-const DashboardLayoutRoute = DashboardLayoutImport.update({
-  id: '/dashboard',
-  path: '/dashboard',
   getParentRoute: () => rootRoute,
 } as any)
 
@@ -63,12 +53,6 @@ const FrensIndexRoute = FrensIndexImport.update({
   getParentRoute: () => rootRoute,
 } as any)
 
-const DashboardIndexRoute = DashboardIndexImport.update({
-  id: '/',
-  path: '/',
-  getParentRoute: () => DashboardLayoutRoute,
-} as any)
-
 const AuthIndexRoute = AuthIndexImport.update({
   id: '/',
   path: '/',
@@ -93,20 +77,6 @@ const AuthForgortPasswordRoute = AuthForgortPasswordImport.update({
   getParentRoute: () => AuthLayoutRoute,
 } as any)
 
-const DashboardRepositoriesIndexRoute = DashboardRepositoriesIndexImport.update(
-  {
-    id: '/repositories/',
-    path: '/repositories/',
-    getParentRoute: () => DashboardLayoutRoute,
-  } as any,
-)
-
-const DashboardGistsIndexRoute = DashboardGistsIndexImport.update({
-  id: '/gists/',
-  path: '/gists/',
-  getParentRoute: () => DashboardLayoutRoute,
-} as any)
-
 // Populate the FileRoutesByPath interface
 
 declare module '@tanstack/react-router' {
@@ -123,13 +93,6 @@ declare module '@tanstack/react-router' {
       path: '/auth'
       fullPath: '/auth'
       preLoaderRoute: typeof AuthLayoutImport
-      parentRoute: typeof rootRoute
-    }
-    '/dashboard': {
-      id: '/dashboard'
-      path: '/dashboard'
-      fullPath: '/dashboard'
-      preLoaderRoute: typeof DashboardLayoutImport
       parentRoute: typeof rootRoute
     }
     '/about': {
@@ -167,13 +130,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthIndexImport
       parentRoute: typeof AuthLayoutImport
     }
-    '/dashboard/': {
-      id: '/dashboard/'
-      path: '/'
-      fullPath: '/dashboard/'
-      preLoaderRoute: typeof DashboardIndexImport
-      parentRoute: typeof DashboardLayoutImport
-    }
     '/frens/': {
       id: '/frens/'
       path: '/frens'
@@ -187,20 +143,6 @@ declare module '@tanstack/react-router' {
       fullPath: '/profile'
       preLoaderRoute: typeof ProfileIndexImport
       parentRoute: typeof rootRoute
-    }
-    '/dashboard/gists/': {
-      id: '/dashboard/gists/'
-      path: '/gists'
-      fullPath: '/dashboard/gists'
-      preLoaderRoute: typeof DashboardGistsIndexImport
-      parentRoute: typeof DashboardLayoutImport
-    }
-    '/dashboard/repositories/': {
-      id: '/dashboard/repositories/'
-      path: '/repositories'
-      fullPath: '/dashboard/repositories'
-      preLoaderRoute: typeof DashboardRepositoriesIndexImport
-      parentRoute: typeof DashboardLayoutImport
     }
   }
 }
@@ -223,36 +165,16 @@ const AuthLayoutRouteWithChildren = AuthLayoutRoute._addFileChildren(
   AuthLayoutRouteChildren,
 )
 
-interface DashboardLayoutRouteChildren {
-  DashboardIndexRoute: typeof DashboardIndexRoute
-  DashboardGistsIndexRoute: typeof DashboardGistsIndexRoute
-  DashboardRepositoriesIndexRoute: typeof DashboardRepositoriesIndexRoute
-}
-
-const DashboardLayoutRouteChildren: DashboardLayoutRouteChildren = {
-  DashboardIndexRoute: DashboardIndexRoute,
-  DashboardGistsIndexRoute: DashboardGistsIndexRoute,
-  DashboardRepositoriesIndexRoute: DashboardRepositoriesIndexRoute,
-}
-
-const DashboardLayoutRouteWithChildren = DashboardLayoutRoute._addFileChildren(
-  DashboardLayoutRouteChildren,
-)
-
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/auth': typeof AuthLayoutRouteWithChildren
-  '/dashboard': typeof DashboardLayoutRouteWithChildren
   '/about': typeof AboutRoute
   '/auth/forgort-password': typeof AuthForgortPasswordRoute
   '/auth/signup': typeof AuthSignupRoute
   '/admin': typeof AdminIndexRoute
   '/auth/': typeof AuthIndexRoute
-  '/dashboard/': typeof DashboardIndexRoute
   '/frens': typeof FrensIndexRoute
   '/profile': typeof ProfileIndexRoute
-  '/dashboard/gists': typeof DashboardGistsIndexRoute
-  '/dashboard/repositories': typeof DashboardRepositoriesIndexRoute
 }
 
 export interface FileRoutesByTo {
@@ -262,28 +184,21 @@ export interface FileRoutesByTo {
   '/auth/signup': typeof AuthSignupRoute
   '/admin': typeof AdminIndexRoute
   '/auth': typeof AuthIndexRoute
-  '/dashboard': typeof DashboardIndexRoute
   '/frens': typeof FrensIndexRoute
   '/profile': typeof ProfileIndexRoute
-  '/dashboard/gists': typeof DashboardGistsIndexRoute
-  '/dashboard/repositories': typeof DashboardRepositoriesIndexRoute
 }
 
 export interface FileRoutesById {
   __root__: typeof rootRoute
   '/': typeof IndexRoute
   '/auth': typeof AuthLayoutRouteWithChildren
-  '/dashboard': typeof DashboardLayoutRouteWithChildren
   '/about': typeof AboutRoute
   '/auth/forgort-password': typeof AuthForgortPasswordRoute
   '/auth/signup': typeof AuthSignupRoute
   '/admin/': typeof AdminIndexRoute
   '/auth/': typeof AuthIndexRoute
-  '/dashboard/': typeof DashboardIndexRoute
   '/frens/': typeof FrensIndexRoute
   '/profile/': typeof ProfileIndexRoute
-  '/dashboard/gists/': typeof DashboardGistsIndexRoute
-  '/dashboard/repositories/': typeof DashboardRepositoriesIndexRoute
 }
 
 export interface FileRouteTypes {
@@ -291,17 +206,13 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/auth'
-    | '/dashboard'
     | '/about'
     | '/auth/forgort-password'
     | '/auth/signup'
     | '/admin'
     | '/auth/'
-    | '/dashboard/'
     | '/frens'
     | '/profile'
-    | '/dashboard/gists'
-    | '/dashboard/repositories'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -310,33 +221,25 @@ export interface FileRouteTypes {
     | '/auth/signup'
     | '/admin'
     | '/auth'
-    | '/dashboard'
     | '/frens'
     | '/profile'
-    | '/dashboard/gists'
-    | '/dashboard/repositories'
   id:
     | '__root__'
     | '/'
     | '/auth'
-    | '/dashboard'
     | '/about'
     | '/auth/forgort-password'
     | '/auth/signup'
     | '/admin/'
     | '/auth/'
-    | '/dashboard/'
     | '/frens/'
     | '/profile/'
-    | '/dashboard/gists/'
-    | '/dashboard/repositories/'
   fileRoutesById: FileRoutesById
 }
 
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AuthLayoutRoute: typeof AuthLayoutRouteWithChildren
-  DashboardLayoutRoute: typeof DashboardLayoutRouteWithChildren
   AboutRoute: typeof AboutRoute
   AdminIndexRoute: typeof AdminIndexRoute
   FrensIndexRoute: typeof FrensIndexRoute
@@ -346,7 +249,6 @@ export interface RootRouteChildren {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AuthLayoutRoute: AuthLayoutRouteWithChildren,
-  DashboardLayoutRoute: DashboardLayoutRouteWithChildren,
   AboutRoute: AboutRoute,
   AdminIndexRoute: AdminIndexRoute,
   FrensIndexRoute: FrensIndexRoute,
@@ -365,7 +267,6 @@ export const routeTree = rootRoute
       "children": [
         "/",
         "/auth",
-        "/dashboard",
         "/about",
         "/admin/",
         "/frens/",
@@ -381,14 +282,6 @@ export const routeTree = rootRoute
         "/auth/forgort-password",
         "/auth/signup",
         "/auth/"
-      ]
-    },
-    "/dashboard": {
-      "filePath": "dashboard/layout.tsx",
-      "children": [
-        "/dashboard/",
-        "/dashboard/gists/",
-        "/dashboard/repositories/"
       ]
     },
     "/about": {
@@ -409,23 +302,11 @@ export const routeTree = rootRoute
       "filePath": "auth/index.tsx",
       "parent": "/auth"
     },
-    "/dashboard/": {
-      "filePath": "dashboard/index.tsx",
-      "parent": "/dashboard"
-    },
     "/frens/": {
       "filePath": "frens/index.tsx"
     },
     "/profile/": {
       "filePath": "profile/index.tsx"
-    },
-    "/dashboard/gists/": {
-      "filePath": "dashboard/gists/index.tsx",
-      "parent": "/dashboard"
-    },
-    "/dashboard/repositories/": {
-      "filePath": "dashboard/repositories/index.tsx",
-      "parent": "/dashboard"
     }
   }
 }

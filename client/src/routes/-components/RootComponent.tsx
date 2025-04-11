@@ -1,26 +1,20 @@
-import { MainNavbar } from "@/components/navigation/navbar/MainNavbar";
+import Nprogress from "@/components/navigation/nprogress/Nprogress";
 import { TailwindIndicator } from "@/components/navigation/tailwind-indicator";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
-import { Outlet } from "@tanstack/react-router";
+import { Outlet, useRouterState } from "@tanstack/react-router";
 import { TanStackRouterDevtools } from "@tanstack/react-router-devtools";
 import { Toaster } from "react-hot-toast";
-import { ApolloClient, InMemoryCache, ApolloProvider, gql } from "@apollo/client";
-import { useQuery } from "@tanstack/react-query";
-export function RootComponent() {
-  const client = new ApolloClient({
-    uri: "https://flyby-router-demo.herokuapp.com/",
-    cache: new InMemoryCache(),
-  });
 
+export function RootComponent() {
+  const panding = useRouterState().status === "pending";
   return (
-    <ApolloProvider client={client}>
-      <div className="content min-h-screen w-full">
-        <TailwindIndicator />
-        <Outlet />
-        <TanStackRouterDevtools position="bottom-left" />
-        <ReactQueryDevtools buttonPosition="bottom-right" />
-        <Toaster reverseOrder />
-      </div>
-    </ApolloProvider>
+    <div className="content min-h-screen w-full">
+       <Nprogress isAnimating={panding}/>
+      <TailwindIndicator />
+      <Outlet />
+      <TanStackRouterDevtools position="bottom-left" />
+      <ReactQueryDevtools buttonPosition="bottom-right" />
+      <Toaster reverseOrder />
+    </div>
   );
 }
