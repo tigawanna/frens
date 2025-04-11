@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<b32251d8878c5ed35becca7ce793d780>>
+ * @generated SignedSource<<208aabad119a4fb9f2ef80998ecbdd33>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -25,7 +25,7 @@ export type OtherFrensQuery = {
 const node: ConcreteRequest = (function(){
 var v0 = [
   {
-    "defaultValue": 10,
+    "defaultValue": 30,
     "kind": "LocalArgument",
     "name": "frensFirst"
   },
@@ -239,16 +239,16 @@ return {
     ]
   },
   "params": {
-    "cacheID": "b4279fed0306340ebcb37950144666bf",
+    "cacheID": "1919cfc2a3adb5211c01c2538d4157d2",
     "id": null,
     "metadata": {},
     "name": "OtherFrensQuery",
     "operationKind": "query",
-    "text": "query OtherFrensQuery(\n  $frensFirst: Int = 10\n  $searchText: String\n) {\n  ...OtherFrens_frens_ze2zB\n}\n\nfragment OtherFrenCard_fren on Fren {\n  frenId\n  name\n  email\n  image\n  isMe\n  amFollowing\n  isFollowingMe\n  followerCount\n  followingCount\n}\n\nfragment OtherFrens_frens_ze2zB on Query {\n  frens(first: $frensFirst, sort: {field: \"name\", order: asc}, search: $searchText) {\n    edges {\n      node {\n        id\n        ...OtherFrenCard_fren\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      hasNextPage\n      endCursor\n    }\n  }\n}\n"
+    "text": "query OtherFrensQuery(\n  $frensFirst: Int = 30\n  $searchText: String\n) {\n  ...OtherFrens_frens_ze2zB\n}\n\nfragment OtherFrenCard_fren on Fren {\n  frenId\n  name\n  email\n  image\n  isMe\n  amFollowing\n  isFollowingMe\n  followerCount\n  followingCount\n}\n\nfragment OtherFrens_frens_ze2zB on Query {\n  frens(first: $frensFirst, sort: {field: \"name\", order: asc}, search: $searchText) {\n    edges {\n      node {\n        id\n        ...OtherFrenCard_fren\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      hasNextPage\n      endCursor\n    }\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "e9fc3e02f3be5c433649f94598f97d54";
+(node as any).hash = "c953ee002f7aa332d665ffd05c31affb";
 
 export default node;
