@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<30609f37eef3672e13b68a770dc388d3>>
+ * @generated SignedSource<<5ece26db45a670b10e6aa37006cd3156>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -30,7 +30,7 @@ var v0 = [
     "name": "after"
   },
   {
-    "defaultValue": 10,
+    "defaultValue": 24,
     "kind": "LocalArgument",
     "name": "first"
   }
@@ -118,7 +118,14 @@ return {
                     "alias": null,
                     "args": null,
                     "kind": "ScalarField",
-                    "name": "constent",
+                    "name": "postId",
+                    "storageKey": null
+                  },
+                  {
+                    "alias": null,
+                    "args": null,
+                    "kind": "ScalarField",
+                    "name": "content",
                     "storageKey": null
                   },
                   {
@@ -132,7 +139,7 @@ return {
                     "alias": null,
                     "args": null,
                     "kind": "ScalarField",
-                    "name": "likeCoount",
+                    "name": "likeCount",
                     "storageKey": null
                   },
                   {
@@ -216,16 +223,16 @@ return {
     ]
   },
   "params": {
-    "cacheID": "e0f04bb71bd987eccc71070302a5ece3",
+    "cacheID": "51ad43f18fb7997ebd8977bd0b3c3220",
     "id": null,
     "metadata": {},
     "name": "MainFeedPaginationQuery",
     "operationKind": "query",
-    "text": "query MainFeedPaginationQuery(\n  $after: String\n  $first: Int = 10\n) {\n  ...MainFeed_feedPosts_2HEEH6\n}\n\nfragment MainFeed_feedPosts_2HEEH6 on Query {\n  feedPosts(first: $first, after: $after) {\n    edges {\n      cursor\n      node {\n        id\n        imageUrl\n        constent\n        createdAt\n        likeCoount\n        likedByMe\n        updatedAt\n        __typename\n      }\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n      hasPreviousPage\n      startCursor\n    }\n  }\n}\n"
+    "text": "query MainFeedPaginationQuery(\n  $after: String\n  $first: Int = 24\n) {\n  ...MainFeed_feedPosts_2HEEH6\n}\n\nfragment MainFeed_feedPosts_2HEEH6 on Query {\n  feedPosts(first: $first, after: $after) {\n    edges {\n      cursor\n      node {\n        id\n        imageUrl\n        postId\n        content\n        createdAt\n        likeCount\n        likedByMe\n        updatedAt\n        __typename\n      }\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n      hasPreviousPage\n      startCursor\n    }\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "f28ff792f40a3572aa075698ad69dfee";
+(node as any).hash = "f503c0c4c82427e410cc86ad7e8fc270";
 
 export default node;

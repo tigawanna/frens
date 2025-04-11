@@ -1,10 +1,12 @@
 type FeedPost implements Node {
-  constent: String
+  content: String
   createdAt: String
   id: ID!
   imageUrl: String
-  likeCoount: Int
+  likeCount: Int
   likedByMe: Boolean
+  postId: String!
+  postedBy: Fren
   updatedAt: String
 }
 
@@ -25,15 +27,16 @@ type Follower implements Node {
 type Fren implements Node {
   amFollowing: Boolean
   createdAt: String
-  email: String
+  email: String!
   followerCount: Int
   followers(after: String, before: String, first: Int, last: Int, sort: SortInput): FrenFollowersConnection
   following(after: String, before: String, first: Int, last: Int, sort: SortInput): FrenFollowingConnection
   followingCount: Int
+  frenId: String!
   id: ID!
   image: String
   isFollowingMe: Boolean
-  name: String
+  name: String!
   role: String
 }
 

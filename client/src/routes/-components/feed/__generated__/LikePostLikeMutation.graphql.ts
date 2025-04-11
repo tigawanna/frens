@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<8ee3b47d9f0f091ad273a7f4a5e086d7>>
+ * @generated SignedSource<<4d67b878a78088ead71803d652cfb024>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -18,7 +18,7 @@ export type LikePostLikeMutation$data = {
     readonly createdAt: string | null | undefined;
     readonly id: string;
     readonly imageUrl: string | null | undefined;
-    readonly likeCoount: number | null | undefined;
+    readonly likeCount: number | null | undefined;
     readonly likedByMe: boolean | null | undefined;
     readonly updatedAt: string | null | undefined;
   } | null | undefined;
@@ -83,7 +83,7 @@ v1 = [
         "alias": null,
         "args": null,
         "kind": "ScalarField",
-        "name": "likeCoount",
+        "name": "likeCount",
         "storageKey": null
       },
       {
@@ -122,16 +122,16 @@ return {
     "selections": (v1/*: any*/)
   },
   "params": {
-    "cacheID": "6c7d3cb8f452e356f644900510773292",
+    "cacheID": "a1195019780460d8010bf4e834a05612",
     "id": null,
     "metadata": {},
     "name": "LikePostLikeMutation",
     "operationKind": "mutation",
-    "text": "mutation LikePostLikeMutation(\n  $postId: String!\n) {\n  likePost(postId: $postId) {\n    content\n    createdAt\n    id\n    imageUrl\n    likeCoount\n    likedByMe\n    updatedAt\n  }\n}\n"
+    "text": "mutation LikePostLikeMutation(\n  $postId: String!\n) {\n  likePost(postId: $postId) {\n    content\n    createdAt\n    id\n    imageUrl\n    likeCount\n    likedByMe\n    updatedAt\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "eeb8a8c2f8fbd3260877d090d545281d";
+(node as any).hash = "7935a10f5c46203530a1744cf2db4f67";
 
 export default node;

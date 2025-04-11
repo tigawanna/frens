@@ -1,11 +1,13 @@
 import { prisma } from "@/db/client";
-import { builder } from "./schema/builder";
+import { builder } from "./builder";
+import { Fren } from "./fren.types";
 
 export const FeedPost = builder.prismaNode("Post", {
   variant: "FeedPost",
   id: { field: "id" },
   fields: (t) => ({
-    constent: t.exposeString("content"),
+    postId: t.exposeString("id", { nullable: false }),
+    content: t.exposeString("content"),
     imageUrl: t.exposeString("imageUrl"),
     createdAt: t.field({
       type: "String",
@@ -19,7 +21,19 @@ export const FeedPost = builder.prismaNode("Post", {
         return post.createdAt.toISOString();
       },
     }),
-    likeCoount: t.field({
+    postedBy: t.field({
+      type: Fren,
+      resolve: async (parent, args, context) => {
+        return prisma.user.findUnique({
+          where: {
+            id: parent.authorId
+          },
+        });
+      }
+    }),
+    // comments: t.relation("comments"),
+    // likes: t.relation("likes"),
+    likeCount: t.field({
       type: "Int",
       resolve: async (parent) => {
         return prisma.like.count({

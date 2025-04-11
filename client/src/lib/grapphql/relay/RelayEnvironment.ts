@@ -36,22 +36,23 @@ export async function fetchFn({
     // }
     const resp = await fetch(HTTP_ENDPOINT, {
       method: "POST",
+      credentials: "include",
       headers: {
         Accept: "application/graphql-response+json; charset=utf-8, application/json; charset=utf-8",
         "Content-Type": "application/json",
         // <-- Additional headers like 'Authorization' would go here
-        Authorization: `Bearer ${bearer_token}`,
+        // Authorization: `Bearer ${bearer_token}`,
       },
       body: JSON.stringify({
         query: request.text, // <-- The GraphQL document composed by Relay
         variables,
       }),
     });
-    if (!resp.ok) {
+    // if (!resp.ok) {
       // If the response is not okay, then throw an error
       // console.log(" ====== RELAY FETCHER STATUS TEXT ============== ", resp.statusText);
-      throw new Error(resp.statusText);
-    }
+      // throw new Error(resp.statusText);/
+    // }
     const json = await resp.json();
     // console.log(" ====== RELAY FETCHER JSON ============== ", json);
     // GraphQL returns exceptions (for example, a missing required variable) in the "errors"

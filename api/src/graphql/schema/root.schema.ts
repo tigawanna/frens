@@ -2,7 +2,7 @@ import { prisma } from "@/db/client";
 import { builder } from "./builder";
 import { FollowInput, SortInput } from "./inputs";
 import { Fren, ViewerFren } from "./fren.types";
-import { FeedPost } from "../post.type";
+import { FeedPost } from "./post.type";
 import { lexicographicSortSchema, printSchema } from "graphql";
 
 // root query type
@@ -226,7 +226,16 @@ builder.mutationType({
         if (!ctx.currentUser?.id) {
           throw new Error("User not authenticated");
         }
-
+        
+        // First, check if the post exists
+        const post = await prisma.post.findUnique({
+          where: { id: args.postId },
+        });
+        
+        if (!post) {
+          throw new Error(`Post with ID ${args.postId} not found`);
+        }
+        
         // Check if like already exists
         const existingLike = await prisma.like.findFirst({
           where: {
@@ -237,12 +246,17 @@ builder.mutationType({
 
         // Create like if it doesn't exist
         if (!existingLike) {
-          await prisma.like.create({
-            data: {
-              post: { connect: { id: args.postId } },
-              user: { connect: { id: ctx.currentUser.id } },
-            },
-          });
+          try {
+            await prisma.like.create({
+              data: {
+                postId: args.postId,
+                userId: ctx.currentUser.id,
+              },
+            });
+          } catch (error) {
+            console.error("Error creating like:", error);
+            throw new Error("Failed to like post. The post may have been deleted.");
+          }
         }
 
         // Return the updated post
@@ -265,7 +279,7 @@ builder.mutationType({
           throw new Error("User not authenticated");
         }
 
-        // Delete the like
+        // Delete the like directly using IDs
         await prisma.like.deleteMany({
           where: {
             postId: args.postId,

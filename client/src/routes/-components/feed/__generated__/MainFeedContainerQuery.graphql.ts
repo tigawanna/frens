@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<10e6a5997462a30ce1035d8f078a23af>>
+ * @generated SignedSource<<b3ef0eb46fd6af16755276e1630ec766>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -122,6 +122,13 @@ return {
                     "alias": null,
                     "args": null,
                     "kind": "ScalarField",
+                    "name": "postId",
+                    "storageKey": null
+                  },
+                  {
+                    "alias": null,
+                    "args": null,
+                    "kind": "ScalarField",
                     "name": "content",
                     "storageKey": null
                   },
@@ -136,7 +143,7 @@ return {
                     "alias": null,
                     "args": null,
                     "kind": "ScalarField",
-                    "name": "likeCoount",
+                    "name": "likeCount",
                     "storageKey": null
                   },
                   {
@@ -220,12 +227,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "f05f1b8e1846b03bf839652aa41de50e",
+    "cacheID": "3c1bdbacf3d471b85ccaf495e49f66ea",
     "id": null,
     "metadata": {},
     "name": "MainFeedContainerQuery",
     "operationKind": "query",
-    "text": "query MainFeedContainerQuery(\n  $first: Int!\n  $after: String\n) {\n  ...MainFeed_feedPosts_2HEEH6\n}\n\nfragment MainFeed_feedPosts_2HEEH6 on Query {\n  feedPosts(first: $first, after: $after) {\n    edges {\n      cursor\n      node {\n        id\n        imageUrl\n        content\n        createdAt\n        likeCoount\n        likedByMe\n        updatedAt\n        __typename\n      }\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n      hasPreviousPage\n      startCursor\n    }\n  }\n}\n"
+    "text": "query MainFeedContainerQuery(\n  $first: Int!\n  $after: String\n) {\n  ...MainFeed_feedPosts_2HEEH6\n}\n\nfragment MainFeed_feedPosts_2HEEH6 on Query {\n  feedPosts(first: $first, after: $after) {\n    edges {\n      cursor\n      node {\n        id\n        imageUrl\n        postId\n        content\n        createdAt\n        likeCount\n        likedByMe\n        updatedAt\n        __typename\n      }\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n      hasPreviousPage\n      startCursor\n    }\n  }\n}\n"
   }
 };
 })();

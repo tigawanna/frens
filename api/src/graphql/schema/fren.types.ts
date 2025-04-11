@@ -24,8 +24,9 @@ export const Fren = builder.prismaNode("User", {
   variant: "Fren",
   id: { field: "id" },
   fields: (t) => ({
-    name: t.exposeString("name"),
-    email: t.exposeString("email"),
+    frenId: t.exposeString("id", { nullable: false }),
+    name: t.exposeString("name", { nullable: false }),
+    email: t.exposeString("email", { nullable: false }),
     image: t.exposeString("image"),
     role: t.exposeString("role"),
     createdAt: t.field({

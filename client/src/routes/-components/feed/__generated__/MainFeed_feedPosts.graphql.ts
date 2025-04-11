@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<0a8d2e9fc5d6cc7414d4864a54867ff1>>
+ * @generated SignedSource<<7ad12da89b7dd5f73637bdd20fc99b93>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -15,12 +15,13 @@ export type MainFeed_feedPosts$data = {
     readonly edges: ReadonlyArray<{
       readonly cursor: string;
       readonly node: {
-        readonly constent: string | null | undefined;
+        readonly content: string | null | undefined;
         readonly createdAt: string | null | undefined;
         readonly id: string;
         readonly imageUrl: string | null | undefined;
-        readonly likeCoount: number | null | undefined;
+        readonly likeCount: number | null | undefined;
         readonly likedByMe: boolean | null | undefined;
+        readonly postId: string;
         readonly updatedAt: string | null | undefined;
       } | null | undefined;
     } | null | undefined> | null | undefined;
@@ -52,7 +53,7 @@ return {
       "name": "after"
     },
     {
-      "defaultValue": 10,
+      "defaultValue": 24,
       "kind": "LocalArgument",
       "name": "first"
     }
@@ -131,7 +132,14 @@ return {
                   "alias": null,
                   "args": null,
                   "kind": "ScalarField",
-                  "name": "constent",
+                  "name": "postId",
+                  "storageKey": null
+                },
+                {
+                  "alias": null,
+                  "args": null,
+                  "kind": "ScalarField",
+                  "name": "content",
                   "storageKey": null
                 },
                 {
@@ -145,7 +153,7 @@ return {
                   "alias": null,
                   "args": null,
                   "kind": "ScalarField",
-                  "name": "likeCoount",
+                  "name": "likeCount",
                   "storageKey": null
                 },
                 {
@@ -223,6 +231,6 @@ return {
 };
 })();
 
-(node as any).hash = "f28ff792f40a3572aa075698ad69dfee";
+(node as any).hash = "f503c0c4c82427e410cc86ad7e8fc270";
 
 export default node;
