@@ -11,7 +11,7 @@ export function corsHeaders(req: Request, res: Response, next: NextFunction) {
 }
 export const allowedOrigins = [
   process.env.FRONTEND_URL ?? "",
-`${process.env.FRONTEND_URL}/graphql`,
+// `${process.env.FRONTEND_URL}/graphql`,
   process.env.API_URL ?? "",
 ];
 
