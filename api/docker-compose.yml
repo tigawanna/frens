@@ -5,13 +5,27 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    environment:
-      # Use the provided DATABASE_URL from your environment
-      - DATABASE_URL=${DATABASE_URL}
-      - NODE_ENV=${NODE_ENV:-production}
-      - PORT=${PORT:-8000}
+    # environment:
+    #   # Database connection
+    #   - DATABASE_URL=${DATABASE_URL}
+      
+    #   # Server configuration
+    #   - NODE_ENV=${NODE_ENV}
+    #   - PORT=${PORT}
+      
+    #   # URLs
+    #   - FRONTEND_URL=${FRONTEND_URL}
+    #   - API_URL=${API_URL}
+    #   - BETTER_AUTH_URL=${BETTER_AUTH_URL}
+      
+    #   # Authentication
+    #   - BETTER_AUTH_SECRET=${BETTER_AUTH_SECRET}
+    #   - GITHUB_CLIENT_ID=${GITHUB_CLIENT_ID}
+    #   - GITHUB_CLIENT_SECRET=${GITHUB_CLIENT_SECRET}
+    env_file:
+      - .env 
     ports:
-      - "${PORT:-8000}:${PORT:-8000}"
+      - "${PORT}:${PORT}"
     # No db dependency since using external database
     restart: always
 
