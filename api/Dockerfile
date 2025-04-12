@@ -31,8 +31,6 @@ RUN addgroup --system --gid 1001 nodejs
 RUN adduser --system --uid 1001 --ingroup nodejs expressjs
 USER expressjs
 
-# careful iwth this if you plan to publish this image to dockerhub
-COPY --from=builder --chown=expressjs:nodejs /app/.env ./.env
 # Copy built files
 COPY --from=builder --chown=expressjs:nodejs /app/dist ./dist
 COPY --from=builder --chown=expressjs:nodejs /app/node_modules ./node_modules
