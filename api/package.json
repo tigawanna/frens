@@ -8,7 +8,7 @@
     "tsup:build": "npx prisma generate && tsup src/index.ts --format cjs,esm --dts --sourcemap --out-dir dist",
     "tsup:start": " npx prisma generate && tsup src/index.ts --format cjs,esm --dts --sourcemap --out-dir dist --watch",
     
-    "start": "node ./dist/index.js",
+    "start": "node ./dist/src/index.js",
     "build": "tsc && tsc-alias",
     
 
