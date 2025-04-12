@@ -7,11 +7,8 @@
     "vercel-build": "echo uwu",
     "tsup:build": "npx prisma generate && tsup src/index.ts --format cjs,esm --dts --sourcemap --out-dir dist",
     "tsup:start": " npx prisma generate && tsup src/index.ts --format cjs,esm --dts --sourcemap --out-dir dist --watch",
-    
     "start": "node ./dist/src/index.js",
     "build": "tsc && tsc-alias",
-    
-
     "start:tsx": "tsx src/index.ts",
     "lint": "eslint --fix src test",
     "test": "jest",
@@ -22,7 +19,6 @@
     "db:deploy": "prisma migrate deploy",
     "db:studio": "prisma studio",
     "gen:bulk": "tsx src/api/admin.ts"
-
   },
   "keywords": [],
   "repository": {
@@ -49,6 +45,7 @@
     "zod": "^3.24.2"
   },
   "devDependencies": {
+    "@faker-js/faker": "^9.6.0",
     "@types/cookie-parser": "^1.4.8",
     "@types/cors": "^2.8.17",
     "@types/express": "^5.0.1",
