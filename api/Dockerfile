@@ -1,64 +1,46 @@
-ARG NODE_VERSION=23
-ARG PROJECT="backend"
-ARG PORT=5000
+FROM node:22-alpine AS base
 
-# Alpine image
-FROM node:${NODE_VERSION}-alpine AS base
-RUN apk update
-RUN apk add --no-cache gcompat
-
-# Setup pnpm and turbo on the alpine base
-RUN npm install pnpm turbo --global
-RUN pnpm config set store-dir ~/.pnpm-store
-
-# Prune projects
-FROM base AS pruner
-ARG PROJECT
-
+# Set working directory
 WORKDIR /app
-COPY . .
-RUN turbo prune --scope=${PROJECT} --docker
 
-# Build the project
+# Install dependencies for Prisma Client (updated for Alpine 3.21)
+RUN apk add --no-cache libc6-compat openssl
+
+# Install dependencies (with caching)
+FROM base AS deps
+COPY package.json package-lock.json* ./
+RUN npm install --development
+
+# Build the application
 FROM base AS builder
-ARG PROJECT
+COPY --from=deps /app/node_modules ./node_modules
+COPY . .
+RUN npm run db:prod
+RUN npm run build
 
+# Production image, copy all files and run the app
+FROM base AS runner
+
+ENV NODE_ENV production
+
+# Create app directory
 WORKDIR /app
 
-# Copy lockfile and package.json's of isolated subworkspace
-COPY --from=pruner /app/out/pnpm-lock.yaml ./pnpm-lock.yaml
-COPY --from=pruner /app/out/pnpm-workspace.yaml ./pnpm-workspace.yaml
-COPY --from=pruner /app/out/json/ .
-
-# First install dependencies
-RUN --mount=type=cache,id=pnpm,target=~/.pnpm-store pnpm install --frozen-lockfile
-
-# Copy source code
-COPY --from=pruner /app/out/full/ .
-
-RUN turbo build --filter=${PROJECT}
-RUN --mount=type=cache,id=pnpm,target=~/.pnpm-store pnpm prune --prod --no-optional
-RUN rm -rf ./**/*/src
-
-# Final image
-FROM node:${NODE_VERSION}-alpine AS runner
-ARG PROJECT
-ARG PORT
-
-# Install only needed dependencies
-RUN apk add --no-cache gcompat
-
-# Create non-root user
+# Add a non-root user for security (Alpine way)
 RUN addgroup --system --gid 1001 nodejs
-RUN adduser --system --uid 1001 nodejs
-USER nodejs
+RUN adduser --system --uid 1001 --ingroup nodejs expressjs
+USER expressjs
 
-WORKDIR /app
-COPY --from=builder --chown=nodejs:nodejs /app .
-WORKDIR /app/apps/${PROJECT}
+# careful iwth this if you plan to publish this image to dockerhub
+COPY --from=builder --chown=expressjs:nodejs /app/.env ./.env
+# Copy built files
+COPY --from=builder --chown=expressjs:nodejs /app/dist ./dist
+COPY --from=builder --chown=expressjs:nodejs /app/node_modules ./node_modules
+COPY --from=builder --chown=expressjs:nodejs /app/package.json ./package.json
+COPY --from=builder --chown=expressjs:nodejs /app/prisma ./prisma
 
-ENV PORT=${PORT}
-ENV NODE_ENV=production
-EXPOSE ${PORT}
+# Expose port for the application
+EXPOSE 8000
 
-CMD ["node", "dist/index.cjs"]
+# Start the application
+CMD ["npm", "start"]

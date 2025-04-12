@@ -1,0 +1,33 @@
+version: '3.8'
+
+services:
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    environment:
+      # Use the provided DATABASE_URL from your environment
+      - DATABASE_URL=${DATABASE_URL}
+      - NODE_ENV=${NODE_ENV:-production}
+      - PORT=${PORT:-8000}
+    ports:
+      - "${PORT:-8000}:${PORT:-8000}"
+    # No db dependency since using external database
+    restart: always
+
+  # Local database - commented out since you're using an external one
+  # Uncomment this section if you want to switch to a local database
+  # db:
+  #   image: postgres:15
+  #   environment:
+  #     - POSTGRES_USER=${POSTGRES_USER:-postgres}
+  #     - POSTGRES_PASSWORD=${POSTGRES_PASSWORD:-postgres}
+  #     - POSTGRES_DB=${POSTGRES_DB:-frens}
+  #   ports:
+  #     - "${DB_PORT:-5432}:5432"
+  #   volumes:
+  #     - postgres-data:/var/lib/postgresql/data
+
+# Uncomment this when using the local database
+# volumes:
+#   postgres-data:
