@@ -175,14 +175,14 @@ export function SigninCard() {
             <button
               className="gap-2 flex-1 w-full py-4 btn btn-primary btn-outline  border-[1px]"
               onClick={async () => {
-                // const baseURL = new URL(window.location.href);
-                // const callbackURL = new URL(returnTo, baseURL).toString();
-                // const newUserCallbackURL = new URL("/about", baseURL).toString();
-                // const errorCallbackURL = new URL("/auth/error", baseURL).toString();
+                const baseURL = new URL(window.location.href);
+                const callbackURL = new URL(returnTo, baseURL).toString();
+                const newUserCallbackURL = new URL("/about", baseURL).toString();
+                const errorCallbackURL = new URL("/auth/error", baseURL).toString();
 
-                const callbackURL = returnTo;
-                const newUserCallbackURL = "/about";
-                const errorCallbackURL = "/auth/error";
+                // const callbackURL = returnTo;
+                // const newUserCallbackURL = "/about";
+                // const errorCallbackURL = "/auth/error";
 
                 await authClient.signIn.social({
                   provider: "github",
