@@ -46,8 +46,15 @@ app.use(
   }),
 );
 
+app.use("/sign-in/email",(req, res, next) => {
+  console.log("=== Resoponse === ", res);
+  next();
+})
+
+
 //  always put this before calling express.json
 app.all("/api/auth/*", toNodeHandler(auth));
+
 
 app.use(express.json());
 

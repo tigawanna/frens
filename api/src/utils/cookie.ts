@@ -1,4 +1,4 @@
-import type { Response } from "express";
+import type { CookieOptions, Response } from "express";
 export const setCookies = (
   res: Response,
   tokens: { accessToken: string; refreshToken: string },
@@ -18,3 +18,15 @@ export const setCookies = (
     maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
   });
 };
+
+
+
+export const secureCookieOptions = {
+  httpOnly: true,
+  secure: true,
+  sameSite: "none",
+  path: "/",
+  expires: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000), // expires in 7 days
+  maxAge: 7 * 24 * 60 * 60, // expires in 7 days
+} satisfies CookieOptions
+;
