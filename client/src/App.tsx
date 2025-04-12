@@ -6,6 +6,7 @@ import { useViewer } from "./lib/viewer/use-viewer";
 export function App() {
   useEffect(() => {
     document.documentElement.dataset.style = "vertical";
+    document.documentElement.dataset.theme = "dark";
     themeChange(false);
   }, []);
   const viewer = useViewer()
