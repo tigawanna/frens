@@ -1,8 +1,8 @@
 import { graphql } from "relay-runtime";
 import { usePaginationFragment } from 'react-relay';
-import { MainFeed_feedPosts$key } from './__generated__/MainFeed_feedPosts.graphql';
 import { Button } from "@/components/shadcn/ui/button";
 import { Coffee, Link, Loader2, PenSquare, UserPlus } from "lucide-react";
+import { MainFeed_feedPosts$key } from './__generated__/MainFeed_feedPosts.graphql';
 import { MainFeedPaginationQuery } from "./__generated__/MainFeedPaginationQuery.graphql";
 import { PostCard } from "./FeedCard";
 import { CreatePostModal } from "./form/PostDialogs";

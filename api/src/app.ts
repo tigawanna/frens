@@ -26,10 +26,7 @@ app.use(morgan("dev"));
 app.use(requestIp.mw());
 app.use(cookieParser());
 
-// app.use((req, res, next) => {
-//   console.log("Request origin:", req.headers.origin);
-//   next();
-// })
+
 app.use(corsHeaders);
 
 app.use(
