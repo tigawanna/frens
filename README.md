@@ -498,4 +498,5 @@ To get your access token on out fronend got to /profile/account and under the se
 - No replies features
 - No email verification
 
-
+Frontnd on vercel , express server on render
+[Try it out](https://frens.vercel.app/)

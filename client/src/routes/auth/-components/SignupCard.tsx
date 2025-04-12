@@ -234,18 +234,21 @@ export function SignUpCard() {
           </form>
         </Form>
 
-        <div className="flex flex-wrap items-center gap-2 w-full mt-4">
+        {/* <div className="flex flex-wrap items-center gap-2 w-full mt-4">
           <button
             className="gap-2 flex-1 btn btn-primary btn-outline border-[1px] w-full py-4"
             onClick={async () => {
+              // const rediretTo = new URL(window.location.href);
+              // rediretTo.pathname = returnTo;
               await authClient.signIn.social({
                 provider: "github",
+
               });
             }}>
             <FaGithub className="h-4 w-4" />
             Continue with Github
           </button>
-        </div>
+        </div> */}
       </CardContent>
       <CardFooter>
         <div className="flex justify-center w-full border-t py-4">
