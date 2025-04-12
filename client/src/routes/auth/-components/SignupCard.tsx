@@ -41,7 +41,7 @@ export function SignUpCard() {
   const { returnTo } = useSearch({
     from: "/auth/signup",
   });
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const form = useForm<SignupFormValues>({
     resolver: zodResolver(signupSchema),
     defaultValues: {
@@ -64,21 +64,20 @@ export function SignUpCard() {
       });
     },
     onSuccess: (data) => {
-      if(data.error) {
+      if (data.error) {
         makeHotToast({
           title: "Signup failed",
           description: data.error.message,
           variant: "error",
           duration: 5000,
         });
-      }else{
+      } else {
         makeHotToast({
           title: "Welcome",
           description: `Welcome ${data?.data?.user.name}`,
           variant: "success",
         });
-        navigate({ to: returnTo })
-
+        navigate({ to: returnTo });
       }
     },
     onError: (error) => {
@@ -234,21 +233,26 @@ export function SignUpCard() {
           </form>
         </Form>
 
-        {/* <div className="flex flex-wrap items-center gap-2 w-full mt-4">
+        <div className="flex flex-wrap items-center gap-2 w-full mt-4">
           <button
             className="gap-2 flex-1 btn btn-primary btn-outline border-[1px] w-full py-4"
             onClick={async () => {
-              // const rediretTo = new URL(window.location.href);
-              // rediretTo.pathname = returnTo;
+              const baseURL = new URL(window.location.href);
+              const callbackURL = new URL(returnTo, baseURL).toString();
+              const newUserCallbackURL = new URL("/about", baseURL).toString();
+              const errorCallbackURL = new URL("/auth/error", baseURL).toString();
+
               await authClient.signIn.social({
                 provider: "github",
-
+                callbackURL,
+                newUserCallbackURL,
+                errorCallbackURL,
               });
             }}>
             <FaGithub className="h-4 w-4" />
             Continue with Github
           </button>
-        </div> */}
+        </div>
       </CardContent>
       <CardFooter>
         <div className="flex justify-center w-full border-t py-4">

@@ -24,6 +24,7 @@ import { Route as AuthForgortPasswordImport } from './routes/auth/forgort-passwo
 import { Route as ProfileExploreIndexImport } from './routes/profile/explore/index'
 import { Route as ProfileAccountIndexImport } from './routes/profile/account/index'
 import { Route as ProfileFrenIdIndexImport } from './routes/profile/$frenId/index'
+import { Route as AuthErrorIndexImport } from './routes/auth/error/index'
 
 // Create/Update Routes
 
@@ -105,6 +106,12 @@ const ProfileFrenIdIndexRoute = ProfileFrenIdIndexImport.update({
   getParentRoute: () => ProfileLayoutRoute,
 } as any)
 
+const AuthErrorIndexRoute = AuthErrorIndexImport.update({
+  id: '/error/',
+  path: '/error/',
+  getParentRoute: () => AuthLayoutRoute,
+} as any)
+
 // Populate the FileRoutesByPath interface
 
 declare module '@tanstack/react-router' {
@@ -179,6 +186,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ProfileIndexImport
       parentRoute: typeof ProfileLayoutImport
     }
+    '/auth/error/': {
+      id: '/auth/error/'
+      path: '/error'
+      fullPath: '/auth/error'
+      preLoaderRoute: typeof AuthErrorIndexImport
+      parentRoute: typeof AuthLayoutImport
+    }
     '/profile/$frenId/': {
       id: '/profile/$frenId/'
       path: '/$frenId'
@@ -221,12 +235,14 @@ interface AuthLayoutRouteChildren {
   AuthForgortPasswordRoute: typeof AuthForgortPasswordRoute
   AuthSignupRoute: typeof AuthSignupRoute
   AuthIndexRoute: typeof AuthIndexRoute
+  AuthErrorIndexRoute: typeof AuthErrorIndexRoute
 }
 
 const AuthLayoutRouteChildren: AuthLayoutRouteChildren = {
   AuthForgortPasswordRoute: AuthForgortPasswordRoute,
   AuthSignupRoute: AuthSignupRoute,
   AuthIndexRoute: AuthIndexRoute,
+  AuthErrorIndexRoute: AuthErrorIndexRoute,
 }
 
 const AuthLayoutRouteWithChildren = AuthLayoutRoute._addFileChildren(
@@ -262,6 +278,7 @@ export interface FileRoutesByFullPath {
   '/admin/': typeof AdminIndexRoute
   '/auth/': typeof AuthIndexRoute
   '/profile/': typeof ProfileIndexRoute
+  '/auth/error': typeof AuthErrorIndexRoute
   '/profile/$frenId': typeof ProfileFrenIdIndexRoute
   '/profile/account': typeof ProfileAccountIndexRoute
   '/profile/explore': typeof ProfileExploreIndexRoute
@@ -275,6 +292,7 @@ export interface FileRoutesByTo {
   '/admin': typeof AdminIndexRoute
   '/auth': typeof AuthIndexRoute
   '/profile': typeof ProfileIndexRoute
+  '/auth/error': typeof AuthErrorIndexRoute
   '/profile/$frenId': typeof ProfileFrenIdIndexRoute
   '/profile/account': typeof ProfileAccountIndexRoute
   '/profile/explore': typeof ProfileExploreIndexRoute
@@ -292,6 +310,7 @@ export interface FileRoutesById {
   '/admin/': typeof AdminIndexRoute
   '/auth/': typeof AuthIndexRoute
   '/profile/': typeof ProfileIndexRoute
+  '/auth/error/': typeof AuthErrorIndexRoute
   '/profile/$frenId/': typeof ProfileFrenIdIndexRoute
   '/profile/account/': typeof ProfileAccountIndexRoute
   '/profile/explore/': typeof ProfileExploreIndexRoute
@@ -310,6 +329,7 @@ export interface FileRouteTypes {
     | '/admin/'
     | '/auth/'
     | '/profile/'
+    | '/auth/error'
     | '/profile/$frenId'
     | '/profile/account'
     | '/profile/explore'
@@ -322,6 +342,7 @@ export interface FileRouteTypes {
     | '/admin'
     | '/auth'
     | '/profile'
+    | '/auth/error'
     | '/profile/$frenId'
     | '/profile/account'
     | '/profile/explore'
@@ -337,6 +358,7 @@ export interface FileRouteTypes {
     | '/admin/'
     | '/auth/'
     | '/profile/'
+    | '/auth/error/'
     | '/profile/$frenId/'
     | '/profile/account/'
     | '/profile/explore/'
@@ -390,7 +412,8 @@ export const routeTree = rootRoute
       "children": [
         "/auth/forgort-password",
         "/auth/signup",
-        "/auth/"
+        "/auth/",
+        "/auth/error/"
       ]
     },
     "/profile": {
@@ -424,6 +447,10 @@ export const routeTree = rootRoute
     "/profile/": {
       "filePath": "profile/index.tsx",
       "parent": "/profile"
+    },
+    "/auth/error/": {
+      "filePath": "auth/error/index.tsx",
+      "parent": "/auth"
     },
     "/profile/$frenId/": {
       "filePath": "profile/$frenId/index.tsx",
