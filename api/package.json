@@ -10,17 +10,19 @@
     
     "start": "node ./dist/index.js",
     "build": "tsc && tsc-alias",
+    
 
     "start:tsx": "tsx src/index.ts",
     "lint": "eslint --fix src test",
     "test": "jest",
     "typecheck": "tsc --noEmit",
     "db:generate": "prisma generate",
+    "db:prod": "prisma generate --no-engine",
     "db:migrate": "prisma migrate dev --skip-generate",
     "db:deploy": "prisma migrate deploy",
     "db:studio": "prisma studio",
-    "gen:bulk": "tsx src/api/admin.ts",
-    "postinstall": "prisma generate"
+    "gen:bulk": "tsx src/api/admin.ts"
+
   },
   "keywords": [],
   "repository": {
