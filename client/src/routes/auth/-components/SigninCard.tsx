@@ -49,9 +49,9 @@ export function SigninCard() {
       return await authClient.signIn.email({
         email: data.email,
         password: data.password,
-        // callbackURL: returnTo,
+        callbackURL: returnTo,
         rememberMe: data.rememberMe,
-        
+
       });
     },
     onSuccess: (data) => {
