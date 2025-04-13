@@ -1,7 +1,5 @@
 import { Suspense } from "react";
 import { createFileRoute } from "@tanstack/react-router";
-// import { OtherFrenProfileContainer } from "./-components/OtherFrenProfileContainer";
-import { CardsListSuspenseFallback } from "@/components/wrappers/GenericDataCardsListSuspenseFallback";
 import { FrensTabSuspenseFallBack } from "../-components/fren/containers/FrensTabSuspenseFallBack";
 import { Fren } from "../-components/fren/containers/Fren";
 
