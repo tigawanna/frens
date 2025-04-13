@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<39d6445c15cf8eb5706539e42dd26992>>
+ * @generated SignedSource<<f11ca1ff28194b069b82ace9da89f2b2>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -9,14 +9,13 @@
 // @ts-nocheck
 
 import { ConcreteRequest } from 'relay-runtime';
+import { FragmentRefs } from "relay-runtime";
 export type FrenPostcardLikeMutation$variables = {
   postId: string;
 };
 export type FrenPostcardLikeMutation$data = {
-  readonly toggleLiked: {
-    readonly id: string;
-    readonly likeCount: number | null | undefined;
-    readonly likedByMe: boolean | null | undefined;
+  readonly toggleFrenLiked: {
+    readonly " $fragmentSpreads": FragmentRefs<"FrenPostcard_post">;
   } | null | undefined;
 };
 export type FrenPostcardLikeMutation = {
@@ -34,42 +33,9 @@ var v0 = [
 ],
 v1 = [
   {
-    "alias": null,
-    "args": [
-      {
-        "kind": "Variable",
-        "name": "postId",
-        "variableName": "postId"
-      }
-    ],
-    "concreteType": "FeedPost",
-    "kind": "LinkedField",
-    "name": "toggleLiked",
-    "plural": false,
-    "selections": [
-      {
-        "alias": null,
-        "args": null,
-        "kind": "ScalarField",
-        "name": "id",
-        "storageKey": null
-      },
-      {
-        "alias": null,
-        "args": null,
-        "kind": "ScalarField",
-        "name": "likeCount",
-        "storageKey": null
-      },
-      {
-        "alias": null,
-        "args": null,
-        "kind": "ScalarField",
-        "name": "likedByMe",
-        "storageKey": null
-      }
-    ],
-    "storageKey": null
+    "kind": "Variable",
+    "name": "postId",
+    "variableName": "postId"
   }
 ];
 return {
@@ -78,7 +44,24 @@ return {
     "kind": "Fragment",
     "metadata": null,
     "name": "FrenPostcardLikeMutation",
-    "selections": (v1/*: any*/),
+    "selections": [
+      {
+        "alias": null,
+        "args": (v1/*: any*/),
+        "concreteType": "FrenPost",
+        "kind": "LinkedField",
+        "name": "toggleFrenLiked",
+        "plural": false,
+        "selections": [
+          {
+            "args": null,
+            "kind": "FragmentSpread",
+            "name": "FrenPostcard_post"
+          }
+        ],
+        "storageKey": null
+      }
+    ],
     "type": "Mutation",
     "abstractKey": null
   },
@@ -87,19 +70,87 @@ return {
     "argumentDefinitions": (v0/*: any*/),
     "kind": "Operation",
     "name": "FrenPostcardLikeMutation",
-    "selections": (v1/*: any*/)
+    "selections": [
+      {
+        "alias": null,
+        "args": (v1/*: any*/),
+        "concreteType": "FrenPost",
+        "kind": "LinkedField",
+        "name": "toggleFrenLiked",
+        "plural": false,
+        "selections": [
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "id",
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "postId",
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "content",
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "imageUrl",
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "createdAt",
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "updatedAt",
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "likeCount",
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "likedByMe",
+            "storageKey": null
+          }
+        ],
+        "storageKey": null
+      }
+    ]
   },
   "params": {
-    "cacheID": "4f950c06273789882ccb7a74d58517e5",
+    "cacheID": "c487a4b1da0e40f6edc2db27af7e7fa1",
     "id": null,
     "metadata": {},
     "name": "FrenPostcardLikeMutation",
     "operationKind": "mutation",
-    "text": "mutation FrenPostcardLikeMutation(\n  $postId: String!\n) {\n  toggleLiked(postId: $postId) {\n    id\n    likeCount\n    likedByMe\n  }\n}\n"
+    "text": "mutation FrenPostcardLikeMutation(\n  $postId: String!\n) {\n  toggleFrenLiked(postId: $postId) {\n    ...FrenPostcard_post\n    id\n  }\n}\n\nfragment FrenPostcard_post on FrenPost {\n  id\n  postId\n  content\n  imageUrl\n  createdAt\n  updatedAt\n  likeCount\n  likedByMe\n}\n"
   }
 };
 })();
 
-(node as any).hash = "64be8917a191aa14dad2996becc95360";
+(node as any).hash = "a14d7c42fb98db7cab670bb750e27062";
 
 export default node;

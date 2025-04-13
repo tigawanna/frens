@@ -45,7 +45,10 @@ export function PostCard({ postRef, viewer }: PostCardProps) {
     <Card className="w-full mb-4 border-none bg-base-300">
       <CardContent className="pt-6">
         <div className="flex items-center justify-between gap-3 mb-4 ">
-          <Link to="/profile/$frenId" params={{frenId: postData.postedBy?.frenId??""}} className="flex items-center gap-3 p-2 px-4 rounded-2xl hover:bg-primary/20">
+          <Link
+            to="/profile/$frenId"
+            params={{ frenId: postData.postedBy?.frenId ?? "" }}
+            className="flex items-center gap-3 p-2 px-4 rounded-2xl hover:bg-primary/20">
             <Avatar>
               <AvatarFallback className="bg-primary/10 flex items-center justify-center h-10 w-10 rounded-full text-primary font-medium">
                 {postIdFirstChars}
@@ -88,11 +91,11 @@ export function PostCard({ postRef, viewer }: PostCardProps) {
             isLiked={postData?.likedByMe}
             likeCount={postData.likeCount}
           />
-          <Button variant="ghost" size="sm">
+          <Button disabled variant="ghost" size="sm">
             <MessageSquare className="h-4 w-4 mr-1" />
             Comment
           </Button>
-          <Button variant="ghost" size="sm">
+          <Button disabled variant="ghost" size="sm">
             <Share2 className="h-4 w-4 mr-1" />
             Share
           </Button>

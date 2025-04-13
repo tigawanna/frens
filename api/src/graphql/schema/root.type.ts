@@ -2,7 +2,7 @@ import { prisma } from "@/db/client";
 import { builder } from "./builder";
 import { FollowInput, SortInput } from "./inputs";
 import { Follower, Fren } from "./fren.types";
-import { FeedPost } from "./post.type";
+import { FeedPost, FrenPost } from "./post.type";
 import { lexicographicSortSchema, printSchema } from "graphql";
 import { console } from "inspector";
 
@@ -275,6 +275,57 @@ builder.mutationType({
 
     toggleLiked: t.prismaField({
       type: FeedPost,
+      args: {
+        postId: t.arg.string({ required: true }),
+      },
+      resolve: async (query, root, args, ctx, info) => {
+        // Check if the user is authenticated
+        if (!ctx.currentUser?.id) {
+          throw new Error("User not authenticated");
+        }
+
+        // Try to create a like
+        try {
+          await prisma.like.create({
+            data: {
+              postId: args.postId,
+              userId: ctx.currentUser.id,
+            },
+          });
+        } catch (err: any) {
+          // P2002: Unique constraint violation (like already exists)
+          if (err.code === "P2002") {
+            await prisma.like.deleteMany({
+              where: {
+                postId: args.postId,
+                userId: ctx.currentUser.id,
+              },
+            });
+          }
+          // P2003: Foreign key constraint failed (post doesn't exist)
+          else if (err.code === "P2003") {
+            throw new Error(`Post with ID ${args.postId} not found`);
+          }
+          // P2025: Record not found (trying to like a non-existent post)
+          else if (err.code === "P2025") {
+            throw new Error(`Post with ID ${args.postId} not found`);
+          }
+          // Handle any other unexpected errors
+          else {
+            console.error("Error toggling like:", err);
+            throw new Error("An error occurred while toggling the like");
+          }
+        }
+
+        // Return the updated post
+        return prisma.post.findUniqueOrThrow({
+          ...query,
+          where: { id: args.postId },
+        });
+      },
+    }),
+    toggleFrenLiked: t.prismaField({
+      type: FrenPost,
       args: {
         postId: t.arg.string({ required: true }),
       },

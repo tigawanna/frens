@@ -12,7 +12,7 @@ interface FellowToggleFollowingsProps {
 export function FellowToggleFollowings({ fellow }: FellowToggleFollowingsProps) {
   const [isHovering, setIsHovering] = useState(false);
   const [commitToggleFollowMutation, isTogglingFollow] = useMutation(graphql`
-    mutation FellowFrenCardMutation($input: FollowInput!) {
+    mutation FellowToggleFollowingsMutation($input: FollowInput!) {
       toggleFollow(input: $input) {
         ...FellowFrenCard_following
       }

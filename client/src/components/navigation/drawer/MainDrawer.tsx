@@ -39,7 +39,7 @@ export function MainDrawer({ sidebar_props, children, links, header,footer }: Ma
       <SidebarInset>
         <header className="fixed z-30 flex h-10 items-center gap-2 bg-base-200 transition-[width,height] ease-linear group-has-data-[collapsible=icon]/sidebar-wrapper:h-12">
           <div className="flex items-center gap-2 ">
-            <SidebarTrigger className="" icon={<OpenCloseDrawerIcons />} />
+            <SidebarTrigger className="border border-primary m-1 bg-transparent "  icon={<OpenCloseDrawerIcons />} />
             <Separator orientation="vertical" className="h-4" />
             <TSRBreadCrumbs />
           </div>

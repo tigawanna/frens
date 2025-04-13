@@ -38,17 +38,13 @@ export function FrenPostcard({ postRef }: FrenPostcardProps) {
     postRef
   );
 
-  const [commitLikeMutation,isLiking] = useMutation<FrenPostcardLikeMutation>(
-    graphql`
-      mutation FrenPostcardLikeMutation($postId: String!) {
-        toggleLiked(postId: $postId) {
-          id
-          likeCount
-          likedByMe
-        }
+  const [commitLikeMutation, isLiking] = useMutation<FrenPostcardLikeMutation>(graphql`
+    mutation FrenPostcardLikeMutation($postId: String!) {
+      toggleFrenLiked(postId: $postId) {
+        ...FrenPostcard_post
       }
-    `
-  );
+    }
+  `);
 
   const [commitDeleteMutation,isDeleting] = useMutation(
     graphql`
@@ -93,7 +89,7 @@ export function FrenPostcard({ postRef }: FrenPostcardProps) {
               {wasEdited && <span className="ml-1">(edited)</span>}
             </div>
           </div>
-          
+
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Button variant="ghost" size="sm" className="h-8 w-8 p-0">
@@ -117,10 +113,7 @@ export function FrenPostcard({ postRef }: FrenPostcardProps) {
                   </AlertDialogHeader>
                   <AlertDialogFooter>
                     <AlertDialogCancel>Cancel</AlertDialogCancel>
-                    <AlertDialogAction 
-                      onClick={handleDeletePost}
-                      disabled={isDeleting}
-                    >
+                    <AlertDialogAction onClick={handleDeletePost} disabled={isDeleting}>
                       {isDeleting ? "Deleting..." : "Delete"}
                     </AlertDialogAction>
                   </AlertDialogFooter>
@@ -129,42 +122,35 @@ export function FrenPostcard({ postRef }: FrenPostcardProps) {
             </DropdownMenuContent>
           </DropdownMenu>
         </div>
-        
-        {post.content && (
-          <div className="text-base mb-4 whitespace-pre-wrap">{post.content}</div>
-        )}
-        
+
+        {post.content && <div className="text-base mb-4 whitespace-pre-wrap">{post.content}</div>}
+
         {post.imageUrl && (
           <div className="relative aspect-video rounded-md overflow-hidden mb-4">
-            <img
-              src={post.imageUrl}
-              alt="Post image"
-              className="object-cover w-full h-full"
-            />
+            <img src={post.imageUrl} alt="Post image" className="object-cover w-full h-full" />
           </div>
         )}
       </CardContent>
-      
+
       <CardFooter className="border-t py-3 flex justify-between">
         <div className="flex items-center gap-4">
           <Button
             variant="ghost"
             size="sm"
-            className={`flex items-center gap-1 ${post.likedByMe ? 'text-primary' : ''}`}
+            className={`flex items-center gap-1 ${post.likedByMe ? "text-primary" : ""}`}
             onClick={handleLikeToggle}
-            disabled={isLiking}
-          >
-            <Heart className={`h-4 w-4 ${post.likedByMe ? 'fill-primary' : ''}`} />
+            disabled={isLiking}>
+            <Heart className={`h-4 w-4 ${post.likedByMe ? "fill-primary" : ""}`} />
             <span>{post.likeCount || 0}</span>
           </Button>
-          
-          <Button variant="ghost" size="sm" className="flex items-center gap-1">
+
+          <Button disabled variant="ghost" size="sm" className="flex items-center gap-1">
             <MessageCircle className="h-4 w-4" />
             <span>Comment</span>
           </Button>
         </div>
-        
-        <Button variant="ghost" size="sm" className="flex items-center gap-1">
+
+        <Button disabled variant="ghost" size="sm" className="flex items-center gap-1">
           <Share className="h-4 w-4" />
           <span>Share</span>
         </Button>

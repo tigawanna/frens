@@ -95,6 +95,7 @@ type Mutation {
   deletePost(id: String!): Boolean
   toggleFollow(input: FollowInput!): Follower
   toggleFollowFren(input: FollowInput!): Fren
+  toggleFrenLiked(postId: String!): FrenPost
   toggleLiked(postId: String!): FeedPost
   updatePost(content: String, id: String!, imageUrl: String): FeedPost
 }

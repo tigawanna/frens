@@ -9,7 +9,7 @@ export const dashboard_routes = [
 
 
 
-type Routes = {
+export type Routes = {
   name: string;
   href: ValidRoutes;
   icon: React.ReactNode;
@@ -36,7 +36,10 @@ export const routes:Readonly<Routes>[] = [
     name: "Profile",
     href: "/profile",
     icon: <User />,
-    children: undefined,
+    children:[
+      { name: "Account", href: "/profile/account", icon: <Users /> },
+      { name: "Explore", href: "/profile/explore", icon: <Users /> },
+    ],
   },
 ] as const;
 
