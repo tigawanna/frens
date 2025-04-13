@@ -121,7 +121,8 @@ export function OtherFrenCard({ frenRef }: OtherFrenCardProps) {
                   onClick={handleToggleFollow}
                   disabled={isTogglingFollow}
                   onMouseEnter={() => setIsHovering(true)}
-                  onMouseLeave={() => setIsHovering(false)}>
+                  onMouseLeave={() => setIsHovering(false)}
+                  >
                   {isTogglingFollow ? (
                     <Loader className="h-4 w-4 animate-spin mr-1" />
                   ) : isHovering ? (

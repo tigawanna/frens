@@ -13,7 +13,7 @@ const buttonVariants = cva(
         destructive:
           "btn-error",
         outline:
-          "btn-outline border-[1xp]",
+          "btn-outline border-[1px]",
         secondary:
           "btn-secodary",
         ghost: "btn-ghost",

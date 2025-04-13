@@ -5,9 +5,10 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/shadcn/ui
 import { FrenBasicDetails } from "./FrenBasicDetails";
 import { CardsListSuspenseFallback } from "@/components/wrappers/GenericDataCardsListSuspenseFallback";
 import { FrenPosts } from "../posts/FrenPosts";
-import { FrenFollowers } from "../followers/FrenFollowers";
-import { FrenFollowing } from "../following/FrenFollowing";
+import { FrenFollowers } from "../fellow/FrenFollowers";
+
 import { FrenProfileTabsFragment_fren$key } from "./__generated__/FrenProfileTabsFragment_fren.graphql";
+import { FrenFollowing } from "../fellow/FrenFollowing";
 
 interface FrenProfileTabsProps {
   frenRef?: FrenProfileTabsFragment_fren$key|null;

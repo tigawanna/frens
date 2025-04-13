@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<b08d433bffe6ac90ce1fc0d8f0d05899>>
+ * @generated SignedSource<<102904e5ecef1fd6547eb10df89cece1>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -89,28 +89,63 @@ v9 = {
   "name": "frenId",
   "storageKey": null
 },
-v10 = [
-  {
-    "kind": "Variable",
-    "name": "first",
-    "variableName": "postsFirst"
-  }
-],
+v10 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "isFollowingMe",
+  "storageKey": null
+},
 v11 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "cursor",
+  "name": "amFollowing",
   "storageKey": null
 },
 v12 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
+  "name": "isMe",
+  "storageKey": null
+},
+v13 = [
+  {
+    "kind": "Variable",
+    "name": "first",
+    "variableName": "postsFirst"
+  }
+],
+v14 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "cursor",
+  "storageKey": null
+},
+v15 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
   "name": "__typename",
   "storageKey": null
 },
-v13 = {
+v16 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "endCursor",
+  "storageKey": null
+},
+v17 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "hasNextPage",
+  "storageKey": null
+},
+v18 = {
   "alias": null,
   "args": null,
   "concreteType": "PageInfo",
@@ -118,32 +153,34 @@ v13 = {
   "name": "pageInfo",
   "plural": false,
   "selections": [
+    (v16/*: any*/),
+    (v17/*: any*/),
     {
       "alias": null,
       "args": null,
       "kind": "ScalarField",
-      "name": "hasNextPage",
+      "name": "hasPreviousPage",
       "storageKey": null
     },
     {
       "alias": null,
       "args": null,
       "kind": "ScalarField",
-      "name": "endCursor",
+      "name": "startCursor",
       "storageKey": null
     }
   ],
   "storageKey": null
 },
-v14 = [
+v19 = [
   {
     "kind": "Variable",
     "name": "first",
     "variableName": "followersFirst"
   }
 ],
-v15 = [
-  (v11/*: any*/),
+v20 = [
+  (v14/*: any*/),
   {
     "alias": null,
     "args": null,
@@ -157,12 +194,15 @@ v15 = [
       (v6/*: any*/),
       (v7/*: any*/),
       (v8/*: any*/),
-      (v12/*: any*/)
+      (v12/*: any*/),
+      (v11/*: any*/),
+      (v10/*: any*/),
+      (v15/*: any*/)
     ],
     "storageKey": null
   }
 ],
-v16 = [
+v21 = [
   {
     "kind": "Variable",
     "name": "first",
@@ -255,27 +295,9 @@ return {
             "name": "followingCount",
             "storageKey": null
           },
-          {
-            "alias": null,
-            "args": null,
-            "kind": "ScalarField",
-            "name": "isFollowingMe",
-            "storageKey": null
-          },
-          {
-            "alias": null,
-            "args": null,
-            "kind": "ScalarField",
-            "name": "amFollowing",
-            "storageKey": null
-          },
-          {
-            "alias": null,
-            "args": null,
-            "kind": "ScalarField",
-            "name": "isMe",
-            "storageKey": null
-          },
+          (v10/*: any*/),
+          (v11/*: any*/),
+          (v12/*: any*/),
           {
             "alias": null,
             "args": null,
@@ -285,7 +307,7 @@ return {
           },
           {
             "alias": null,
-            "args": (v10/*: any*/),
+            "args": (v13/*: any*/),
             "concreteType": "FrenPostsConnection",
             "kind": "LinkedField",
             "name": "posts",
@@ -299,7 +321,7 @@ return {
                 "name": "edges",
                 "plural": true,
                 "selections": [
-                  (v11/*: any*/),
+                  (v14/*: any*/),
                   {
                     "alias": null,
                     "args": null,
@@ -358,20 +380,20 @@ return {
                         "name": "likedByMe",
                         "storageKey": null
                       },
-                      (v12/*: any*/)
+                      (v15/*: any*/)
                     ],
                     "storageKey": null
                   }
                 ],
                 "storageKey": null
               },
-              (v13/*: any*/)
+              (v18/*: any*/)
             ],
             "storageKey": null
           },
           {
             "alias": null,
-            "args": (v10/*: any*/),
+            "args": (v13/*: any*/),
             "filters": null,
             "handle": "connection",
             "key": "FrenPosts_posts",
@@ -380,7 +402,7 @@ return {
           },
           {
             "alias": null,
-            "args": (v14/*: any*/),
+            "args": (v19/*: any*/),
             "concreteType": "FrenFollowersConnection",
             "kind": "LinkedField",
             "name": "followers",
@@ -393,16 +415,16 @@ return {
                 "kind": "LinkedField",
                 "name": "edges",
                 "plural": true,
-                "selections": (v15/*: any*/),
+                "selections": (v20/*: any*/),
                 "storageKey": null
               },
-              (v13/*: any*/)
+              (v18/*: any*/)
             ],
             "storageKey": null
           },
           {
             "alias": null,
-            "args": (v14/*: any*/),
+            "args": (v19/*: any*/),
             "filters": null,
             "handle": "connection",
             "key": "FrenFollowers_followers",
@@ -411,7 +433,7 @@ return {
           },
           {
             "alias": null,
-            "args": (v16/*: any*/),
+            "args": (v21/*: any*/),
             "concreteType": "FrenFollowingConnection",
             "kind": "LinkedField",
             "name": "following",
@@ -424,16 +446,28 @@ return {
                 "kind": "LinkedField",
                 "name": "edges",
                 "plural": true,
-                "selections": (v15/*: any*/),
+                "selections": (v20/*: any*/),
                 "storageKey": null
               },
-              (v13/*: any*/)
+              {
+                "alias": null,
+                "args": null,
+                "concreteType": "PageInfo",
+                "kind": "LinkedField",
+                "name": "pageInfo",
+                "plural": false,
+                "selections": [
+                  (v17/*: any*/),
+                  (v16/*: any*/)
+                ],
+                "storageKey": null
+              }
             ],
             "storageKey": null
           },
           {
             "alias": null,
-            "args": (v16/*: any*/),
+            "args": (v21/*: any*/),
             "filters": null,
             "handle": "connection",
             "key": "FrenFollowing_following",
@@ -446,12 +480,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "33b8f9026420c6bf960b72775941591b",
+    "cacheID": "6c939250a2a2187928374b8ddb9a3048",
     "id": null,
     "metadata": {},
     "name": "FrenQuery",
     "operationKind": "query",
-    "text": "query FrenQuery(\n  $frenId: String!\n  $postsFirst: Int = 5\n  $followersFirst: Int = 10\n  $followingFirst: Int = 10\n) {\n  fren(id: $frenId) {\n    ...FrenProfileTabsFragment_fren_24KkgP\n    id\n  }\n}\n\nfragment FrenBasicDetails_fren on Fren {\n  id\n  name\n  email\n  image\n  frenId\n  followerCount\n  followingCount\n  isFollowingMe\n  amFollowing\n  isMe\n}\n\nfragment FrenFollowerCard_follower on Follower {\n  id\n  frenId\n  name\n  email\n  image\n}\n\nfragment FrenFollowers_fren_4G6HwG on Fren {\n  id\n  followerCount\n  followers(first: $followersFirst) {\n    edges {\n      cursor\n      node {\n        id\n        ...FrenFollowerCard_follower\n        __typename\n      }\n    }\n    pageInfo {\n      hasNextPage\n      endCursor\n    }\n  }\n}\n\nfragment FrenFollowingCard_following on Follower {\n  id\n  frenId\n  name\n  email\n  image\n}\n\nfragment FrenFollowing_fren_4acRjm on Fren {\n  id\n  followingCount\n  following(first: $followingFirst) {\n    edges {\n      cursor\n      node {\n        id\n        ...FrenFollowingCard_following\n        __typename\n      }\n    }\n    pageInfo {\n      hasNextPage\n      endCursor\n    }\n  }\n}\n\nfragment FrenPostcard_post on FrenPost {\n  id\n  postId\n  content\n  imageUrl\n  createdAt\n  updatedAt\n  likeCount\n  likedByMe\n}\n\nfragment FrenPosts_fren_weBIh on Fren {\n  id\n  postsCount\n  posts(first: $postsFirst) {\n    edges {\n      cursor\n      node {\n        id\n        ...FrenPostcard_post\n        __typename\n      }\n    }\n    pageInfo {\n      hasNextPage\n      endCursor\n    }\n  }\n}\n\nfragment FrenProfileTabsFragment_fren_24KkgP on Fren {\n  id\n  ...FrenBasicDetails_fren\n  ...FrenPosts_fren_weBIh\n  ...FrenFollowers_fren_4G6HwG\n  ...FrenFollowing_fren_4acRjm\n}\n"
+    "text": "query FrenQuery(\n  $frenId: String!\n  $postsFirst: Int = 5\n  $followersFirst: Int = 10\n  $followingFirst: Int = 10\n) {\n  fren(id: $frenId) {\n    ...FrenProfileTabsFragment_fren_24KkgP\n    id\n  }\n}\n\nfragment FellowFrenCard_following on Follower {\n  id\n  frenId\n  name\n  email\n  image\n  isMe\n  amFollowing\n  isFollowingMe\n}\n\nfragment FrenBasicDetails_fren on Fren {\n  id\n  name\n  email\n  image\n  frenId\n  followerCount\n  followingCount\n  isFollowingMe\n  amFollowing\n  isMe\n}\n\nfragment FrenFollowers_fren_4G6HwG on Fren {\n  id\n  followerCount\n  followers(first: $followersFirst) {\n    edges {\n      cursor\n      node {\n        id\n        ...FellowFrenCard_following\n        __typename\n      }\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n      hasPreviousPage\n      startCursor\n    }\n  }\n}\n\nfragment FrenFollowing_fren_4acRjm on Fren {\n  id\n  followingCount\n  following(first: $followingFirst) {\n    edges {\n      cursor\n      node {\n        id\n        ...FellowFrenCard_following\n        __typename\n      }\n    }\n    pageInfo {\n      hasNextPage\n      endCursor\n    }\n  }\n}\n\nfragment FrenPostcard_post on FrenPost {\n  id\n  postId\n  content\n  imageUrl\n  createdAt\n  updatedAt\n  likeCount\n  likedByMe\n}\n\nfragment FrenPosts_fren_weBIh on Fren {\n  id\n  postsCount\n  posts(first: $postsFirst) {\n    edges {\n      cursor\n      node {\n        id\n        ...FrenPostcard_post\n        __typename\n      }\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n      hasPreviousPage\n      startCursor\n    }\n  }\n}\n\nfragment FrenProfileTabsFragment_fren_24KkgP on Fren {\n  id\n  ...FrenBasicDetails_fren\n  ...FrenPosts_fren_weBIh\n  ...FrenFollowers_fren_4G6HwG\n  ...FrenFollowing_fren_4acRjm\n}\n"
   }
 };
 })();

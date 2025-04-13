@@ -162,14 +162,16 @@ export const Fren = builder.prismaNode("User", {
         // frenId: t.arg.string({ required: true }),
         sort: t.arg({ type: SortInput, required: false }),
       },
-      resolve: (query, parent, args, context, info) =>
-        prisma.user.findMany({
+      resolve: (query, parent, args, context, info) =>{
+        console.log("=== parent==== ",parent.id)
+       return prisma.user.findMany({
           ...query,
           orderBy: {
             [args.sort?.field as string]: args.sort?.order,
           },
           where: { following: { some: { followingId: parent.id } } },
-        }),
+        })
+      },
     }),
     following: t.prismaConnection({
       type: Follower,

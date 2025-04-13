@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<b3d8e61ce0a3b0450af7cd7fc1a30c79>>
+ * @generated SignedSource<<f03204aaffc8509dcfbe51b79b2da1c7>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -23,6 +23,8 @@ export type FrenPosts_fren$data = {
     readonly pageInfo: {
       readonly endCursor: string | null | undefined;
       readonly hasNextPage: boolean;
+      readonly hasPreviousPage: boolean;
+      readonly startCursor: string | null | undefined;
     };
   } | null | undefined;
   readonly postsCount: number | null | undefined;
@@ -160,6 +162,13 @@ return {
               "alias": null,
               "args": null,
               "kind": "ScalarField",
+              "name": "endCursor",
+              "storageKey": null
+            },
+            {
+              "alias": null,
+              "args": null,
+              "kind": "ScalarField",
               "name": "hasNextPage",
               "storageKey": null
             },
@@ -167,7 +176,14 @@ return {
               "alias": null,
               "args": null,
               "kind": "ScalarField",
-              "name": "endCursor",
+              "name": "hasPreviousPage",
+              "storageKey": null
+            },
+            {
+              "alias": null,
+              "args": null,
+              "kind": "ScalarField",
+              "name": "startCursor",
               "storageKey": null
             }
           ],
@@ -182,6 +198,6 @@ return {
 };
 })();
 
-(node as any).hash = "e91941db04a291818d4c753ddc02b18a";
+(node as any).hash = "362457406ac1a20aac6eaa416ff625ce";
 
 export default node;

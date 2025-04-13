@@ -1,11 +1,13 @@
 import { useState } from "react";
 import { graphql } from "relay-runtime";
 import { usePaginationFragment } from "react-relay";
-import { FrenFollowers_fren$key } from "./__generated__/FrenFollowers_fren.graphql";
-import { FrenFollowersPaginationQuery } from "./__generated__/FrenFollowersPaginationQuery.graphql";
+
 import { Button } from "@/components/shadcn/ui/button";
 import { Loader2, UserX } from "lucide-react";
-import { FrenFollowerCard } from "./FrenFollowerCard";
+import { FellowFrenCard } from "./FellowFrenCard";
+import { FrenFollowers_fren$key } from "./__generated__/FrenFollowers_fren.graphql";
+import { FrenFollowersPaginationQuery } from "./__generated__/FrenFollowersPaginationQuery.graphql";
+
 
 interface FrenFollowersProps {
   queryRef?: FrenFollowers_fren$key |null ;
@@ -32,9 +34,7 @@ export function FrenFollowers({ queryRef }: FrenFollowersProps) {
         <div className="text-center py-12">
           <UserX className="mx-auto h-12 w-12 text-muted-foreground" />
           <h3 className="mt-4 text-lg font-medium">No followers yet</h3>
-          <p className="text-muted-foreground mt-2">
-            When people follow you, they'll appear here.
-          </p>
+          <p className="text-muted-foreground mt-2">When people follow you, they'll appear here.</p>
         </div>
       ) : (
         <>
@@ -43,18 +43,14 @@ export function FrenFollowers({ queryRef }: FrenFollowersProps) {
           </div>
 
           <div className="space-y-4">
-            {followers.map(follower => 
-              follower && <FrenFollowerCard key={follower.id} followerRef={follower} />
+            {followers.map(
+              (follower) => follower && <FellowFrenCard key={follower.id} fellowRef={follower} />
             )}
           </div>
 
           {hasNext && (
             <div className="flex justify-center mt-6">
-              <Button 
-                variant="outline" 
-                onClick={loadMoreFollowers}
-                disabled={isLoadingNext}
-              >
+              <Button variant="outline" onClick={loadMoreFollowers} disabled={isLoadingNext}>
                 {isLoadingNext ? (
                   <>
                     <Loader2 className="mr-2 h-4 w-4 animate-spin" />
@@ -73,28 +69,25 @@ export function FrenFollowers({ queryRef }: FrenFollowersProps) {
 }
 
 export const FrenFollowersPaginatedFragment = graphql`
-  fragment FrenFollowers_fren on Fren 
-  @argumentDefinitions(
-    first: { type: "Int", defaultValue: 10 }
-    after: { type: "String" }
-  )
+  fragment FrenFollowers_fren on Fren
+  @argumentDefinitions(first: { type: "Int", defaultValue: 10 }, after: { type: "String" })
   @refetchable(queryName: "FrenFollowersPaginationQuery") {
-      id
-      followerCount
-      followers(first: $first, after: $after)
-        @connection(key: "FrenFollowers_followers") {
-        edges {
-          cursor
-          node {
-            id
-            ...FrenFollowerCard_follower
-          }
-        }
-        pageInfo {
-          hasNextPage
-          endCursor
+    id
+    followerCount
+    followers(first: $first, after: $after) @connection(key: "FrenFollowers_followers") {
+      edges {
+        cursor
+        node {
+          id
+          ...FellowFrenCard_following
         }
       }
+      pageInfo {
+        endCursor
+        hasNextPage
+        hasPreviousPage
+        startCursor
+      }
     }
-  
+  }
 `;

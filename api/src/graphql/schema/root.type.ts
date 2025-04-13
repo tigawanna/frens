@@ -88,49 +88,7 @@ builder.queryType({
 builder.mutationType({
   name: "Mutation",
   fields: (t) => ({
-    // follow fren resolver
-    // follow: t.prismaField({
-    //   type: Follower,
-    //   args: {
-    //     input: t.arg({ type: FollowInput, required: true }),
-    //   },
-    //   resolve: async (query, root, args, ctx, info) => {
-    //     await prisma.follow.create({
-    //       data: {
-    //         follower: { connect: { id: ctx.currentUser?.id } },
-    //         following: { connect: { id: args.input.userId } },
-    //       },
-    //     });
 
-    //     return prisma.user.findUniqueOrThrow({
-    //       ...query,
-    //       where: { id: ctx.currentUser?.id },
-    //     });
-    //   },
-    // }),
-
-    // unfollow  fren resolver
-    // unfollow: t.prismaField({
-    //   type: Follower,
-    //   args: {
-    //     input: t.arg({ type: FollowInput, required: true }),
-    //   },
-    //   resolve: async (query, root, args, ctx, info) => {
-    //     // Delete the follow relationship
-    //     await prisma.follow.deleteMany({
-    //       where: {
-    //         followerId: ctx.currentUser?.id,
-    //         followingId: args.input.userId,
-    //       },
-    //     });
-
-    //     // Return the updated user
-    //     return prisma.user.findUniqueOrThrow({
-    //       ...query,
-    //       where: { id: ctx.currentUser?.id },
-    //     });
-    //   },
-    // }),
 
     toggleFollow: t.prismaField({
       type: Follower,

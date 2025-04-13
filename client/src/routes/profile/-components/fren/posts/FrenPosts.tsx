@@ -72,29 +72,26 @@ export function FrenPosts({ queryRef }: FrenPostsProps) {
   );
 }
 
-const FrenPostsPaginatedFragment=  graphql`
-      fragment FrenPosts_fren on Fren
-      @argumentDefinitions(
-        first: { type: "Int", defaultValue: 5 },
-        after: { type: "String" }
-      )
-      @refetchable(queryName: "FrenPostsPaginationQuery") {
+const FrenPostsPaginatedFragment = graphql`
+  fragment FrenPosts_fren on Fren
+  @argumentDefinitions(first: { type: "Int", defaultValue: 5 }, after: { type: "String" })
+  @refetchable(queryName: "FrenPostsPaginationQuery") {
+    id
+    postsCount
+    posts(first: $first, after: $after) @connection(key: "FrenPosts_posts") {
+      edges {
+        cursor
+        node {
           id
-          postsCount
-          posts(first: $first, after: $after)
-            @connection(key: "FrenPosts_posts") {
-            edges {
-              cursor
-              node {
-                id
-                ...FrenPostcard_post
-              }
-            }
-            pageInfo {
-              hasNextPage
-              endCursor
-            }
-          }
+          ...FrenPostcard_post
         }
-      
-    `
+      }
+      pageInfo {
+        endCursor
+        hasNextPage
+        hasPreviousPage
+        startCursor
+      }
+    }
+  }
+`;

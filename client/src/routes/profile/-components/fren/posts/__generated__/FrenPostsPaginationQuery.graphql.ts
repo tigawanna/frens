@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<151952525770283b46b7a9a1ec4f7a65>>
+ * @generated SignedSource<<52e95ee5f4ba8cbbf2ea92f486b1f152>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -229,6 +229,13 @@ return {
                         "alias": null,
                         "args": null,
                         "kind": "ScalarField",
+                        "name": "endCursor",
+                        "storageKey": null
+                      },
+                      {
+                        "alias": null,
+                        "args": null,
+                        "kind": "ScalarField",
                         "name": "hasNextPage",
                         "storageKey": null
                       },
@@ -236,7 +243,14 @@ return {
                         "alias": null,
                         "args": null,
                         "kind": "ScalarField",
-                        "name": "endCursor",
+                        "name": "hasPreviousPage",
+                        "storageKey": null
+                      },
+                      {
+                        "alias": null,
+                        "args": null,
+                        "kind": "ScalarField",
+                        "name": "startCursor",
                         "storageKey": null
                       }
                     ],
@@ -264,16 +278,16 @@ return {
     ]
   },
   "params": {
-    "cacheID": "68a1253f673864d6fff1485603f38e1c",
+    "cacheID": "2980141780ec1810d5849f4c590256d0",
     "id": null,
     "metadata": {},
     "name": "FrenPostsPaginationQuery",
     "operationKind": "query",
-    "text": "query FrenPostsPaginationQuery(\n  $after: String\n  $first: Int = 5\n  $id: ID!\n) {\n  node(id: $id) {\n    __typename\n    ...FrenPosts_fren_2HEEH6\n    id\n  }\n}\n\nfragment FrenPostcard_post on FrenPost {\n  id\n  postId\n  content\n  imageUrl\n  createdAt\n  updatedAt\n  likeCount\n  likedByMe\n}\n\nfragment FrenPosts_fren_2HEEH6 on Fren {\n  id\n  postsCount\n  posts(first: $first, after: $after) {\n    edges {\n      cursor\n      node {\n        id\n        ...FrenPostcard_post\n        __typename\n      }\n    }\n    pageInfo {\n      hasNextPage\n      endCursor\n    }\n  }\n}\n"
+    "text": "query FrenPostsPaginationQuery(\n  $after: String\n  $first: Int = 5\n  $id: ID!\n) {\n  node(id: $id) {\n    __typename\n    ...FrenPosts_fren_2HEEH6\n    id\n  }\n}\n\nfragment FrenPostcard_post on FrenPost {\n  id\n  postId\n  content\n  imageUrl\n  createdAt\n  updatedAt\n  likeCount\n  likedByMe\n}\n\nfragment FrenPosts_fren_2HEEH6 on Fren {\n  id\n  postsCount\n  posts(first: $first, after: $after) {\n    edges {\n      cursor\n      node {\n        id\n        ...FrenPostcard_post\n        __typename\n      }\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n      hasPreviousPage\n      startCursor\n    }\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "e91941db04a291818d4c753ddc02b18a";
+(node as any).hash = "362457406ac1a20aac6eaa416ff625ce";
 
 export default node;

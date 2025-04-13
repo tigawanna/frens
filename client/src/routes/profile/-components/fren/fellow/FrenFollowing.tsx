@@ -5,7 +5,7 @@ import { FrenFollowing_fren$key } from "./__generated__/FrenFollowing_fren.graph
 import { FrenFollowingPaginationQuery } from "./__generated__/FrenFollowingPaginationQuery.graphql";
 import { Button } from "@/components/shadcn/ui/button";
 import { Loader2, Users } from "lucide-react";
-import { FrenFollowingCard } from "./FrenFollowingCard";
+import { FellowFrenCard } from "./FellowFrenCard";
 
 interface FrenFollowingProps {
   queryRef?: FrenFollowing_fren$key | null;
@@ -32,9 +32,7 @@ export function FrenFollowing({ queryRef }: FrenFollowingProps) {
         <div className="text-center py-12">
           <Users className="mx-auto h-12 w-12 text-muted-foreground" />
           <h3 className="mt-4 text-lg font-medium">Not following anyone</h3>
-          <p className="text-muted-foreground mt-2">
-            When you follow people, they'll appear here.
-          </p>
+          <p className="text-muted-foreground mt-2">When you follow people, they'll appear here.</p>
         </div>
       ) : (
         <>
@@ -43,18 +41,15 @@ export function FrenFollowing({ queryRef }: FrenFollowingProps) {
           </div>
 
           <div className="space-y-4">
-            {following.map(followedUser => 
-              followedUser && <FrenFollowingCard key={followedUser.id} followingRef={followedUser} />
+            {following.map(
+              (followedUser) =>
+                followedUser && <FellowFrenCard key={followedUser.id} fellowRef={followedUser} />
             )}
           </div>
 
           {hasNext && (
             <div className="flex justify-center mt-6">
-              <Button 
-                variant="outline" 
-                onClick={loadMoreFollowing}
-                disabled={isLoadingNext}
-              >
+              <Button variant="outline" onClick={loadMoreFollowing} disabled={isLoadingNext}>
                 {isLoadingNext ? (
                   <>
                     <Loader2 className="mr-2 h-4 w-4 animate-spin" />
@@ -73,27 +68,23 @@ export function FrenFollowing({ queryRef }: FrenFollowingProps) {
 }
 
 export const FrenFollowingPaginatedFragment = graphql`
-  fragment FrenFollowing_fren on Fren 
-  @argumentDefinitions(
-    first: { type: "Int", defaultValue: 10 }
-    after: { type: "String" }
-  )
+  fragment FrenFollowing_fren on Fren
+  @argumentDefinitions(first: { type: "Int", defaultValue: 10 }, after: { type: "String" })
   @refetchable(queryName: "FrenFollowingPaginationQuery") {
-      id
-      followingCount
-      following(first: $first, after: $after)
-        @connection(key: "FrenFollowing_following") {
-        edges {
-          cursor
-          node {
-            id
-            ...FrenFollowingCard_following
-          }
-        }
-        pageInfo {
-          hasNextPage
-          endCursor
+    id
+    followingCount
+    following(first: $first, after: $after) @connection(key: "FrenFollowing_following") {
+      edges {
+        cursor
+        node {
+          id
+          ...FellowFrenCard_following
         }
       }
+      pageInfo {
+        hasNextPage
+        endCursor
+      }
     }
+  }
 `;
