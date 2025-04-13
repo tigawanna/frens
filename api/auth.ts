@@ -21,12 +21,12 @@ export const auth = betterAuth({
   advanced: {
     crossSubDomainCookies: {
       enabled: true,
-      domain: process.env.COOKIE_DOMAIN || undefined,
+      // domain: process.env.COOKIE_DOMAIN || undefined,
     },
     cookie: {
       sameSite: "none",
       secure: true,
-      domain: process.env.COOKIE_DOMAIN || undefined,
+      // domain: process.env.COOKIE_DOMAIN || undefined,
       path: "/",
     },
     defaultCookieAttributes: {
