@@ -6,7 +6,6 @@ import { ClipboardButton } from "@/components/wrappers/ClipboardButton";
 import { FrenBasicDetails_fren$key } from "./__generated__/FrenBasicDetails_fren.graphql";
 import { FrenDetalsFollowStatus } from "./FrenDetalsFollowStatus";
 
-
 interface FrenBasicDetailsProps {
   queryRef?: FrenBasicDetails_fren$key | null;
 }
@@ -14,8 +13,7 @@ interface FrenBasicDetailsProps {
 export function FrenBasicDetails({ queryRef }: FrenBasicDetailsProps) {
   const data = useFragment<FrenBasicDetails_fren$key>(FrenBasicDetailsFragment, queryRef);
 
-  const me = data
-  
+  const me = data;
 
   if (!me) return null;
 
@@ -47,19 +45,16 @@ export function FrenBasicDetails({ queryRef }: FrenBasicDetailsProps) {
               <p className="text-sm text-muted-foreground">Following</p>
             </div>
           </div>
-
         </div>
-          <div>
-            <ClipboardButton
-              text={`${window.location.origin}/frens/${me.frenId}`}
-              displayText="Copy profile link"
-              className="inline-flex"
-              showFullText={false}
-            />
-            <FrenDetalsFollowStatus  
-            fren={me}
-            />
-          </div>
+        <div>
+          <ClipboardButton
+            text={`${window.location.origin}/frens/${me.frenId}`}
+            displayText="Copy profile link"
+            className="inline-flex"
+            showFullText={false}
+          />
+          <FrenDetalsFollowStatus fren={me} />
+        </div>
       </div>
     </Card>
   );
