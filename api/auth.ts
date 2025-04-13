@@ -2,7 +2,12 @@
 import { allowedOrigins } from "@/middleware/cors-stuff";
 import { betterAuth } from "better-auth";
 import { prismaAdapter } from "better-auth/adapters/prisma";
-import { openAPI, admin, apiKey, createAuthMiddleware } from "better-auth/plugins";
+import {
+  openAPI,
+  admin,
+  apiKey,
+  createAuthMiddleware,
+} from "better-auth/plugins";
 import { prisma } from "./prisma/client";
 import { secureCookieOptions } from "@/utils/cookie";
 // const prisma = new PrismaClient();
@@ -12,34 +17,18 @@ export const auth = betterAuth({
   database: prismaAdapter(prisma, {
     provider: "postgresql", // or "mysql", "postgresql", ...etc
   }),
-  //   hooks: {
-  //   after: createAuthMiddleware(async (ctx) => {
-  //     function setSessionCookie(){
-  //       const sessionCookie = ctx.headers?.get("cookie")
-  //       const sessionToken = sessionCookie?.split("better-auth.session_token=")[1]?.split(";")[0]
-  //       console.log("=== sessionToekn === ", sessionToken);
-  //       if(!sessionToken) return;
-  //       ctx.setCookie("better-auth.session_token", sessionToken, secureCookieOptions);
-  //     }
-  //     if(ctx.path.startsWith("/sign-in")){
-  //       setSessionCookie();
-  //       ctx.setCookie("my-cookie", "signed-up",secureCookieOptions);
-  //     } else if (ctx.path === "/sign-out") {
-  //       ctx.setCookie("my-cookie", "signed-out", { /* cookie options */ });
-  //     }
-  //   },
 
-  // ),
-  // },
   advanced: {
-    // useSecureCookies: true,
-    // @ts-expect-error
-     cookie: {
-      sameSite: 'none',
+    crossSubDomainCookies: {
+      enabled: true,
+      domain: process.env.COOKIE_DOMAIN || undefined,
+    },
+    cookie: {
+      sameSite: "none",
       secure: true,
-      domain: process.env.FRONTEND_URL || undefined,
-      path: '/',
-    }
+      domain: process.env.COOKIE_DOMAIN || undefined,
+      path: "/",
+    },
   },
   logger: {
     disabled: false,
