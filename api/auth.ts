@@ -29,6 +29,12 @@ export const auth = betterAuth({
       domain: process.env.COOKIE_DOMAIN || undefined,
       path: "/",
     },
+    defaultCookieAttributes: {
+      secure: true,
+      // httpOnly: true,
+      sameSite: "none", // Allows CORS-based cookie sharing across subdomains
+      // partitioned: true, // New browser standards will mandate this for foreign cookies
+    },
   },
   logger: {
     disabled: false,
