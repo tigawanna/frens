@@ -143,16 +143,7 @@ builder.mutationType({
           throw new Error("User not authenticated");
         }
 
-        // // First check if the target user exists
-        // const targetUser = await prisma.user.findUnique({
-        //   where: { id: args.input.userId },
-        // });
-
-        // if (!targetUser) {
-        //   throw new Error(`User with ID ${args.input.userId} not found`);
-        // }
-
-        try {
+         try {
           // Try to create a follow relationship
           await prisma.follow.create({
             data: {
@@ -182,7 +173,7 @@ builder.mutationType({
         // Return the updated user
         return prisma.user.findUniqueOrThrow({
           ...query,
-          where: { id: ctx.currentUser.id },
+          where: { id: args.input.userId},
         });
       },
     }),

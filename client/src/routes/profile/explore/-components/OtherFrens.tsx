@@ -114,16 +114,19 @@ const OtherFrensPaginatedQuery = graphql`
   )
   @refetchable(queryName: "OtherFrensPaginationQuery") {
     frens(first: $first, after: $after, sort: { field: "name", order: asc }, search: $search)
-      @connection(key: "OtherFrens_frens") {
+      @connection(key: "OtherFrens_frens", filters: ["search"]) {
       edges {
+        cursor
         node {
           id
           ...OtherFrenCard_fren
         }
       }
       pageInfo {
-        hasNextPage
         endCursor
+        hasNextPage
+        hasPreviousPage
+        startCursor
       }
     }
   }

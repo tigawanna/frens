@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<368849a286335b9cf598453edbf546b4>>
+ * @generated SignedSource<<33610080d75e80173c58a208664df00f>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -13,6 +13,7 @@ import { FragmentRefs } from "relay-runtime";
 export type OtherFrens_frens$data = {
   readonly frens: {
     readonly edges: ReadonlyArray<{
+      readonly cursor: string;
       readonly node: {
         readonly id: string;
         readonly " $fragmentSpreads": FragmentRefs<"OtherFrenCard_fren">;
@@ -21,6 +22,8 @@ export type OtherFrens_frens$data = {
     readonly pageInfo: {
       readonly endCursor: string | null | undefined;
       readonly hasNextPage: boolean;
+      readonly hasPreviousPage: boolean;
+      readonly startCursor: string | null | undefined;
     };
   } | null | undefined;
   readonly " $fragmentType": "OtherFrens_frens";
@@ -86,14 +89,6 @@ return {
           "kind": "Variable",
           "name": "search",
           "variableName": "search"
-        },
-        {
-          "kind": "Literal",
-          "name": "sort",
-          "value": {
-            "field": "name",
-            "order": "asc"
-          }
         }
       ],
       "concreteType": "QueryFrensConnection",
@@ -109,6 +104,13 @@ return {
           "name": "edges",
           "plural": true,
           "selections": [
+            {
+              "alias": null,
+              "args": null,
+              "kind": "ScalarField",
+              "name": "cursor",
+              "storageKey": null
+            },
             {
               "alias": null,
               "args": null,
@@ -138,13 +140,6 @@ return {
                 }
               ],
               "storageKey": null
-            },
-            {
-              "alias": null,
-              "args": null,
-              "kind": "ScalarField",
-              "name": "cursor",
-              "storageKey": null
             }
           ],
           "storageKey": null
@@ -161,6 +156,13 @@ return {
               "alias": null,
               "args": null,
               "kind": "ScalarField",
+              "name": "endCursor",
+              "storageKey": null
+            },
+            {
+              "alias": null,
+              "args": null,
+              "kind": "ScalarField",
               "name": "hasNextPage",
               "storageKey": null
             },
@@ -168,7 +170,14 @@ return {
               "alias": null,
               "args": null,
               "kind": "ScalarField",
-              "name": "endCursor",
+              "name": "hasPreviousPage",
+              "storageKey": null
+            },
+            {
+              "alias": null,
+              "args": null,
+              "kind": "ScalarField",
+              "name": "startCursor",
               "storageKey": null
             }
           ],
@@ -183,6 +192,6 @@ return {
 };
 })();
 
-(node as any).hash = "71d4cb844a9610335aa8c07163e16f54";
+(node as any).hash = "43f89cdf36572a77d8c58c3651bc7710";
 
 export default node;

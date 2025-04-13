@@ -1,4 +1,4 @@
-// import { PrismaClient } from "@/db/generated/client";
+
 import { allowedOrigins } from "@/middleware/cors-stuff";
 import { betterAuth } from "better-auth";
 import { prismaAdapter } from "better-auth/adapters/prisma";
@@ -6,11 +6,9 @@ import {
   openAPI,
   admin,
   apiKey,
-  createAuthMiddleware,
+
 } from "better-auth/plugins";
 import { prisma } from "./prisma/client";
-import { secureCookieOptions } from "@/utils/cookie";
-// const prisma = new PrismaClient();
 
 export const auth = betterAuth({
   trustedOrigins: [...allowedOrigins],

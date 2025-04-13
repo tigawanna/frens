@@ -1,27 +1,8 @@
-import { Button } from "@/components/shadcn/ui/button";
 import { Heart } from "lucide-react";
-import { useState, useOptimistic } from "react";
-import { ConnectionHandler, graphql, useMutation } from "react-relay";
-import { LikePostLikeMutation } from "./__generated__/LikePostLikeMutation.graphql";
-import { FeedPostCard } from "./FeedCard";
+import {  graphql, useMutation } from "react-relay";
 import { LikePostUntoggleLikedMutation } from "./__generated__/LikePostUntoggleLikedMutation.graphql";
 
-// Define the mutations
-// const likePostMutation = graphql`
-//   mutation LikePostLikeMutation($postId: String!) {
-//     likePost(postId: $postId) {
-//       ...FeedCard_post
-//     }
-//   }
-// `;
 
-// const unlikePostMutation = graphql`
-//   mutation LikePostUnlikeMutation($postId: String!) {
-//     unlikePost(postId: $postId) {
-//       ...FeedCard_post
-//     }
-//   }
-// `;
 const toggleLikedMutation = graphql`
   mutation LikePostUntoggleLikedMutation($postId: String!) {
     toggleLiked(postId: $postId) {

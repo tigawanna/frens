@@ -1,4 +1,4 @@
-import { graphql } from "relay-runtime";
+import { ConnectionHandler, graphql } from "relay-runtime";
 import { useFragment, useMutation } from "react-relay";
 import { Card, CardContent } from "@/components/shadcn/ui/card";
 import { Button } from "@/components/shadcn/ui/button";
@@ -15,28 +15,24 @@ interface OtherFrenCardProps {
 
 export function OtherFrenCard({ frenRef }: OtherFrenCardProps) {
   const [isHovering, setIsHovering] = useState(false);
-  
-  const fren = useFragment(
-    OtherFrenCardFragment,
-    frenRef
-  );
 
-  const [toggleFollowMutation, isTogglingFollow] = useMutation<OtherFrenCardFollowMutation>(
-    graphql`
-      mutation OtherFrenCardFollowMutation($input: FollowInput!) {
-        toggleFollow(input: $input) {
-          ...OtherFrenCard_fren
-        }
+  const fren = useFragment(OtherFrenCardFragment, frenRef);
+
+  const [toggleFollowMutation, isTogglingFollow] = useMutation<OtherFrenCardFollowMutation>(graphql`
+    mutation OtherFrenCardFollowMutation($input: FollowInput!) {
+      toggleFollow(input: $input) {
+        ...OtherFrenCard_fren
       }
-    `
-  );
+    }
+  `);
 
   const handleToggleFollow = (e: React.MouseEvent) => {
     e.preventDefault();
     e.stopPropagation();
-    
+
     if (isTogglingFollow) return;
-    
+ const willFollow = !fren.amFollowing;
+//  const newFollowerCount = fren.followerCount + (willFollow ? 1 : -1);
     toggleFollowMutation({
       variables: {
         input: {
@@ -65,24 +61,24 @@ export function OtherFrenCard({ frenRef }: OtherFrenCardProps) {
                 </AvatarFallback>
               )}
             </Avatar>
-            
+
             <div className="flex-1 min-w-0">
               <h3 className="font-semibold truncate">{fren.name}</h3>
               <p className="text-sm text-muted-foreground truncate">{fren.email}</p>
-              
+
               <div className="flex items-center gap-4 mt-2">
                 <span className="text-sm">
                   <span className="font-medium">{fren.followerCount || 0}</span>{" "}
                   <span className="text-muted-foreground">followers</span>
                 </span>
-                
+
                 <span className="text-sm">
                   <span className="font-medium">{fren.followingCount || 0}</span>{" "}
                   <span className="text-muted-foreground">following</span>
                 </span>
               </div>
             </div>
-            
+
             {/* Follow/Unfollow Button */}
             <div onClick={(e) => e.stopPropagation()}>
               {/* Not following, they're not following me */}
@@ -91,8 +87,7 @@ export function OtherFrenCard({ frenRef }: OtherFrenCardProps) {
                   size="sm"
                   variant="outline"
                   onClick={handleToggleFollow}
-                  disabled={isTogglingFollow}
-                >
+                  disabled={isTogglingFollow}>
                   {isTogglingFollow ? (
                     <Loader className="h-4 w-4 animate-spin mr-1" />
                   ) : (
@@ -101,15 +96,14 @@ export function OtherFrenCard({ frenRef }: OtherFrenCardProps) {
                   Follow
                 </Button>
               )}
-              
+
               {/* Not following, but they follow me */}
               {!fren.amFollowing && fren.isFollowingMe && (
                 <Button
                   size="sm"
                   variant="secondary"
                   onClick={handleToggleFollow}
-                  disabled={isTogglingFollow}
-                >
+                  disabled={isTogglingFollow}>
                   {isTogglingFollow ? (
                     <Loader className="h-4 w-4 animate-spin mr-1" />
                   ) : (
@@ -118,7 +112,7 @@ export function OtherFrenCard({ frenRef }: OtherFrenCardProps) {
                   Follow Back
                 </Button>
               )}
-              
+
               {/* I'm following, they're not following me */}
               {fren.amFollowing && !fren.isFollowingMe && (
                 <Button
@@ -127,8 +121,7 @@ export function OtherFrenCard({ frenRef }: OtherFrenCardProps) {
                   onClick={handleToggleFollow}
                   disabled={isTogglingFollow}
                   onMouseEnter={() => setIsHovering(true)}
-                  onMouseLeave={() => setIsHovering(false)}
-                >
+                  onMouseLeave={() => setIsHovering(false)}>
                   {isTogglingFollow ? (
                     <Loader className="h-4 w-4 animate-spin mr-1" />
                   ) : isHovering ? (
@@ -139,7 +132,7 @@ export function OtherFrenCard({ frenRef }: OtherFrenCardProps) {
                   {isHovering ? "Unfollow" : "Following"}
                 </Button>
               )}
-              
+
               {/* Mutual following */}
               {fren.amFollowing && fren.isFollowingMe && (
                 <Button
@@ -148,8 +141,7 @@ export function OtherFrenCard({ frenRef }: OtherFrenCardProps) {
                   onClick={handleToggleFollow}
                   disabled={isTogglingFollow}
                   onMouseEnter={() => setIsHovering(true)}
-                  onMouseLeave={() => setIsHovering(false)}
-                >
+                  onMouseLeave={() => setIsHovering(false)}>
                   {isTogglingFollow ? (
                     <Loader className="h-4 w-4 animate-spin mr-1" />
                   ) : isHovering ? (

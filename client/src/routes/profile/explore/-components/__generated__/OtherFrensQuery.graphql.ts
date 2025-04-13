@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<208aabad119a4fb9f2ef80998ecbdd33>>
+ * @generated SignedSource<<208e1d053d295d8da6f0d1d526d4ea9c>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -101,6 +101,13 @@ return {
               {
                 "alias": null,
                 "args": null,
+                "kind": "ScalarField",
+                "name": "cursor",
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
                 "concreteType": "Fren",
                 "kind": "LinkedField",
                 "name": "node",
@@ -185,13 +192,6 @@ return {
                   }
                 ],
                 "storageKey": null
-              },
-              {
-                "alias": null,
-                "args": null,
-                "kind": "ScalarField",
-                "name": "cursor",
-                "storageKey": null
               }
             ],
             "storageKey": null
@@ -208,6 +208,13 @@ return {
                 "alias": null,
                 "args": null,
                 "kind": "ScalarField",
+                "name": "endCursor",
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
                 "name": "hasNextPage",
                 "storageKey": null
               },
@@ -215,7 +222,14 @@ return {
                 "alias": null,
                 "args": null,
                 "kind": "ScalarField",
-                "name": "endCursor",
+                "name": "hasPreviousPage",
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "startCursor",
                 "storageKey": null
               }
             ],
@@ -228,7 +242,6 @@ return {
         "alias": null,
         "args": (v3/*: any*/),
         "filters": [
-          "sort",
           "search"
         ],
         "handle": "connection",
@@ -239,12 +252,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "1919cfc2a3adb5211c01c2538d4157d2",
+    "cacheID": "e138f3b2782642f4622542a129793434",
     "id": null,
     "metadata": {},
     "name": "OtherFrensQuery",
     "operationKind": "query",
-    "text": "query OtherFrensQuery(\n  $frensFirst: Int = 30\n  $searchText: String\n) {\n  ...OtherFrens_frens_ze2zB\n}\n\nfragment OtherFrenCard_fren on Fren {\n  frenId\n  name\n  email\n  image\n  isMe\n  amFollowing\n  isFollowingMe\n  followerCount\n  followingCount\n}\n\nfragment OtherFrens_frens_ze2zB on Query {\n  frens(first: $frensFirst, sort: {field: \"name\", order: asc}, search: $searchText) {\n    edges {\n      node {\n        id\n        ...OtherFrenCard_fren\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      hasNextPage\n      endCursor\n    }\n  }\n}\n"
+    "text": "query OtherFrensQuery(\n  $frensFirst: Int = 30\n  $searchText: String\n) {\n  ...OtherFrens_frens_ze2zB\n}\n\nfragment OtherFrenCard_fren on Fren {\n  frenId\n  name\n  email\n  image\n  isMe\n  amFollowing\n  isFollowingMe\n  followerCount\n  followingCount\n}\n\nfragment OtherFrens_frens_ze2zB on Query {\n  frens(first: $frensFirst, sort: {field: \"name\", order: asc}, search: $searchText) {\n    edges {\n      cursor\n      node {\n        id\n        ...OtherFrenCard_fren\n        __typename\n      }\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n      hasPreviousPage\n      startCursor\n    }\n  }\n}\n"
   }
 };
 })();
