@@ -15,11 +15,12 @@ import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Textarea } from "@/components/shadcn/ui/textarea";
 import { Switch } from "@/components/shadcn/ui/switch";
+import { BetterAthViewer } from "@/lib/viewer/use-viewer";
 
 const createApiKeySchema = z.object({
   name: z.string().min(1, "Name is required"),
   prefix: z.string().optional(),
-  expiresIn: z.string(),
+  expiresIn: z.coerce.number(),
   permissions: z.string().optional(),
 //   metadata: z.string().optional()
 //     .transform((val) => {
@@ -41,7 +42,7 @@ const dateBasedrandomNumber = new Date().getTime().toString().slice(-4);
 const defaultValues: Partial<CreateApiKeyFormValues> = {
   name: `access_key_${dateBasedrandomNumber}`,
   prefix: "",
-  expiresIn: "604800", // 7 days
+  expiresIn: 604800, // 7 days
   permissions: "",
 //   metadata: "{\n  \"app\": \"my-app\"\n}",
   enabled: true,
@@ -50,7 +51,12 @@ const defaultValues: Partial<CreateApiKeyFormValues> = {
   rateLimitMax: 100,
 };
 
-export function CreateApiKeyButton() {
+interface CreateApiKeyButton{
+  viewer: BetterAthViewer;
+}
+
+export function CreateApiKeyButton({ viewer }: CreateApiKeyButton) {
+
   const [open, setOpen] = useState(false);
   const queryClient = useQueryClient();
   
@@ -77,12 +83,13 @@ export function CreateApiKeyButton() {
         payload.rateLimitMax = values.rateLimitMax;
       }
       
-      const { data, error } = await authClient.apiKey.create()
+      console.log("== api key payload == ",payload);
+      const { data, error } = await authClient.apiKey.create(payload)
       if (error) throw new Error(error.message || "Failed to create API key");
       return data;
     },
     onSuccess: (data) => {
-      queryClient.invalidateQueries({ queryKey: ["viewer"] });
+      queryClient.invalidateQueries({ queryKey: ["apikeys"] });
     //   setOpen(false);
     //   form.reset(defaultValues);
       makeHotToast({
@@ -105,23 +112,23 @@ export function CreateApiKeyButton() {
   }
 
   const expirationOptions = [
-    { value: "3600", label: "1 Hour" },
-    { value: "86400", label: "1 Day" },
-    { value: "604800", label: "7 Days" },
-    { value: "2592000", label: "30 Days" },
-    { value: "31536000", label: "1 Year" },
-    { value: "0", label: "Never" },
+    { value: 3600, label: "1 Hour" },
+    { value: 86400, label: "1 Day" },
+    { value: 604800, label: "7 Days" },
+    { value: 2592000, label: "30 Days" },
+    { value: 31536000, label: "1 Year" },
+    { value: 0, label: "Never" },
   ];
 const data = createApiKeyMutation.data
   return (
-    <AlertDialog open={open} onOpenChange={setOpen}>
+    <AlertDialog open={open} onOpenChange={setOpen} >
       <AlertDialogTrigger asChild>
         <Button className="gap-2">
           <Plus className="h-4 w-4" />
           Create API Key
         </Button>
       </AlertDialogTrigger>
-      <AlertDialogContent className="sm:max-w-md md:max-w-xl">
+      <AlertDialogContent className="sm:max-w-md md:max-w-xl bg-base-200 overflow-scroll max-h-[90vh]">
         <AlertDialogHeader>
           <AlertDialogTitle className="flex items-center gap-2">
             <Key className="h-5 w-5" />
@@ -132,20 +139,20 @@ const data = createApiKeyMutation.data
           </AlertDialogDescription>
         </AlertDialogHeader>
         {createApiKeyMutation.isSuccess && (
-          <Card className="mt-4 border-green-200 bg-green-50 dark:bg-green-900/20">
+          <Card className="mt-4  inset-[5%]  border-0 ">
             <CardContent className="pt-4">
               <div className="space-y-2">
-                <div className="text-sm font-medium text-green-800 dark:text-green-300">
+                <div className="text-sm font-medium text-secondary">
                   API Key Created
                 </div>
-                <div className="font-mono text-xs bg-white dark:bg-gray-800 p-2 rounded border overflow-x-auto">
+                <div className="font-mono text-xs p-2 rounded overflow-auto">
                   {createApiKeyMutation.data?.key}
                 </div>
-                <div className="text-xs text-red-600 dark:text-red-400 font-medium">
+                <div className="text-xs text-error-content font-medium">
                   Important: Copy this key now. You won't be able to see it again!
                 </div>
                 <Button
-                  variant="outline"
+                  variant="secondary"
                   size="sm"
                   className="w-full text-xs"
                   onClick={() => {
@@ -162,8 +169,8 @@ const data = createApiKeyMutation.data
             </CardContent>
           </Card>
         )}
-        <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+        <Form {...form} >
+          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4 max-h-[80%]">
             <div className="grid gap-4 py-2">
               <FormField
                 control={form.control}
@@ -210,7 +217,7 @@ const data = createApiKeyMutation.data
                         </FormControl>
                         <SelectContent>
                           {expirationOptions.map((option) => (
-                            <SelectItem key={option.value} value={option.value}>
+                            <SelectItem key={option.value} value={option.value.toString()}>
                               {option.label}
                             </SelectItem>
                           ))}

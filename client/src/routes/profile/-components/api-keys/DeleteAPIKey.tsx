@@ -10,9 +10,10 @@ import { ConfirmDialog } from "@/components/shadcn/mine/ConfirmDialog";
 interface DeleteKeyProps {
   keyId: string;
   keyName: string | null;
+  userId: string;
 }
 
-export function DeleteKey({ keyId, keyName }: DeleteKeyProps) {
+export function DeleteKey({ keyId, keyName, userId }: DeleteKeyProps) {
   const [open, setOpen] = useState(false);
   const queryClient = useQueryClient();
 
@@ -26,7 +27,7 @@ export function DeleteKey({ keyId, keyName }: DeleteKeyProps) {
       return data;
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["viwer"] });
+      queryClient.invalidateQueries({ queryKey: ["apikeys"] });
       setOpen(false);
       makeHotToast({
         title: "API Key Deleted",

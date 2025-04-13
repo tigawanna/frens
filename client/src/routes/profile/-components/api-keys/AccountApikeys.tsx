@@ -11,9 +11,8 @@ import {
 } from "@/components/shadcn/ui/card";
 import { Badge } from "@/components/shadcn/ui/badge";
 import { formatDistanceToNow } from "date-fns";
-import { Copy, FileWarningIcon, Key } from "lucide-react";
+import { FileWarningIcon, Key } from "lucide-react";
 import { makeHotToast } from "@/components/toasters";
-import { Button } from "@/components/shadcn/ui/button";
 import { CreateApiKeyButton } from "./CreateApikey";
 import { DeleteKey } from "./DeleteAPIKey";
 
@@ -23,7 +22,7 @@ interface AccountApikeysProps {
 
 export function AccountApikeys({ viewer }: AccountApikeysProps) {
   const query = useSuspenseQuery({
-    queryKey: ["viwer", viewer.id, "apikeys"],
+    queryKey: ["apikeys"],
     queryFn: async () => {
       const result = await authClient.apiKey.list();
       return result;
@@ -33,15 +32,6 @@ export function AccountApikeys({ viewer }: AccountApikeysProps) {
   const apiKeys = query.data.data;
   const error = query.data.error;
 
-  const copyToClipboard = (text: string) => {
-    navigator.clipboard.writeText(text);
-    makeHotToast({
-      title: "Copied!",
-      description: "API key copied to clipboard",
-      duration: 2000,
-      variant: "success",
-    });
-  };
 
   if (!apiKeys || apiKeys.length === 0 || error) {
     return (
@@ -56,7 +46,7 @@ export function AccountApikeys({ viewer }: AccountApikeysProps) {
               </p>
             </div>
             {/* <Button className="mt-2 bg-primary/70 text-primary-content">Create API Key</Button> */}
-            <CreateApiKeyButton />
+            <CreateApiKeyButton viewer={viewer} />
           </CardContent>
         </Card>
       </div>
@@ -66,7 +56,7 @@ export function AccountApikeys({ viewer }: AccountApikeysProps) {
   return (
     <div className="w-full flex flex-col gap-4">
       <div className="w-full flex flex-col items-end gap-4">
-        <CreateApiKeyButton />
+        <CreateApiKeyButton viewer={viewer} />
       </div>
 
       {apiKeys.map((apiKey) => (
@@ -88,12 +78,11 @@ export function AccountApikeys({ viewer }: AccountApikeysProps) {
               </div>
             </div>
             <CardDescription className="flex flex-col  mt-1">
-                Key ID:{apiKey.id}
-                <span className="text-sm italic text-warning-content/60 flex gap-2 items-center">
-                  <FileWarningIcon className="size-4" /> This isn't the actual key , if you lost it consider deleting
-                  this one and cratinga anew one
-                </span>
-        
+              Key ID:{apiKey.id}
+              <span className="text-sm italic text-warning-content/60 flex gap-2 items-center">
+                <FileWarningIcon className="size-4" /> This isn't the actual key , if you lost it
+                consider deleting this one and cratinga anew one
+              </span>
             </CardDescription>
           </CardHeader>
           <CardContent className="pb-2">
@@ -142,7 +131,7 @@ export function AccountApikeys({ viewer }: AccountApikeysProps) {
           </CardContent>
           <CardFooter className="flex justify-end gap-2 pt-2">
             <button className="btn btn-sm">Edit</button>
-            <DeleteKey keyId={apiKey.id} keyName={apiKey.name} />
+            <DeleteKey keyId={apiKey.id} keyName={apiKey.name} userId={viewer.id} />
           </CardFooter>
         </Card>
       ))}

@@ -14,11 +14,9 @@ import { Route as rootRoute } from './routes/__root'
 import { Route as AboutImport } from './routes/about'
 import { Route as ProfileLayoutImport } from './routes/profile/layout'
 import { Route as AuthLayoutImport } from './routes/auth/layout'
-import { Route as AdminLayoutImport } from './routes/admin/layout'
 import { Route as IndexImport } from './routes/index'
 import { Route as ProfileIndexImport } from './routes/profile/index'
 import { Route as AuthIndexImport } from './routes/auth/index'
-import { Route as AdminIndexImport } from './routes/admin/index'
 import { Route as AuthSignupImport } from './routes/auth/signup'
 import { Route as AuthForgortPasswordImport } from './routes/auth/forgort-password'
 import { Route as ProfileExploreIndexImport } from './routes/profile/explore/index'
@@ -46,12 +44,6 @@ const AuthLayoutRoute = AuthLayoutImport.update({
   getParentRoute: () => rootRoute,
 } as any)
 
-const AdminLayoutRoute = AdminLayoutImport.update({
-  id: '/admin',
-  path: '/admin',
-  getParentRoute: () => rootRoute,
-} as any)
-
 const IndexRoute = IndexImport.update({
   id: '/',
   path: '/',
@@ -68,12 +60,6 @@ const AuthIndexRoute = AuthIndexImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => AuthLayoutRoute,
-} as any)
-
-const AdminIndexRoute = AdminIndexImport.update({
-  id: '/',
-  path: '/',
-  getParentRoute: () => AdminLayoutRoute,
 } as any)
 
 const AuthSignupRoute = AuthSignupImport.update({
@@ -123,13 +109,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexImport
       parentRoute: typeof rootRoute
     }
-    '/admin': {
-      id: '/admin'
-      path: '/admin'
-      fullPath: '/admin'
-      preLoaderRoute: typeof AdminLayoutImport
-      parentRoute: typeof rootRoute
-    }
     '/auth': {
       id: '/auth'
       path: '/auth'
@@ -164,13 +143,6 @@ declare module '@tanstack/react-router' {
       fullPath: '/auth/signup'
       preLoaderRoute: typeof AuthSignupImport
       parentRoute: typeof AuthLayoutImport
-    }
-    '/admin/': {
-      id: '/admin/'
-      path: '/'
-      fullPath: '/admin/'
-      preLoaderRoute: typeof AdminIndexImport
-      parentRoute: typeof AdminLayoutImport
     }
     '/auth/': {
       id: '/auth/'
@@ -219,18 +191,6 @@ declare module '@tanstack/react-router' {
 
 // Create and export the route tree
 
-interface AdminLayoutRouteChildren {
-  AdminIndexRoute: typeof AdminIndexRoute
-}
-
-const AdminLayoutRouteChildren: AdminLayoutRouteChildren = {
-  AdminIndexRoute: AdminIndexRoute,
-}
-
-const AdminLayoutRouteWithChildren = AdminLayoutRoute._addFileChildren(
-  AdminLayoutRouteChildren,
-)
-
 interface AuthLayoutRouteChildren {
   AuthForgortPasswordRoute: typeof AuthForgortPasswordRoute
   AuthSignupRoute: typeof AuthSignupRoute
@@ -269,13 +229,11 @@ const ProfileLayoutRouteWithChildren = ProfileLayoutRoute._addFileChildren(
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
-  '/admin': typeof AdminLayoutRouteWithChildren
   '/auth': typeof AuthLayoutRouteWithChildren
   '/profile': typeof ProfileLayoutRouteWithChildren
   '/about': typeof AboutRoute
   '/auth/forgort-password': typeof AuthForgortPasswordRoute
   '/auth/signup': typeof AuthSignupRoute
-  '/admin/': typeof AdminIndexRoute
   '/auth/': typeof AuthIndexRoute
   '/profile/': typeof ProfileIndexRoute
   '/auth/error': typeof AuthErrorIndexRoute
@@ -289,7 +247,6 @@ export interface FileRoutesByTo {
   '/about': typeof AboutRoute
   '/auth/forgort-password': typeof AuthForgortPasswordRoute
   '/auth/signup': typeof AuthSignupRoute
-  '/admin': typeof AdminIndexRoute
   '/auth': typeof AuthIndexRoute
   '/profile': typeof ProfileIndexRoute
   '/auth/error': typeof AuthErrorIndexRoute
@@ -301,13 +258,11 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRoute
   '/': typeof IndexRoute
-  '/admin': typeof AdminLayoutRouteWithChildren
   '/auth': typeof AuthLayoutRouteWithChildren
   '/profile': typeof ProfileLayoutRouteWithChildren
   '/about': typeof AboutRoute
   '/auth/forgort-password': typeof AuthForgortPasswordRoute
   '/auth/signup': typeof AuthSignupRoute
-  '/admin/': typeof AdminIndexRoute
   '/auth/': typeof AuthIndexRoute
   '/profile/': typeof ProfileIndexRoute
   '/auth/error/': typeof AuthErrorIndexRoute
@@ -320,13 +275,11 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
-    | '/admin'
     | '/auth'
     | '/profile'
     | '/about'
     | '/auth/forgort-password'
     | '/auth/signup'
-    | '/admin/'
     | '/auth/'
     | '/profile/'
     | '/auth/error'
@@ -339,7 +292,6 @@ export interface FileRouteTypes {
     | '/about'
     | '/auth/forgort-password'
     | '/auth/signup'
-    | '/admin'
     | '/auth'
     | '/profile'
     | '/auth/error'
@@ -349,13 +301,11 @@ export interface FileRouteTypes {
   id:
     | '__root__'
     | '/'
-    | '/admin'
     | '/auth'
     | '/profile'
     | '/about'
     | '/auth/forgort-password'
     | '/auth/signup'
-    | '/admin/'
     | '/auth/'
     | '/profile/'
     | '/auth/error/'
@@ -367,7 +317,6 @@ export interface FileRouteTypes {
 
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
-  AdminLayoutRoute: typeof AdminLayoutRouteWithChildren
   AuthLayoutRoute: typeof AuthLayoutRouteWithChildren
   ProfileLayoutRoute: typeof ProfileLayoutRouteWithChildren
   AboutRoute: typeof AboutRoute
@@ -375,7 +324,6 @@ export interface RootRouteChildren {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
-  AdminLayoutRoute: AdminLayoutRouteWithChildren,
   AuthLayoutRoute: AuthLayoutRouteWithChildren,
   ProfileLayoutRoute: ProfileLayoutRouteWithChildren,
   AboutRoute: AboutRoute,
@@ -392,7 +340,6 @@ export const routeTree = rootRoute
       "filePath": "__root.tsx",
       "children": [
         "/",
-        "/admin",
         "/auth",
         "/profile",
         "/about"
@@ -400,12 +347,6 @@ export const routeTree = rootRoute
     },
     "/": {
       "filePath": "index.tsx"
-    },
-    "/admin": {
-      "filePath": "admin/layout.tsx",
-      "children": [
-        "/admin/"
-      ]
     },
     "/auth": {
       "filePath": "auth/layout.tsx",
@@ -435,10 +376,6 @@ export const routeTree = rootRoute
     "/auth/signup": {
       "filePath": "auth/signup.tsx",
       "parent": "/auth"
-    },
-    "/admin/": {
-      "filePath": "admin/index.tsx",
-      "parent": "/admin"
     },
     "/auth/": {
       "filePath": "auth/index.tsx",
