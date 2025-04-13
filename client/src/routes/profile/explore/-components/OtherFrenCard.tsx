@@ -20,7 +20,7 @@ export function OtherFrenCard({ frenRef }: OtherFrenCardProps) {
 
   const [toggleFollowMutation, isTogglingFollow] = useMutation<OtherFrenCardFollowMutation>(graphql`
     mutation OtherFrenCardFollowMutation($input: FollowInput!) {
-      toggleFollow(input: $input) {
+      toggleFollowFren(input: $input) {
         ...OtherFrenCard_fren
       }
     }

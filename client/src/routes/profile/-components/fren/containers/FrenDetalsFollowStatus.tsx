@@ -24,7 +24,7 @@ export function FrenDetalsFollowStatus({ fren }: FrenDetalsFollowStatusProps) {
   const [toggleFollowMutation, isTogglingFollow] = useMutation<FrenDetalsFollowStatusMutation>(
     graphql`
       mutation FrenDetalsFollowStatusMutation($input: FollowInput!) {
-        toggleFollow(input: $input) {
+        toggleFollowFren(input: $input) {
           ...FrenBasicDetails_fren
         }
       }

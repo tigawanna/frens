@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<663879bf5fcbb8f3d6a7008f49b31bbd>>
+ * @generated SignedSource<<5b79ae63ccd3df538b30305924420a33>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -17,7 +17,7 @@ export type FrenFollowerCardFollowMutation$variables = {
   input: FollowInput;
 };
 export type FrenFollowerCardFollowMutation$data = {
-  readonly follow: {
+  readonly toggleFollow: {
     readonly " $fragmentSpreads": FragmentRefs<"FrenFollowerCard_follower">;
   } | null | undefined;
 };
@@ -53,7 +53,7 @@ return {
         "args": (v1/*: any*/),
         "concreteType": "Follower",
         "kind": "LinkedField",
-        "name": "follow",
+        "name": "toggleFollow",
         "plural": false,
         "selections": [
           {
@@ -79,7 +79,7 @@ return {
         "args": (v1/*: any*/),
         "concreteType": "Follower",
         "kind": "LinkedField",
-        "name": "follow",
+        "name": "toggleFollow",
         "plural": false,
         "selections": [
           {
@@ -123,16 +123,16 @@ return {
     ]
   },
   "params": {
-    "cacheID": "e500d136ff849ec41aa0144a0d89e020",
+    "cacheID": "a0fb29e88b575ad610ea0dcc2452da4d",
     "id": null,
     "metadata": {},
     "name": "FrenFollowerCardFollowMutation",
     "operationKind": "mutation",
-    "text": "mutation FrenFollowerCardFollowMutation(\n  $input: FollowInput!\n) {\n  follow(input: $input) {\n    ...FrenFollowerCard_follower\n    id\n  }\n}\n\nfragment FrenFollowerCard_follower on Follower {\n  id\n  frenId\n  name\n  email\n  image\n}\n"
+    "text": "mutation FrenFollowerCardFollowMutation(\n  $input: FollowInput!\n) {\n  toggleFollow(input: $input) {\n    ...FrenFollowerCard_follower\n    id\n  }\n}\n\nfragment FrenFollowerCard_follower on Follower {\n  id\n  frenId\n  name\n  email\n  image\n}\n"
   }
 };
 })();
 
-(node as any).hash = "621e7d894805e1d9c10372c5620030b2";
+(node as any).hash = "1e8670695a80ee07230fd37d512b7072";
 
 export default node;

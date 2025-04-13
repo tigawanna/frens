@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<501a97b8335507dd56f31e4c706fea16>>
+ * @generated SignedSource<<13aa8a753cdeaa417ad410a971c4cd8c>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -17,7 +17,7 @@ export type FrenDetalsFollowStatusMutation$variables = {
   input: FollowInput;
 };
 export type FrenDetalsFollowStatusMutation$data = {
-  readonly toggleFollow: {
+  readonly toggleFollowFren: {
     readonly " $fragmentSpreads": FragmentRefs<"FrenBasicDetails_fren">;
   } | null | undefined;
 };
@@ -53,7 +53,7 @@ return {
         "args": (v1/*: any*/),
         "concreteType": "Fren",
         "kind": "LinkedField",
-        "name": "toggleFollow",
+        "name": "toggleFollowFren",
         "plural": false,
         "selections": [
           {
@@ -79,7 +79,7 @@ return {
         "args": (v1/*: any*/),
         "concreteType": "Fren",
         "kind": "LinkedField",
-        "name": "toggleFollow",
+        "name": "toggleFollowFren",
         "plural": false,
         "selections": [
           {
@@ -158,16 +158,16 @@ return {
     ]
   },
   "params": {
-    "cacheID": "7791caf517523211e91618addd3a70a6",
+    "cacheID": "af2c6213b568edc86620acb004d3e226",
     "id": null,
     "metadata": {},
     "name": "FrenDetalsFollowStatusMutation",
     "operationKind": "mutation",
-    "text": "mutation FrenDetalsFollowStatusMutation(\n  $input: FollowInput!\n) {\n  toggleFollow(input: $input) {\n    ...FrenBasicDetails_fren\n    id\n  }\n}\n\nfragment FrenBasicDetails_fren on Fren {\n  id\n  name\n  email\n  image\n  frenId\n  followerCount\n  followingCount\n  isFollowingMe\n  amFollowing\n  isMe\n}\n"
+    "text": "mutation FrenDetalsFollowStatusMutation(\n  $input: FollowInput!\n) {\n  toggleFollowFren(input: $input) {\n    ...FrenBasicDetails_fren\n    id\n  }\n}\n\nfragment FrenBasicDetails_fren on Fren {\n  id\n  name\n  email\n  image\n  frenId\n  followerCount\n  followingCount\n  isFollowingMe\n  amFollowing\n  isMe\n}\n"
   }
 };
 })();
 
-(node as any).hash = "09f0afd7ed690cac8bf6fc7aa15ef4c2";
+(node as any).hash = "268c57ef6a4b3ab658cbc420e50c24ba";
 
 export default node;

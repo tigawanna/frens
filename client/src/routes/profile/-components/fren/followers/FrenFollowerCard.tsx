@@ -27,7 +27,7 @@ export function FrenFollowerCard({ followerRef }: FrenFollowerCardProps) {
 
   const [commitFollowMutation, isFollowing] = useMutation(graphql`
     mutation FrenFollowerCardFollowMutation($input: FollowInput!) {
-      follow(input: $input) {
+      toggleFollow(input: $input) {
         ...FrenFollowerCard_follower
       }
     }
@@ -41,29 +41,6 @@ export function FrenFollowerCard({ followerRef }: FrenFollowerCardProps) {
           userId: follower.frenId,
         },
       },
-            updater: (store) => {
-              // Get the new post record
-              const payload = store.getRootField("follow");
-              // Get the connection
-              const root = store.getRoot();
-              const connection = ConnectionHandler.getConnection(
-                root,
-                "FrenFollowers_followers" // This matches your @connection key in MainFeed.tsx
-              );
-              if (connection && payload) {
-                // Create a new edge with the post as the node
-                const edge = ConnectionHandler.createEdge(
-                  store,
-                  connection,
-                  payload,
-                  "FrenFollowersConnectionEdge" // Edge type from your schema
-                );
-      
-                // Insert at the beginning of the feed
-                // ConnectionHandler.insertEdgeBefore(connection, edge);
-                ConnectionHandler.deleteNode(connection, follower.id);
-              }
-            },
     });
   };
 

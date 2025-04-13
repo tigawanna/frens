@@ -89,50 +89,95 @@ builder.mutationType({
   name: "Mutation",
   fields: (t) => ({
     // follow fren resolver
-    follow: t.prismaField({
-      type: Follower,
-      args: {
-        input: t.arg({ type: FollowInput, required: true }),
-      },
-      resolve: async (query, root, args, ctx, info) => {
-        await prisma.follow.create({
-          data: {
-            follower: { connect: { id: ctx.currentUser?.id } },
-            following: { connect: { id: args.input.userId } },
-          },
-        });
+    // follow: t.prismaField({
+    //   type: Follower,
+    //   args: {
+    //     input: t.arg({ type: FollowInput, required: true }),
+    //   },
+    //   resolve: async (query, root, args, ctx, info) => {
+    //     await prisma.follow.create({
+    //       data: {
+    //         follower: { connect: { id: ctx.currentUser?.id } },
+    //         following: { connect: { id: args.input.userId } },
+    //       },
+    //     });
 
-        return prisma.user.findUniqueOrThrow({
-          ...query,
-          where: { id: ctx.currentUser?.id },
-        });
-      },
-    }),
+    //     return prisma.user.findUniqueOrThrow({
+    //       ...query,
+    //       where: { id: ctx.currentUser?.id },
+    //     });
+    //   },
+    // }),
 
     // unfollow  fren resolver
-    unfollow: t.prismaField({
+    // unfollow: t.prismaField({
+    //   type: Follower,
+    //   args: {
+    //     input: t.arg({ type: FollowInput, required: true }),
+    //   },
+    //   resolve: async (query, root, args, ctx, info) => {
+    //     // Delete the follow relationship
+    //     await prisma.follow.deleteMany({
+    //       where: {
+    //         followerId: ctx.currentUser?.id,
+    //         followingId: args.input.userId,
+    //       },
+    //     });
+
+    //     // Return the updated user
+    //     return prisma.user.findUniqueOrThrow({
+    //       ...query,
+    //       where: { id: ctx.currentUser?.id },
+    //     });
+    //   },
+    // }),
+
+    toggleFollow: t.prismaField({
       type: Follower,
       args: {
         input: t.arg({ type: FollowInput, required: true }),
       },
       resolve: async (query, root, args, ctx, info) => {
-        // Delete the follow relationship
-        await prisma.follow.deleteMany({
-          where: {
-            followerId: ctx.currentUser?.id,
-            followingId: args.input.userId,
-          },
-        });
+        // Check if the user is authenticated
+        if (!ctx.currentUser?.id) {
+          throw new Error("User not authenticated");
+        }
+
+         try {
+          // Try to create a follow relationship
+          await prisma.follow.create({
+            data: {
+              followerId: ctx.currentUser.id,
+              followingId: args.input.userId,
+            },
+          });
+        } catch (err: any) {
+          // P2002: Unique constraint violation (follow relationship already exists)
+          if (err.code === "P2002") {
+            // Delete the existing follow
+            await prisma.follow.deleteMany({
+              where: {
+                followerId: ctx.currentUser.id,
+                followingId: args.input.userId,
+              },
+            });
+          } else {
+            // Handle any other unexpected errors
+            console.error("Error toggling follow:", err);
+            throw new Error(
+              "An error occurred while toggling the follow relationship",
+            );
+          }
+        }
 
         // Return the updated user
         return prisma.user.findUniqueOrThrow({
           ...query,
-          where: { id: ctx.currentUser?.id },
+          where: { id: args.input.userId},
         });
       },
     }),
-
-    toggleFollow: t.prismaField({
+    toggleFollowFren: t.prismaField({
       type: Fren,
       args: {
         input: t.arg({ type: FollowInput, required: true }),

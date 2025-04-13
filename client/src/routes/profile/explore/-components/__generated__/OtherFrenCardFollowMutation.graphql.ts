@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<de44c8e032aab77a4c35a68a29476f44>>
+ * @generated SignedSource<<bb9ca5f40002d688cf6798a0adbdf0b1>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -17,7 +17,7 @@ export type OtherFrenCardFollowMutation$variables = {
   input: FollowInput;
 };
 export type OtherFrenCardFollowMutation$data = {
-  readonly toggleFollow: {
+  readonly toggleFollowFren: {
     readonly " $fragmentSpreads": FragmentRefs<"OtherFrenCard_fren">;
   } | null | undefined;
 };
@@ -53,7 +53,7 @@ return {
         "args": (v1/*: any*/),
         "concreteType": "Fren",
         "kind": "LinkedField",
-        "name": "toggleFollow",
+        "name": "toggleFollowFren",
         "plural": false,
         "selections": [
           {
@@ -79,7 +79,7 @@ return {
         "args": (v1/*: any*/),
         "concreteType": "Fren",
         "kind": "LinkedField",
-        "name": "toggleFollow",
+        "name": "toggleFollowFren",
         "plural": false,
         "selections": [
           {
@@ -158,16 +158,16 @@ return {
     ]
   },
   "params": {
-    "cacheID": "4526092ca3bf343cea66d494ac5c8e69",
+    "cacheID": "1753d0a356f035560a33038e65049bf5",
     "id": null,
     "metadata": {},
     "name": "OtherFrenCardFollowMutation",
     "operationKind": "mutation",
-    "text": "mutation OtherFrenCardFollowMutation(\n  $input: FollowInput!\n) {\n  toggleFollow(input: $input) {\n    ...OtherFrenCard_fren\n    id\n  }\n}\n\nfragment OtherFrenCard_fren on Fren {\n  frenId\n  name\n  email\n  image\n  isMe\n  amFollowing\n  isFollowingMe\n  followerCount\n  followingCount\n}\n"
+    "text": "mutation OtherFrenCardFollowMutation(\n  $input: FollowInput!\n) {\n  toggleFollowFren(input: $input) {\n    ...OtherFrenCard_fren\n    id\n  }\n}\n\nfragment OtherFrenCard_fren on Fren {\n  frenId\n  name\n  email\n  image\n  isMe\n  amFollowing\n  isFollowingMe\n  followerCount\n  followingCount\n}\n"
   }
 };
 })();
 
-(node as any).hash = "acc844592c1d17d0ae8181efe5f11412";
+(node as any).hash = "cfe9d181899d775a3bf7b31676ab623f";
 
 export default node;

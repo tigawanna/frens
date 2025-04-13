@@ -27,7 +27,7 @@ export function FrenFollowingCard({ followingRef }: FrenFollowingCardProps) {
 
   const [commitUnfollowMutation, isUnfollowing] = useMutation(graphql`
     mutation FrenFollowingCardUnfollowMutation($input: FollowInput!) {
-      unfollow(input: $input) {
+      toggleFollow(input: $input) {
         ...FrenFollowingCard_following
       }
     }
