@@ -9,7 +9,7 @@ import { MainFeed_feedPosts$data } from "./__generated__/MainFeed_feedPosts.grap
 import { useFragment } from "react-relay";
 import { FeedCard_post$key } from "./__generated__/FeedCard_post.graphql";
 import { BetterAthViewer } from "@/lib/viewer/use-viewer";
-import { EditPostModal } from "./form/PostDialogs";
+import { DeletePostModal, EditPostModal } from "./form/PostDialogs";
 import { useState } from "react";
 import { ClipboardButton } from "@/components/wrappers/ClipboardButton";
 import { Link } from "@tanstack/react-router";
@@ -36,6 +36,7 @@ export function PostCard({ postRef, viewer }: PostCardProps) {
   const postDate = postData?.createdAt ? new Date(postData.createdAt) : new Date();
   const timeAgo = formatDistance(postDate, new Date(), { addSuffix: true });
   const [open, setOpen] = useState(false);
+  const [openDeleteModal, setDeleteModalOpen] = useState(false);
   // Since we don't have user information in FeedPost, we'll use the post ID to create a unique identifier
   const postIdFirstChars = postData?.id.substring(0, 2).toUpperCase();
   if (!postData) {
@@ -62,7 +63,10 @@ export function PostCard({ postRef, viewer }: PostCardProps) {
           </Link>
           <div className="">
             {viewer && viewer.id === postData?.postedBy?.frenId && (
+              <span className="flex items-center gap-2">
               <EditPostModal post={postData} open={open} setOpen={setOpen} />
+              <DeletePostModal post={postData} open={openDeleteModal} setOpen={setDeleteModalOpen} />
+              </span>
             )}
           </div>
         </div>

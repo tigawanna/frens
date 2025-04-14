@@ -6,6 +6,7 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
+  DialogTrigger,
 } from "@/components/shadcn/ui/dialog";
 import { Button } from "@/components/shadcn/ui/button";
 
@@ -17,6 +18,7 @@ type DialogVariant = "danger" | "warning" | "info" | "default";
 interface ConfirmDialogProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
+  trigger?: React.ReactNode;
   title: string;
   description?: string;
   confirmLabel?: string;
@@ -31,6 +33,7 @@ interface ConfirmDialogProps {
 
 export function ConfirmDialog({
   open,
+  trigger,
   onOpenChange,
   title,
   description,
@@ -86,6 +89,15 @@ export function ConfirmDialog({
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
+      <DialogTrigger asChild>
+        {trigger ? (
+          trigger
+        ) : (
+          <Button variant="outline" className="btn btn-primary">
+            Open Dialog
+          </Button>
+        )}
+      </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader className="flex flex-row  gap-4">
           <div className="flex items-center justify-center mt-1">{getIconByVariant()}</div>
@@ -116,3 +128,25 @@ export function ConfirmDialog({
     </Dialog>
   );
 }
+
+    //  example usage
+      // <ConfirmDialog
+      //   open={open}
+      //   onOpenChange={setOpen}
+      //   title="Delete API Key"
+      //   description={`Are you sure you want to delete the API key "${keyName || keyId}"? This action cannot be undone.`}
+      //   confirmLabel="Delete API Key"
+      //   cancelLabel="Cancel"
+      //   variant="danger"
+      //   loading={deleteMutation.isPending}
+      //   onConfirm={() => deleteMutation.mutate()}>
+      //   <div className="text-sm text-muted-foreground">
+      //     <p>Deleting this API key will immediately revoke access for any applications using it.</p>
+      //     {deleteMutation.isPending && (
+      //       <div className="mt-3 flex items-center justify-center p-2 rounded-md bg-muted">
+      //         <Loader2 className="h-5 w-5 animate-spin text-muted-foreground mr-2" />
+      //         <span>Deleting API key...</span>
+      //       </div>
+      //     )}
+      //   </div>
+      // </ConfirmDialog>
