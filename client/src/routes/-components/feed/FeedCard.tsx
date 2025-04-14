@@ -13,6 +13,7 @@ import { EditPostModal } from "./form/PostDialogs";
 import { useState } from "react";
 import { ClipboardButton } from "@/components/wrappers/ClipboardButton";
 import { Link } from "@tanstack/react-router";
+import { AuthenticationRequiredDialog } from "@/lib/viewer/components/AuthenticationRequiredDialog";
 
 // Define the interface for a post based on your GraphQL schema
 
@@ -86,11 +87,13 @@ export function PostCard({ postRef, viewer }: PostCardProps) {
         )}
 
         <div className="flex justify-between text-sm text-muted-foreground pt-2 border-t">
-          <LikeButton
-            postId={postData.postId}
-            isLiked={postData?.likedByMe}
-            likeCount={postData.likeCount}
-          />
+          <AuthenticationRequiredDialog icon={<Heart className="mr-2 h-4 w-4" />}>
+            <LikeButton
+              postId={postData.postId}
+              isLiked={postData?.likedByMe}
+              likeCount={postData.likeCount}
+            />
+          </AuthenticationRequiredDialog>
           <Button disabled variant="ghost" size="sm">
             <MessageSquare className="h-4 w-4 mr-1" />
             Comment

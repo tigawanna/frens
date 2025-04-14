@@ -4,7 +4,7 @@ import { AccountStatusTab } from "./AccountStatusTab";
 import { AccountDetailsTab } from "./AccountDetailsTab";
 import { OverviewTab } from "./OverviewTab";
 import { ProfileHeader } from "./ProfileHeader";
-import { NotSignedIn } from "@/lib/viewer/cmponents/NotSignedin";
+import { NotSignedIn } from "@/lib/viewer/components/NotSignedin";
 import { AccountSettings } from "./AccountSettings";
 
 // Not Signed In Component
