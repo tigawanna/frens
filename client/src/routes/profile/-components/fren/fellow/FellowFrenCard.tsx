@@ -16,7 +16,7 @@ export function FellowFrenCard({ fellowRef }: FellowFrenCardProps) {
   const fellow = useFragment(FellowFrenCardFragment, fellowRef);
 
   return (
-    <Card className="p-4">
+    <Card className="p-4 border-none bg-base-200 shadow-xs shadow-primary/20">
       <div className="flex items-center justify-between">
         <Link
           to="/profile/$frenId"
