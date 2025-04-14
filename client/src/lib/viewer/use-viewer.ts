@@ -1,44 +1,56 @@
-import { queryOptions, useQueryClient, useSuspenseQuery } from "@tanstack/react-query";
+import { queryOptions, useMutation, useQueryClient, useSuspenseQuery } from "@tanstack/react-query";
 import { authClient } from "../better-auth/auth-client";
 
+export type BetterAuthUserPayload = NonNullable<
+  Awaited<ReturnType<typeof fetchCurrentViewer>>["data"]
+>;
+export type BetterAthViewer = BetterAuthUserPayload["user"];
+export type BetterAuthSession = BetterAuthUserPayload["session"];
 
-export type BetterAuthUserPayload = NonNullable<Awaited<ReturnType<typeof fetchCurrentViewer>>["data"]>
-export type BetterAthViewer = BetterAuthUserPayload["user"]
-export type BetterAuthSession = BetterAuthUserPayload["session"]
-
-export function viewerQueryOptions(){
+export function viewerQueryOptions() {
   return queryOptions({
     queryKey: ["viewer"],
     queryFn: async () => {
-      const session  = await authClient.getSession()
-      if(!session){
-        return
+      const session = await authClient.getSession();
+      if (!session) {
+        return;
       }
-      return session
+      return session;
     },
     staleTime: 1000 * 60 * 60 * 24, // 24 hours
-  })
+  });
 }
-
 
 export function useViewer() {
   // const routeApi = getRouteApi("__root__");
   // const data = routeApi.useLoaderData();
-  const qc = useQueryClient()
-  const {data} = useSuspenseQuery(viewerQueryOptions());
+  const qc = useQueryClient();
+  const { data } = useSuspenseQuery(viewerQueryOptions());
 
   function logoutMutation() {
+    new Promise((resolve) => {
+      setTimeout(() => {
+        resolve(true);
+      }, 3000);
+    });
     return authClient.signOut().then(() => {
       qc.invalidateQueries(viewerQueryOptions());
-    })
+    });
   }
-  return {viewer:data?.data?.user,session:data?.data?.session,logoutMutation};
+  const mutation = useMutation({
+    mutationFn: async () => {
+      return logoutMutation();
+    },
+  });
+  return {
+    viewer: data?.data?.user,
+    session: data?.data?.session,
+    logoutMutation: mutation,
+  };
 }
 
-
-
 // const GITHUB_API_URL = "https://api.github.com/user";
- // Replace with your GitHub token
+// Replace with your GitHub token
 
 // export interface GitHubViewer {
 //   login: string;
@@ -75,10 +87,9 @@ export function useViewer() {
 //   updated_at: string;
 // }
 
-export async function fetchCurrentViewer(){
-  return authClient.getSession()
+export async function fetchCurrentViewer() {
+  return authClient.getSession();
 }
-
 
 // export function getPAT(){
 //   if(typeof window !== "undefined"){

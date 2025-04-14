@@ -1,5 +1,5 @@
 import { useViewer } from "@/lib/viewer/use-viewer";
-import { BadgeCheck, Bell, ChevronsUpDown, ShieldCheck, User } from "lucide-react";
+import { BadgeCheck, Bell, ChevronsUpDown, Loader2, ShieldCheck, User } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/shadcn/ui/avatar";
 import {
   DropdownMenu,
@@ -12,72 +12,64 @@ import {
 } from "@/components/shadcn/ui/dropdown-menu";
 import { Link } from "@tanstack/react-router";
 import { AVATAR_FALLBACK } from "@/consts";
-interface MainNavbarUserProps {
+interface MainNavbarUserProps {}
 
-}
-
-export function MainNavbarUser({}:MainNavbarUserProps){
-const { viewer, logoutMutation } = useViewer();
+export function MainNavbarUser({}: MainNavbarUserProps) {
+  const { viewer, logoutMutation } = useViewer();
   if (!viewer) {
-    return <Link to="/auth" search={{returnTo: window.location.pathname}}>
-      <User/>
-    </Link>
+    return (
+      <Link to="/auth" search={{ returnTo: window.location.pathname }}>
+        <User />
+      </Link>
+    );
   }
-  const avatarUrl = viewer?.image || AVATAR_FALLBACK
-return (
-  <DropdownMenu>
-    <DropdownMenuTrigger asChild>
-      {/* <SidebarMenuButton size="lg" className=""> */}
-      <div>
-        <Avatar className="h-8 w-8 rounded-full bg-base-content hover:bg-base-300">
-          <AvatarImage src={avatarUrl} alt={viewer?.name} />
-          <AvatarFallback className="rounded-lg">{viewer.name?.slice(0, 2)}</AvatarFallback>
-        </Avatar>
-        {/* <div className="grid flex-1 text-left text-sm leading-tight">
-          <span className="truncate font-semibold">{viewer?.name}</span>
-          <span className="truncate text-xs">{viewer.email}</span>
-        </div> */}
-        {/* <ChevronsUpDown className="ml-auto size-4" /> */}
+  const avatarUrl = viewer?.image || AVATAR_FALLBACK;
+  return (
+    <DropdownMenu>
+      <DropdownMenuTrigger asChild>
 
-      </div>
-      {/* </SidebarMenuButton> */}
-    </DropdownMenuTrigger>
-    <DropdownMenuContent
-      className="w-(--radix-dropdown-menu-trigger-width) min-w-56 rounded-lg bg-base-300 p-2 text-base-content"
-    //   side={isMobile ? "bottom" : "right"}
-      align="end"
-      sideOffset={4}>
-      <DropdownMenuLabel className="p-0 font-normal">
-        <div className="flex items-center gap-2 px-1 py-1.5 text-left text-sm">
-          <Avatar className="h-8 w-8 rounded-lg">
+          <Avatar className="h-8 w-8 rounded-full bg-base-content hover:bg-base-300 border border-pripary">
             <AvatarImage src={avatarUrl} alt={viewer?.name} />
-            <AvatarFallback className="rounded-lg">CN</AvatarFallback>
+            <AvatarFallback className="rounded-lg">{viewer.name?.slice(0, 2)}</AvatarFallback>
           </Avatar>
-          <div className="grid flex-1 text-left text-sm leading-tight">
-            <span className="flex items-center gap-1 truncate font-semibold">{viewer.name} </span>
-            <span className="truncate text-xs">{viewer.email}</span>
+        {/* </SidebarMenuButton> */}
+      </DropdownMenuTrigger>
+      <DropdownMenuContent
+        className="w-(--radix-dropdown-menu-trigger-width) min-w-56 rounded-lg bg-base-300 p-2 text-base-content"
+        //   side={isMobile ? "bottom" : "right"}
+        align="end"
+        sideOffset={4}>
+        <DropdownMenuLabel className="p-0 font-normal">
+          <div className="flex items-center gap-2 px-1 py-1.5 text-left text-sm">
+            <Avatar className="h-8 w-8 rounded-lg">
+              <AvatarImage src={avatarUrl} alt={viewer?.name} />
+              <AvatarFallback className="rounded-lg">CN</AvatarFallback>
+            </Avatar>
+            <div className="grid flex-1 text-left text-sm leading-tight">
+              <span className="flex items-center gap-1 truncate font-semibold">{viewer.name} </span>
+              <span className="truncate text-xs">{viewer.email}</span>
+            </div>
           </div>
-        </div>
-      </DropdownMenuLabel>
-      <DropdownMenuSeparator />
+        </DropdownMenuLabel>
+        <DropdownMenuSeparator />
 
-      <DropdownMenuSeparator />
-      <DropdownMenuGroup>
-        <Link to="/profile" className="w-full">
+        <DropdownMenuSeparator />
+        <DropdownMenuGroup>
+          <Link to="/profile" className="w-full">
+            <DropdownMenuItem>
+              <BadgeCheck />
+              Account
+            </DropdownMenuItem>
+          </Link>
+
           <DropdownMenuItem>
-            <BadgeCheck />
-            Account
+            <Bell />
+            Notifications
           </DropdownMenuItem>
-        </Link>
+        </DropdownMenuGroup>
+        <DropdownMenuSeparator />
 
-        <DropdownMenuItem>
-          <Bell />
-          Notifications
-        </DropdownMenuItem>
-      </DropdownMenuGroup>
-      <DropdownMenuSeparator />
-
-      {/* <MutationButton
+        {/* <MutationButton
               className="btn-error max-w-[98%]"
               onClick={() => {
                 logoutMutation.mutate();
@@ -86,16 +78,19 @@ return (
               label="Logout"
               mutation={logoutMutation}
             /> */}
-      <div className="flex gap-3 w-full">
-        <button
-          className="btn btn-error max-w-[98%] w-full"
-          onClick={() => {
-            logoutMutation();
-          }}>
-          Logout
-        </button>
-      </div>
-    </DropdownMenuContent>
-  </DropdownMenu>
-);
+          <div className="flex  h-full gap-3 w-full space-y-1 p-1">
+          <div className="flex gap-3 w-full space-y-1">
+            <button
+              className="btn btn-error btn-sm border border-error-content  max-w-[98%] w-full"
+              onClick={() => {
+                logoutMutation.mutate();
+              }}>
+              Logout
+              {logoutMutation.isPending && <Loader2 size={16} className="animate-spin" />}
+            </button>
+          </div>
+          </div>
+      </DropdownMenuContent>
+    </DropdownMenu>
+  );
 }

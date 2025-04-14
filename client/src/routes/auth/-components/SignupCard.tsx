@@ -21,6 +21,8 @@ import { Form, FormControl, FormField, FormItem, FormMessage } from "@/component
 import { Link, useNavigate, useSearch } from "@tanstack/react-router";
 import { useMutation } from "@tanstack/react-query";
 import { makeHotToast } from "@/components/toasters";
+import { Button } from "@/components/shadcn/ui/button";
+import { delayedPromise } from "@/utils/async";
 
 const signupSchema = z
   .object({
@@ -85,6 +87,23 @@ export function SignUpCard() {
         title: "Signup failed",
         description: error.message,
         variant: "error",
+      });
+    },
+  });
+
+  const oauthMutation = useMutation({
+    mutationFn: async () => {
+      delayedPromise(1000);
+      const baseURL = new URL(window.location.href);
+      const callbackURL = new URL(returnTo, baseURL).toString();
+      const newUserCallbackURL = new URL("/about", baseURL).toString();
+      const errorCallbackURL = new URL("/auth/error", baseURL).toString();
+
+      await authClient.signIn.social({
+        provider: "github",
+        callbackURL,
+        newUserCallbackURL,
+        errorCallbackURL,
       });
     },
   });
@@ -233,28 +252,16 @@ export function SignUpCard() {
           </form>
         </Form>
 
-        <div className="flex flex-wrap items-center gap-2 w-full mt-4">
-          <button
-            className="gap-2 flex-1 btn btn-primary btn-outline border-[1px] w-full py-4"
-            onClick={async () => {
-              const baseURL = new URL(window.location.href);
-              const callbackURL = new URL(returnTo, baseURL).toString();
-              const newUserCallbackURL = new URL("/about", baseURL).toString();
-              const errorCallbackURL = new URL("/auth/error", baseURL).toString();
-              // const callbackURL = returnTo;
-              // const newUserCallbackURL = "/about";
-              // const errorCallbackURL = "/auth/error";
-
-              await authClient.signIn.social({
-                provider: "github",
-                callbackURL,
-                newUserCallbackURL,
-                errorCallbackURL,
-              });
+        <div className="flex flex-wrap items-center gap-2 w-full">
+          <Button
+            className="gap-2 flex-1 w-full py-4 btn btn-primary btn-outline  border-[1px]"
+            onClick={() => {
+              oauthMutation.mutate();
             }}>
-            <FaGithub className="h-4 w-4" />
+            <FaGithub />
             Continue with Github
-          </button>
+            {oauthMutation.isPending && <Loader2 size={16} className="animate-spin" />}
+          </Button>
         </div>
       </CardContent>
       <CardFooter>

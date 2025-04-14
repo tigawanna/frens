@@ -25,7 +25,7 @@ export function ThemeToggle({compact}: ThemeToggleProps) {
     }
   }
   return (
-    <div data-test="theme-toggle" className="flex w-full  items-center justify-between gap-5 ">
+    <div data-test="theme-toggle" className="flex items-center justify-between gap-5 ">
       <ViewTransitionSelect compact={compact}/>
       <button onClick={() => transitionColors()} data-test="theme-toggle-button" className="">
         {biTheme === "light" ? <Moon /> : <Sun />}

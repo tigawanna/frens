@@ -21,6 +21,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 import { Form, FormControl, FormField, FormItem, FormMessage } from "@/components/shadcn/ui/form";
+import { Button } from "@/components/shadcn/ui/button";
 
 const loginSchema = z.object({
   email: z.string().email("Please enter a valid email address"),
@@ -51,7 +52,6 @@ export function SigninCard() {
         password: data.password,
         callbackURL: returnTo,
         rememberMe: data.rememberMe,
-
       });
     },
     onSuccess: (data) => {
@@ -75,6 +75,22 @@ export function SigninCard() {
         title: "Login failed",
         description: error.message,
         variant: "error",
+      });
+    },
+  });
+
+  const oauthMutation = useMutation({
+    mutationFn: async () => {
+      const baseURL = new URL(window.location.href);
+      const callbackURL = new URL(returnTo, baseURL).toString();
+      const newUserCallbackURL = new URL("/about", baseURL).toString();
+      const errorCallbackURL = new URL("/auth/error", baseURL).toString();
+
+      await authClient.signIn.social({
+        provider: "github",
+        callbackURL,
+        newUserCallbackURL,
+        errorCallbackURL,
       });
     },
   });
@@ -173,28 +189,15 @@ export function SigninCard() {
           </Form>
 
           <div className="flex flex-wrap items-center gap-2 w-full">
-            <button
+            <Button
               className="gap-2 flex-1 w-full py-4 btn btn-primary btn-outline  border-[1px]"
-              onClick={async () => {
-                const baseURL = new URL(window.location.href);
-                const callbackURL = new URL(returnTo, baseURL).toString();
-                const newUserCallbackURL = new URL("/about", baseURL).toString();
-                const errorCallbackURL = new URL("/auth/error", baseURL).toString();
-
-                // const callbackURL = returnTo;
-                // const newUserCallbackURL = "/about";
-                // const errorCallbackURL = "/auth/error";
-
-                await authClient.signIn.social({
-                  provider: "github",
-                  callbackURL,
-                  newUserCallbackURL,
-                  errorCallbackURL,
-                });
+              onClick={() => {
+                oauthMutation.mutate();
               }}>
               <FaGithub />
               Continue with Github
-            </button>
+              {oauthMutation.isPending && <Loader2 size={16} className="animate-spin" />}
+            </Button>
           </div>
         </div>
       </CardContent>
