@@ -19,34 +19,39 @@ function About() {
               Welcome to Frens
             </h1>
             <p className="mt-4 text-xl text-muted-foreground">
-              A cozy space to connect with people who matter
+              A cozy space to connect with fellow frens
             </p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-12 text-left">
-            <FeatureCard
-              icon={<Users className="h-8 w-8 text-primary" />}
-              title="Find Your Circle"
-              description="Connect with friends and discover new people with shared interests"
-            />
-
-            <FeatureCard
-              icon={<MessageCircle className="h-8 w-8 text-primary" />}
-              title="Share What Matters"
-              description="Post updates, photos, and experiences with your close community"
-            />
-
-            <FeatureCard
-              icon={<Heart className="h-8 w-8 text-primary" />}
-              title="Genuine Connections"
-              description="No algorithms, no ads—just authentic social interactions"
-            />
-
-            <FeatureCard
-              icon={<Compass className="h-8 w-8 text-primary" />}
-              title="Explore Your Way"
-              description="Personalize your experience and discover content you care about"
-            />
+            <Link to="/profile/explore">
+              <FeatureCard
+                icon={<Users className="h-8 w-8 text-primary" />}
+                title="Find Your Circle"
+                description="Connect with friends and discover new people with shared interests"
+              />
+            </Link>
+            <Link to="/">
+              <FeatureCard
+                icon={<MessageCircle className="h-8 w-8 text-primary" />}
+                title="Share What some wisdom"
+                description="Post updates, photos, and experiences with your close community"
+              />
+            </Link>
+            <Link to="/">
+              <FeatureCard
+                icon={<Heart className="h-8 w-8 text-primary" />}
+                title="Genuine Connections"
+                description="No algorithms, no ads—just authentic social interactions"
+              />
+            </Link>
+            <Link to="/">
+              <FeatureCard
+                icon={<Compass className="h-8 w-8 text-primary" />}
+                title="Explore Your Way"
+                description="Personalize your experience and discover content you care about"
+              />
+            </Link>
           </div>
 
           <div className="mt-12 space-y-6">
@@ -72,16 +77,18 @@ function About() {
   );
 }
 
-function FeatureCard({ icon, title, description }: { 
-  icon: React.ReactNode; 
-  title: string; 
+function FeatureCard({
+  icon,
+  title,
+  description,
+}: {
+  icon: React.ReactNode;
+  title: string;
   description: string;
 }) {
   return (
-    <div className="bg-card border rounded-lg p-6 hover:shadow-md transition-shadow">
-      <div className="rounded-full bg-primary/10 p-3 w-fit mb-4">
-        {icon}
-      </div>
+    <div className="bg-card border rounded-lg p-6 hover:shadow-md hover:border-secondary hover:text-secondary transition-shadow">
+      <div className="rounded-full bg-primary/10 p-3 w-fit mb-4">{icon}</div>
       <h3 className="font-semibold text-xl mb-2">{title}</h3>
       <p className="text-muted-foreground">{description}</p>
     </div>
