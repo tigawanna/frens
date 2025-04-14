@@ -1,7 +1,7 @@
 import { useSidebar } from "@/components/shadcn/ui/sidebar";
 import { useLocation } from "@tanstack/react-router";
 import { useViewer } from "@/lib/viewer/use-viewer";
-import { BadgeCheck, Bell, ChevronsUpDown, Loader2, Moon, ShieldCheck, User } from "lucide-react";
+import { BadgeCheck, Bell, ChevronsUpDown, KeySquareIcon, Loader2, Moon, ShieldCheck, User } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/shadcn/ui/avatar";
 import {
   DropdownMenu,
@@ -86,16 +86,16 @@ export function MainDrawerFooter({}: MainDrawerFooterProps) {
 
           <DropdownMenuSeparator />
           <DropdownMenuGroup>
-            <Link to="/profile" className="w-full">
+            <Link to="/profile/account" className="w-full">
               <DropdownMenuItem>
                 <BadgeCheck />
                 Account
               </DropdownMenuItem>
             </Link>
-            <Link to="/profile" className="w-full">
+            <Link to="/profile/account" search={{ tab: "keys" }} className="w-full">
               <DropdownMenuItem>
-                <Bell />
-                Settings
+                <KeySquareIcon />
+                Keys
               </DropdownMenuItem>
             </Link>
           </DropdownMenuGroup>
