@@ -15,7 +15,7 @@ function About() {
       <div className="min-h-screen w-full flex flex-col items-center px-4 py-12">
         <div className="max-w-3xl mx-auto text-center">
           <div className="mb-8">
-            <h1 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-primary to-blue-500 bg-clip-text text-transparent">
+            <h1 className="text-4xl md:text-5xl font-bold text-primary">
               Welcome to Frens
             </h1>
             <p className="mt-4 text-xl text-muted-foreground">

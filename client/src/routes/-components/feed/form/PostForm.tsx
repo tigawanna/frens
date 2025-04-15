@@ -34,7 +34,7 @@ export function PostForm({
 }: PostFormProps) {
   const [formData, setFormData] = useState<PostFormData>(initialData);
   const [imagePreviewError, setImagePreviewError] = useState<string | null>(null);
-  const [isPreviewVisible, setIsPreviewVisible] = useState<boolean>(Boolean(initialData.imageUrl));
+  const [isPreviewVisible, setIsPreviewVisible] = useState<boolean>(true);
   
   // Reset form when initialData changes (for editing different posts)
   // useEffect(() => {

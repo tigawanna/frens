@@ -74,11 +74,11 @@ export function PostCard({ postRef, viewer }: PostCardProps) {
         <div className="mb-4">
           <p className="whitespace-pre-wrap">{postData.content}</p>
         </div>
-        <ClipboardButton
+        {/* <ClipboardButton
           text={postData.postId}
           displayText={postData.postId}
           show={import.meta.env.DEV}
-        />
+        /> */}
 
         {postData.imageUrl && (
           <div className="rounded-md overflow-hidden mb-4">
