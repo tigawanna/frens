@@ -1,5 +1,5 @@
 import { Button } from "@/components/shadcn/ui/button";
-import { AlertTriangle, RefreshCw, Home, Copy, MessageSquare, FileText } from "lucide-react";
+import { AlertTriangle, RefreshCw, Home } from "lucide-react";
 import { Link } from "@tanstack/react-router";
 import { ClipboardButton } from "@/components/wrappers/ClipboardButton";
 

@@ -1,20 +1,18 @@
 import { Card, CardContent } from "@/components/shadcn/ui/card";
 import { Suspense } from "react";
 import { graphql, useLazyLoadQuery } from "react-relay";
-// Rename the imported type with an alias
 import { MainFeedQuery as MainFeedContainerQuery } from "./__generated__/MainFeedQuery.graphql";
-import { Feed } from "./MainFeed"; // Make sure to import the Feed component
+import { Feed } from "./MainFeed";
 
-// Define the main query to fetch the feed
+
 export const MainFeedQuery = graphql`
   query MainFeedContainerQuery($first: Int!, $after: String) {
     ...MainFeed_feedPosts @arguments(first: $first, after: $after)
   }
 `;
 
-// Main component that fetches data and renders the feed
+
 export function MainFeed() {
-  // Use the renamed type
   const queryData = useLazyLoadQuery<MainFeedContainerQuery>(MainFeedQuery, { first: 24 });
 
   return (
@@ -24,7 +22,7 @@ export function MainFeed() {
   );
 }
 
-// Export a wrapper component with Suspense
+
 export default function MainFeedWrapper() {
   return (
     <Suspense fallback={<FeedSkeleton />}>
@@ -33,7 +31,7 @@ export default function MainFeedWrapper() {
   );
 }
 
-// Loading skeleton for the feed
+
 function FeedSkeleton() {
   return (
     <div className="w-full max-w-2xl mx-auto py-4">

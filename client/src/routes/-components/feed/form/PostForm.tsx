@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { Button } from "@/components/shadcn/ui/button";
 import { Input } from "@/components/shadcn/ui/input";
 import { Textarea } from "@/components/shadcn/ui/textarea";
@@ -36,17 +36,10 @@ export function PostForm({
   const [imagePreviewError, setImagePreviewError] = useState<string | null>(null);
   const [isPreviewVisible, setIsPreviewVisible] = useState<boolean>(true);
   
-  // Reset form when initialData changes (for editing different posts)
-  // useEffect(() => {
-  //   setFormData(initialData);
-  //   setIsPreviewVisible(Boolean(initialData.imageUrl));
-  //   setImagePreviewError(null);
-  // }, [initialData]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
     setFormData(prev => ({ ...prev, [name]: value }));
-    // Reset image preview error when URL changes
     if (name === 'imageUrl') {
       setImagePreviewError(null);
     }
@@ -55,9 +48,7 @@ export function PostForm({
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     
-    // Basic validation
     if (!formData.content.trim() && !formData.imageUrl.trim()) {
-      // Don't allow completely empty posts
       return;
     }
     

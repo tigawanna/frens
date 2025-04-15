@@ -1,4 +1,4 @@
-import { StrictMode, Suspense } from "react";
+import { Suspense } from "react";
 import ReactDOM from "react-dom/client";
 import { createRouter } from "@tanstack/react-router";
 // Import the generated route tree

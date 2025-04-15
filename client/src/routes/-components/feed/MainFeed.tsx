@@ -14,7 +14,7 @@ interface FeedProps {
   queryRef: MainFeed_feedPosts$key;
 }
 
-// Feed component that handles pagination
+
 export function Feed({ queryRef }: FeedProps) {
   const fragData = usePaginationFragment<
     MainFeedPaginationQuery, 
@@ -64,7 +64,7 @@ export function Feed({ queryRef }: FeedProps) {
           </div>
         </div>
 
-        {/* Keep the modal here but it will be opened by the button click */}
+
         <CreatePostModal open={open} setOpen={setOpen} />
       </div>
     );
@@ -94,7 +94,6 @@ export function Feed({ queryRef }: FeedProps) {
 }
 
 
-// Define a fragment for the feed posts that supports pagination
 export const MainFeedFragment = graphql`
   fragment MainFeed_feedPosts on Query
   @argumentDefinitions(

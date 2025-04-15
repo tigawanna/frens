@@ -30,7 +30,7 @@ export function LikeButton({
   likeCount = 0,
   className = "",
 }: LikeButtonProps) {
-  // Base state from props
+
   const state = {
     isLiked: isLiked || false,
     count: likeCount || 0,
@@ -39,7 +39,7 @@ export function LikeButton({
     useMutation<LikePostUntoggleLikedMutation>(toggleLikedMutation);
 
   const isLoading = togglingUnlikepending;
-  // Handle the like/unlike action
+
 
   const toggleLike = () => {
     if (isLoading) return;
@@ -50,7 +50,6 @@ export function LikeButton({
 
   return (
     <button
-      // variant="ghost"
       onClick={toggleLike}
       disabled={isLoading}
       className={`btn btn-ghost gap-3`}

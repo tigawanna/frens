@@ -1,6 +1,6 @@
 import { Button } from "@/components/shadcn/ui/button";
 import { Card, CardContent } from "@/components/shadcn/ui/card";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/shadcn/ui/avatar"; // Update import
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/shadcn/ui/avatar";
 import { formatDistance } from "date-fns";
 import { Heart, MessageSquare, Share2 } from "lucide-react";
 import { LikeButton } from "./LikePost";
@@ -11,11 +11,9 @@ import { FeedCard_post$key } from "./__generated__/FeedCard_post.graphql";
 import { BetterAthViewer } from "@/lib/viewer/use-viewer";
 import { DeletePostModal, EditPostModal } from "./form/PostDialogs";
 import { useState } from "react";
-import { ClipboardButton } from "@/components/wrappers/ClipboardButton";
 import { Link } from "@tanstack/react-router";
 import { AuthenticationRequiredDialog } from "@/lib/viewer/components/AuthenticationRequiredDialog";
 
-// Define the interface for a post based on your GraphQL schema
 
 export type FeedPostCard = NonNullable<
   NonNullable<NonNullable<MainFeed_feedPosts$data["feedPosts"]>["edges"]>[number]
@@ -26,18 +24,14 @@ interface PostCardProps {
   viewer?: BetterAthViewer;
 }
 
-// interface PostCardProps {
-//   post: FeedPostCard;
-// }
 
-// Post Card Component to render individual posts
 export function PostCard({ postRef, viewer }: PostCardProps) {
   const postData = useFragment<FeedCard_post$key>(FeedCardFragment, postRef);
   const postDate = postData?.createdAt ? new Date(postData.createdAt) : new Date();
   const timeAgo = formatDistance(postDate, new Date(), { addSuffix: true });
   const [open, setOpen] = useState(false);
   const [openDeleteModal, setDeleteModalOpen] = useState(false);
-  // Since we don't have user information in FeedPost, we'll use the post ID to create a unique identifier
+
   const postIdFirstChars = postData?.id.substring(0, 2).toUpperCase();
   if (!postData) {
     return null;
@@ -74,11 +68,7 @@ export function PostCard({ postRef, viewer }: PostCardProps) {
         <div className="mb-4">
           <p className="whitespace-pre-wrap">{postData.content}</p>
         </div>
-        {/* <ClipboardButton
-          text={postData.postId}
-          displayText={postData.postId}
-          show={import.meta.env.DEV}
-        /> */}
+
 
         {postData.imageUrl && (
           <div className="rounded-md overflow-hidden mb-4">
@@ -112,12 +102,6 @@ export function PostCard({ postRef, viewer }: PostCardProps) {
   );
 }
 
-// interface PostCardProps {
-//   post: FeedCard_post$key;
-// }
-
-// const postData = useFragment(FeedCardFragment, post);
-// // Update the fragment to include all needed fields from FeedPost
 export const FeedCardFragment = graphql`
   fragment FeedCard_post on FeedPost {
     id

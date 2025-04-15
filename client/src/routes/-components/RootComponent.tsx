@@ -7,7 +7,6 @@ import { Toaster } from "react-hot-toast";
 
 export function RootComponent() {
   const panding = useRouterState().status === "pending";
-  // throw new Error("RootComponent is not implemented");
   return (
     <div className="content min-h-screen w-full">
        <Nprogress isAnimating={panding}/>
