@@ -4,7 +4,7 @@ import { FollowInput, SortInput } from "./inputs";
 import { Follower, Fren } from "./fren.types";
 import { FeedPost, FrenPost } from "./post.type";
 import { lexicographicSortSchema, printSchema } from "graphql";
-import { console } from "inspector";
+
 
 // root query type
 builder.queryType({
